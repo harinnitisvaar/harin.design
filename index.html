@@ -1130,14 +1130,19 @@ body.cs-locked { overflow: hidden; }
 /* problem grid with three columns */
 .cs-problems-3 { grid-template-columns: repeat(3, 1fr); }
 
-/* small square art tiles */
-.cs-tiles { flex: 1; min-height: 0; display: flex; gap: 16px; align-items: center; padding-bottom: 22px; }
-.cs-tile { flex: none; width: 196px; margin: 0; }
-.cs-tile-art { aspect-ratio: 1 / 1; border-radius: 22px; background: var(--g50); display: grid; place-items: center; overflow: hidden; }
-.cs-tile-art img { width: 58%; height: 58%; object-fit: contain; }
-.cs-tile-art img.full { width: 100%; height: 100%; object-fit: cover; }
-.cs-tile figcaption { margin-top: 10px; font-size: 13px; font-weight: 500; letter-spacing: -0.01em; }
-.cs-tile figcaption span { display: block; margin-top: 2px; font-size: 12px; font-weight: 400; color: var(--g500); }
+/* an animation cut out of its black video frame, on a soft grey card */
+.cs-phone.cs-anim { display: grid; place-items: center; border-radius: 28px; background: rgba(134,134,139,0.2); }
+.cs-anim-clip { position: relative; width: 60%; aspect-ratio: 1 / 1; border-radius: 22%; overflow: hidden; }
+.cs-phone .cs-anim-clip video { position: absolute; width: 176%; height: 176%; left: -38%; top: -38%; max-width: none; border: 0; border-radius: 0; background: none; object-fit: cover; }
+
+/* square art tiles: one big, two stacked */
+.cs-tiles { flex: none; height: 100%; display: flex; gap: 16px; padding-bottom: 22px; }
+.cs-tiles-col { height: 100%; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+.cs-tile { position: relative; flex: none; margin: 0; aspect-ratio: 1 / 1; height: calc(50% - 8px); border-radius: 24px; overflow: hidden; background: var(--g50); }
+.cs-tile.big { height: 100%; }
+.cs-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cs-tile figcaption { position: absolute; left: 12px; bottom: 12px; padding: 8px 12px; border-radius: 14px; background: rgba(255,255,255,0.92); font-size: 13px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.3; }
+.cs-tile figcaption span { display: block; font-size: 11px; font-weight: 400; color: var(--g500); }
 
 /* a wide picture that fills the frame height */
 .cs-wide-pic { flex: 1; min-height: 0; display: flex; align-items: center; padding-bottom: 22px; }
@@ -1194,8 +1199,10 @@ a.cs-pill { text-decoration: none; }
 
 @media (max-width: 768px) {
   .cs-problems-3 { grid-template-columns: 1fr; }
-  .cs-tiles { flex: none; flex-wrap: nowrap; overflow-x: auto; }
-  .cs-tile { width: 140px; }
+  .cs-tiles { height: calc(100vh - 440px); min-height: 260px; gap: 10px; }
+  .cs-tiles-col { gap: 10px; }
+  .cs-tile { height: calc(50% - 5px); border-radius: 16px; }
+  .cs-tile.big { height: 100%; }
   .cs-ba { flex-direction: column; height: auto; flex: none; }
   .cs-ba-col { height: calc(100vh - 420px); min-height: 260px; }
   .cs-ba-list { width: auto; }
@@ -2331,9 +2338,11 @@ renderFeatured();
               <p class="cs-p">Simple shapes, clean forms, and just enough detail to say "this isn't easy", without making anyone feel guilty.</p>
             </div>
             <div class="cs-tiles">
-              <figure class="cs-tile"><div class="cs-tile-art"><img class="full" src="work/tipping-widget/ill-building.png" alt="Partner looking up at a tall building" loading="lazy"></div><figcaption>The tall building<span>No lift, fourth floor</span></figcaption></figure>
-              <figure class="cs-tile"><div class="cs-tile-art"><img class="full" src="work/tipping-widget/ill-stairs.png" alt="Partner climbing stairs" loading="lazy"></div><figcaption>The stairs<span>One step at a time</span></figcaption></figure>
-              <figure class="cs-tile"><div class="cs-tile-art"><img class="full" src="work/tipping-widget/ill-rain.png" alt="Partner riding a scooter in the rain" loading="lazy"></div><figcaption>The rain<span>Still on time</span></figcaption></figure>
+              <figure class="cs-tile big"><img src="work/tipping-widget/ill-building.png" alt="Partner looking up at a tall building" loading="lazy"><figcaption>The tall building<span>No lift, fourth floor</span></figcaption></figure>
+              <div class="cs-tiles-col">
+                <figure class="cs-tile"><img src="work/tipping-widget/ill-stairs.png" alt="Partner climbing stairs" loading="lazy"><figcaption>The stairs<span>One step at a time</span></figcaption></figure>
+                <figure class="cs-tile"><img src="work/tipping-widget/ill-rain.png" alt="Partner riding a scooter in the rain" loading="lazy"><figcaption>The rain<span>Still on time</span></figcaption></figure>
+              </div>
             </div>
           </div>
         </section>
@@ -2349,7 +2358,7 @@ renderFeatured();
               <p class="cs-p">A tired leg, one more step, and the quiet message: "this isn't always easy."</p>
             </div>
             <div class="cs-phones">
-              <figure class="cs-phone sq dark"><video src="work/tipping-widget/micro-animation.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Animated illustration of a partner climbing stairs"></video></figure>
+              <figure class="cs-phone sq cs-anim"><div class="cs-anim-clip"><video src="work/tipping-widget/micro-animation.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Animated illustrations of a partner's day"></video></div></figure>
             </div>
           </div>
         </section>
