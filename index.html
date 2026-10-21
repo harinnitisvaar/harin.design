@@ -1130,9 +1130,9 @@ body.cs-locked { overflow: hidden; }
 /* problem grid with three columns */
 .cs-problems-3 { grid-template-columns: repeat(3, 1fr); }
 
-/* an animation cut out of its black video frame, on a soft grey card */
-.cs-phone.cs-anim { display: grid; place-items: center; border-radius: 28px; background: rgba(134,134,139,0.2); }
-.cs-anim-clip { position: relative; width: 60%; aspect-ratio: 1 / 1; border-radius: 22%; overflow: hidden; }
+/* an animation cut out of its black video frame */
+.cs-phone.cs-anim { display: grid; place-items: center; background: none; }
+.cs-anim-clip { position: relative; width: 80%; aspect-ratio: 1 / 1; border-radius: 22%; overflow: hidden; }
 .cs-phone .cs-anim-clip video { position: absolute; width: 176%; height: 176%; left: -38%; top: -38%; max-width: none; border: 0; border-radius: 0; background: none; object-fit: cover; }
 
 /* square art tiles: one big, two stacked */
@@ -1166,7 +1166,7 @@ body.cs-locked { overflow: hidden; }
 .cs-cards .cs-thumb img { height: 100%; width: auto; object-fit: contain; background: var(--white); border-radius: 16px; }
 
 /* reactions */
-.cs-reacts { flex: none; display: flex; gap: 12px; align-items: flex-start; align-self: flex-start; }
+.cs-reacts { flex: none; display: flex; gap: 12px; align-items: flex-start; align-self: center; padding-bottom: 22px; }
 .cs-reacts-col { width: 300px; display: flex; flex-direction: column; gap: 10px; }
 .cs-reacts .cs-thumb { height: auto; }
 .cs-reacts .cs-thumb img { height: auto; border-radius: 12px; background: #000; }
@@ -2408,9 +2408,8 @@ renderFeatured();
               <p class="cs-p">People shared it, LottieFiles loved it, and folks reminded each other to tip on rainy days <span class="e">🌧️</span>.</p>
             </div>
             <div class="cs-reacts">
-              <div class="cs-reacts-col"><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-04.png" aria-label="A post sharing the widget"><img src="work/tipping-widget/reaction-04.png" alt="" loading="lazy"></button><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-07.png" aria-label="Reaction on X"><img src="work/tipping-widget/reaction-07.png" alt="" loading="lazy"></button></div>
-              <div class="cs-reacts-col"><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-01.png" aria-label="Always tip on a rainy day"><img src="work/tipping-widget/reaction-01.png" alt="" loading="lazy"></button><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-03.png" aria-label="It made me tip 50 instead of 30"><img src="work/tipping-widget/reaction-03.png" alt="" loading="lazy"></button><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-02.png" aria-label="LottieFiles reacted"><img src="work/tipping-widget/reaction-02.png" alt="" loading="lazy"></button><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-06.png" aria-label="Reaction on X"><img src="work/tipping-widget/reaction-06.png" alt="" loading="lazy"></button></div>
-              <div class="cs-reacts-col"><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-05.png" aria-label="A post about the widget"><img src="work/tipping-widget/reaction-05.png" alt="" loading="lazy"></button></div>
+              <div class="cs-reacts-col"><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-04.png" aria-label="A post sharing the widget"><img src="work/tipping-widget/reaction-04.png" alt="" loading="lazy"></button><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-03.png" aria-label="It made me tip 50 instead of 30"><img src="work/tipping-widget/reaction-03.png" alt="" loading="lazy"></button></div>
+              <div class="cs-reacts-col"><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-05.png" aria-label="A LinkedIn post about the widget"><img src="work/tipping-widget/reaction-05.png" alt="" loading="lazy"></button><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-01.png" aria-label="Always tip on a rainy day"><img src="work/tipping-widget/reaction-01.png" alt="" loading="lazy"></button><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-02.png" aria-label="LottieFiles reacted"><img src="work/tipping-widget/reaction-02.png" alt="" loading="lazy"></button><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-06.png" aria-label="I could stare at this all day"><img src="work/tipping-widget/reaction-06.png" alt="" loading="lazy"></button><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-07.png" aria-label="Beautiful storytelling"><img src="work/tipping-widget/reaction-07.png" alt="" loading="lazy"></button></div>
             </div>
           </div>
         </section>
