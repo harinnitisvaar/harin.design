@@ -1463,18 +1463,6 @@ init();
         <!-- Paint solid ink (#1d1d1f) and threshold the alpha so blurred letters fuse like liquid.
              The threshold strength is animated so the effect fades in and out instead of snapping. -->
         <feColorMatrix id="meltMatrix" in="SourceGraphic" type="matrix" values="0 0 0 0 0.114  0 0 0 0 0.114  0 0 0 0 0.122  0 0 0 1 0" result="goo"/>
-        <!-- Blue and pink outline around the melting letters -->
-        <feMorphology in="goo" operator="dilate" radius="1.6" result="fat"/>
-        <feComposite in="fat" in2="goo" operator="out" result="ring"/>
-        <feFlood flood-color="#5b8cff"/>
-        <feComposite in2="ring" operator="in"/>
-        <feOffset dx="-1.4" dy="-0.6" result="ringBlue"/>
-        <feFlood flood-color="#ff5fae"/>
-        <feComposite in2="ring" operator="in"/>
-        <feOffset dx="1.4" dy="0.6" result="ringPink"/>
-        <feMerge result="rings"><feMergeNode in="ringBlue"/><feMergeNode in="ringPink"/></feMerge>
-        <feComponentTransfer in="rings" result="ringsFaded"><feFuncA id="meltRing" type="linear" slope="0"/></feComponentTransfer>
-        <feMerge><feMergeNode in="ringsFaded"/><feMergeNode in="goo"/></feMerge>
       </filter>
     </svg>
     <h1 class="hero-title" aria-label="Interactions, product design, motion, illustrations and visual design">
@@ -1911,7 +1899,19 @@ renderFeatured();
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   var matrix = document.getElementById('meltMatrix');
-  var ring = document.getElementById('meltRing');
+  // the box is as wide as the widest word, so a landing word never shifts the layout
+  var probe = document.createElement('span');
+  probe.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;left:0;top:0';
+  el.appendChild(probe);
+  function fit(){
+    var w = 0;
+    words.forEach(function(x){ probe.textContent = x; w = Math.max(w, probe.getBoundingClientRect().width); });
+    el.style.width = Math.ceil(w) + 'px';
+  }
+  fit();
+  window.addEventListener('resize', fit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+
   function blur(f){ return 'blur(' + Math.min(4 / f - 4, 40) + 'px)'; }
   function ease(x){ return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
   function setMorph(f){
@@ -1923,8 +1923,6 @@ renderFeatured();
     var w = Math.min(1, Math.min(f, 1 - f) / 0.18);
     w = w * w * (3 - 2 * w);
     matrix.setAttribute('values', '0 0 0 0 0.114  0 0 0 0 0.114  0 0 0 0 0.122  0 0 0 ' + (1 + 11 * w).toFixed(3) + ' ' + (-4.5 * w).toFixed(3));
-    // outline peaks mid-morph
-    ring.setAttribute('slope', (Math.sin(Math.PI * f) * 0.95).toFixed(3));
   }
   function settle(){
     a.textContent = b.textContent;
