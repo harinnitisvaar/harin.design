@@ -1096,6 +1096,128 @@ body.cs-locked { overflow: hidden; }
   .case-wide-shots { padding: 8px 12px 0; gap: 8px; }
   .case-wide-shots img { border-radius: 14px 14px 0 0; }
 }
+
+/* ─── CASE STUDIES: shared media (videos, Lotties, GIF overlays) ─── */
+.cs-phone video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 22px;
+  border: 1px solid rgba(0,0,0,0.07);
+  background: var(--g50);
+  display: block;
+}
+.cs-phone.sq { aspect-ratio: 1 / 1; }
+.cs-phone.r916 { aspect-ratio: 9 / 16; }
+.cs-phone.r37 { aspect-ratio: 720 / 1480; }
+.cs-phone.r36 { aspect-ratio: 720 / 1456; }
+.cs-phone.r9195 { aspect-ratio: 720 / 1558; }
+.cs-phone.r9208 { aspect-ratio: 1081 / 2341; }
+.cs-phone.dark video { background: #000; }
+.cs-hero-shots .cs-phone { height: 78%; }
+.cs-hero-shots .cs-phone:nth-child(2) { height: 100%; }
+.cs-hero-shots .cs-phone.sq { height: 86%; }
+
+/* an animation laid over a static screen, placed in % of the screen */
+.cs-over { position: absolute; pointer-events: none; }
+.cs-phone .cs-over > img { width: 100%; height: 100%; object-fit: contain; border: 0; border-radius: 0; background: none; }
+/* Zepto ETA card illustration slot */
+.cs-over.ot { left: 6.8%; top: 15%; width: 74.4%; aspect-ratio: 268 / 188; }
+.cs-lottie { width: 100%; height: 100%; }
+.cs-lottie svg { display: block; }
+
+/* problem grid with three columns */
+.cs-problems-3 { grid-template-columns: repeat(3, 1fr); }
+
+/* small square art tiles */
+.cs-tiles { flex: 1; min-height: 0; display: flex; gap: 16px; align-items: center; padding-bottom: 22px; }
+.cs-tile { flex: none; width: 196px; margin: 0; }
+.cs-tile-art { aspect-ratio: 1 / 1; border-radius: 22px; background: var(--g50); display: grid; place-items: center; overflow: hidden; }
+.cs-tile-art img { width: 58%; height: 58%; object-fit: contain; }
+.cs-tile-art img.full { width: 100%; height: 100%; object-fit: cover; }
+.cs-tile figcaption { margin-top: 10px; font-size: 13px; font-weight: 500; letter-spacing: -0.01em; }
+.cs-tile figcaption span { display: block; margin-top: 2px; font-size: 12px; font-weight: 400; color: var(--g500); }
+
+/* a wide picture that fills the frame height */
+.cs-wide-pic { flex: 1; min-height: 0; display: flex; align-items: center; padding-bottom: 22px; }
+.cs-wide-pic img, .cs-wide-pic .cs-proof-img { height: 100%; width: auto; max-width: none; }
+.cs-wide-pic img { border-radius: 18px; border: 1px solid rgba(0,0,0,0.06); display: block; }
+.cs-wide-pic .cs-proof-img img { height: 100%; width: auto; object-fit: contain; }
+
+/* before / after */
+.cs-ba { flex: 1; min-height: 0; display: flex; gap: 28px; padding-bottom: 22px; }
+.cs-ba-col { display: flex; gap: 18px; height: 100%; }
+.cs-ba-col .cs-phone { height: 100%; }
+.cs-ba-list { width: 220px; display: flex; flex-direction: column; justify-content: center; gap: 14px; }
+.cs-ba-list h4 { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; letter-spacing: -0.02em; }
+.cs-ba-list h4 img { width: 28px; height: 28px; }
+.cs-ba-list p { font-size: 13px; line-height: 1.5; color: var(--g700); }
+.cs-ba-list b { color: var(--ink); font-weight: 600; }
+
+/* exploration cards with their own shape (not phone screens) */
+.cs-cards { flex: 1; min-height: 0; display: grid; grid-template-rows: repeat(2, minmax(0, 1fr)); grid-auto-flow: column; grid-auto-columns: max-content; gap: 14px; padding-bottom: 22px; }
+.cs-cards .cs-thumb { height: 100%; width: auto; }
+.cs-cards .cs-thumb img { height: 100%; width: auto; object-fit: contain; background: var(--white); border-radius: 16px; }
+
+/* reactions */
+.cs-reacts { flex: none; display: flex; gap: 12px; align-items: flex-start; align-self: flex-start; }
+.cs-reacts-col { width: 300px; display: flex; flex-direction: column; gap: 10px; }
+.cs-reacts .cs-thumb { height: auto; }
+.cs-reacts .cs-thumb img { height: auto; border-radius: 12px; background: #000; }
+.cs-end-foot .cs-pill { flex: none; white-space: nowrap; }
+
+/* Swiggy home made from the real banner Lotties */
+.cs-swhome { flex: none; align-self: center; width: 440px; margin-bottom: 22px; padding: 18px 16px; border-radius: 26px; background: var(--white); border: 1px solid rgba(0,0,0,0.07); display: flex; flex-direction: column; gap: 12px; overflow: hidden; }
+.cs-swhome .l { width: 100%; }
+.cs-swhome-row { display: grid; gap: 10px; align-items: center; }
+.cs-swhome-row.two { grid-template-columns: 1fr 1fr; }
+.cs-swhome-row.tiles { grid-template-columns: 98fr 80fr 120fr 156fr; align-items: stretch; }
+.cs-swhome-stack { display: flex; flex-direction: column; justify-content: space-between; gap: 8px; }
+
+/* a wall of Lotties */
+.cs-wall { flex: 1; min-height: 0; display: grid; grid-template-rows: repeat(3, minmax(0, 1fr)); grid-auto-flow: column; grid-auto-columns: 170px; gap: 12px; padding-bottom: 22px; }
+.cs-wall figure { margin: 0; display: flex; flex-direction: column; min-height: 0; min-width: 0; background: var(--g50); border-radius: 18px; padding: 10px 10px 8px; }
+.cs-wall figure.w2 { grid-column: span 2; }
+.cs-wall .cs-lottie, .cs-wall .pic { flex: 1; min-height: 0; }
+.cs-wall .pic { width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+.cs-wall figcaption { flex: none; margin-top: 6px; font-size: 11px; color: var(--g500); white-space: nowrap; }
+
+/* the impact slide for a single strong number */
+.cs-big { flex: none; width: 300px; align-self: stretch; display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: 28px; border-radius: 22px; background: rgba(245,244,241,0.5); }
+.cs-big img { width: 120px; height: 120px; object-fit: contain; margin-bottom: 16px; }
+.cs-big b { font-size: 64px; font-weight: 600; letter-spacing: -0.05em; line-height: 1; font-feature-settings: "tnum"; }
+.cs-big span { font-size: 14px; line-height: 1.45; color: var(--g700); }
+
+.cs-pill-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+a.cs-pill { text-decoration: none; }
+
+@media (max-width: 768px) {
+  .cs-problems-3 { grid-template-columns: 1fr; }
+  .cs-tiles { flex: none; flex-wrap: nowrap; overflow-x: auto; }
+  .cs-tile { width: 140px; }
+  .cs-ba { flex-direction: column; height: auto; flex: none; }
+  .cs-ba-col { height: calc(100vh - 420px); min-height: 260px; }
+  .cs-ba-list { width: auto; }
+  .cs-reacts { overflow-x: auto; max-width: 86vw; }
+  .cs-reacts-col { width: 220px; flex: none; }
+  .cs-cards, .cs-wall, .cs-wide-pic { flex: none; height: calc(100vh - 400px); min-height: 280px; }
+  .cs-cards, .cs-wall, .cs-wide-pic { max-width: 100%; overflow-x: auto; }
+  .cs-swhome { width: 78vw; }
+  .cs-hero-shots .cs-phone.sq { height: auto; width: 100%; align-self: center; }
+  .cs-big { padding: 20px; }
+  .cs-big img { width: 72px; height: 72px; margin-bottom: 8px; }
+  .cs-big { width: auto; }
+  .cs-big b { font-size: 44px; }
+}
+
+/* Dunzo: where each mascot GIF sits on its screen */
+.cs-over.dz-onb { left: 19%; top: 10%; width: 62%; aspect-ratio: 1 / 1; }
+.cs-over.dz-onb3 { left: 22%; top: 16%; width: 56%; aspect-ratio: 1 / 1; }
+.cs-over.dz-peak { left: 9%; top: 12%; width: 82%; aspect-ratio: 1 / 1; }
+
+/* Swiggy: the scooter rides above the landmark sheet */
+.cs-over.sw-land { left: 4%; top: 43%; width: 92%; aspect-ratio: 360 / 156; }
 </style>
 </head>
 <body>
@@ -1364,7 +1486,7 @@ init();
         <p class="section-sub">Work I'm proud of, crafted with care.</p>
       </div>
       <div class="cases-grid">
-        <button class="case case-wide" type="button" id="csOpen" aria-haspopup="dialog" aria-controls="cs">
+        <button class="case case-wide" type="button" id="csOpen" data-cs-open="cs" aria-haspopup="dialog" aria-controls="cs">
           <span class="case-wide-text">
             <img class="case-icon" src="logos/zepto.png" alt="Zepto logo">
             <span><span class="case-company" style="display:block">Zepto</span><span class="case-title">Zepto Cafe</span><span class="case-wide-sub">Taking a grocery app into 10-minute food. From 40 stores to 650+.</span></span>
@@ -1821,7 +1943,7 @@ renderFeatured();
 })();
 </script>
 <!-- CASE STUDY: ZEPTO CAFE (horizontal canvas) -->
-<div class="cs" id="cs" role="dialog" aria-modal="true" aria-labelledby="csTitle" aria-hidden="true">
+<div class="cs" id="cs" data-hash="zepto-cafe" role="dialog" aria-modal="true" aria-labelledby="csTitle" aria-hidden="true">
   <div class="cs-backdrop" data-cs-close></div>
   <article class="cs-sheet" tabindex="-1">
     <div class="cs-top">
@@ -1832,7 +1954,7 @@ renderFeatured();
       </button>
     </div>
 
-    <div class="cs-canvas" id="csCanvas">
+    <div class="cs-canvas">
       <div class="cs-track">
 
         <!-- INTRO -->
@@ -2097,146 +2219,1079 @@ renderFeatured();
       <button type="button" data-cs-go="impact">Impact</button>
     </nav>
 
-    <div class="cs-gallery" id="csGallery" role="dialog" aria-label="Explorations">
+    <div class="cs-gallery" role="dialog" aria-label="Explorations">
       <div class="cs-gallery-inner">
-        <div class="cs-gallery-head"><div><span class="cs-num" id="csGalleryKicker">Explorations</span><h4 id="csGalleryTitle"></h4></div><button class="cs-close" type="button" id="csGalleryClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Close</button></div>
-        <div class="cs-gallery-grid" id="csGalleryGrid"></div>
+        <div class="cs-gallery-head"><div><span class="cs-num cs-gallery-kicker">Explorations</span><h4 class="cs-gallery-title"></h4></div><button class="cs-close cs-gallery-close" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Close</button></div>
+        <div class="cs-gallery-grid"></div>
       </div>
     </div>
 
-    <div class="cs-lightbox" id="csLightbox"><img alt=""></div>
+    <div class="cs-lightbox"><img alt=""></div>
+  </article>
+</div>
+
+<div class="cs" id="csTip" data-hash="tipping-widget" role="dialog" aria-modal="true" aria-labelledby="csTipTitle" aria-hidden="true">
+  <div class="cs-backdrop" data-cs-close></div>
+  <article class="cs-sheet" tabindex="-1">
+    <div class="cs-top">
+      <span class="cs-top-title">Tipping Widget <span>· case study</span></span>
+      <button class="cs-close" type="button" data-cs-close>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        Close
+      </button>
+    </div>
+
+    <div class="cs-canvas">
+      <div class="cs-track">
+
+        <!-- INTRO -->
+        <section class="cs-frame" data-chapter="intro">
+          <span class="cs-frame-name">Intro</span>
+          <div class="cs-card cs-intro">
+            <div class="cs-intro-text">
+              <div>
+                <span class="cs-eyebrow">Swiggy · Checkout · Shipped</span>
+                <h2 class="cs-h1" id="csTipTitle">Tipping Widget</h2>
+                <p class="cs-p">Tipping is a tiny moment in checkout. Most people scroll right past it.</p>
+                <p class="cs-p">I wanted it to feel like it's about a person, not a button. A few tiny illustrations later, tips went up by 3%.</p>
+              </div>
+              <dl class="cs-meta">
+                <dt>Role</dt><dd>Visual designer</dd>
+                <dt>Team</dt><dd>1 PM, 1 senior product designer, me</dd>
+                <dt>Timeline</dt><dd>4 days</dd>
+              </dl>
+            </div>
+            <div class="cs-hero-shots" aria-hidden="true">
+              <figure class="cs-phone sq"><video src="work/tipping-widget/hero.mp4#t=0.1" muted loop playsinline preload="metadata"></video></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- PROBLEM -->
+        <section class="cs-frame" data-chapter="problem">
+          <span class="cs-frame-name">The problem</span>
+          <div class="cs-card cs-problem">
+            <div>
+              <p class="cs-say">Delivery partners climb stairs, ride through the rain and carry heavy bags. <span class="dim">The tip screen didn't show any of that.</span></p>
+              <div class="cs-problems">
+                <div class="cs-prob"><span class="cs-num">01 · It felt cold</span><b>Just a row of ₹ buttons</b><p>It sat in the middle of a fast checkout. Easy to skip, and kind of transactional.</p></div>
+                <div class="cs-prob"><span class="cs-num">02 · No one behind it</span><b>Where's the person?</b><p>Nothing reminded you that a real human is carrying your order to your door.</p></div>
+              </div>
+            </div>
+            <div class="cs-stats">
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/stopwatch.png" alt="" loading="lazy"><b>4 days</b><span>from idea to handoff</span></div>
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/palette.png" alt="" loading="lazy"><b>64 px</b><span>to tell each story</span></div>
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/eyes.png" alt="" loading="lazy"><b>3–10 s</b><span>people spend on this widget</span></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- RESEARCH -->
+        <section class="cs-frame" data-chapter="research">
+          <span class="cs-frame-name">Why do people tip?</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">01</span><h3 class="cs-h2">So, why do people tip?</h3>
+              <p class="cs-p">I wrote down the small things delivery partners go through every day. Then I asked a few people, users and partners, when they actually tip.</p>
+              <p class="cs-p">The answers were very similar. Rain, festivals, long distances, no lift. People tip when they can <em>see</em> the effort.</p>
+            </div>
+            <div class="cs-wide-pic">
+              <button class="cs-proof-img" type="button" data-full="work/tipping-widget/why-people-tip.png" aria-label="What people told me about tipping"><img src="work/tipping-widget/why-people-tip.png" alt="" loading="lazy"></button>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- DAILY HARDSHIPS -->
+        <section class="cs-frame">
+          <span class="cs-frame-name">What partners deal with</span>
+          <div class="cs-card cs-ideas">
+            <span class="cs-num">02</span>
+            <h3 class="cs-h2">A few things partners deal with daily</h3>
+            <div class="cs-ideas-row">
+              <div class="cs-idea"><small>No lift, fourth floor</small><b>Climbing tall buildings</b><img class="a" src="work/tipping-widget/e-building.png" alt="" loading="lazy"></div>
+              <div class="cs-idea"><small>Wet roads, still on time</small><b>Braving the rain</b><img class="a" src="work/tipping-widget/e-rain.png" alt="" loading="lazy"></div>
+              <div class="cs-idea"><small>Water cans, big grocery runs</small><b>Carrying heavy loads</b><img class="a" src="work/tipping-widget/e-tired.png" alt="" loading="lazy"></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- ILLUSTRATE -->
+        <section class="cs-frame" data-chapter="illustrate">
+          <span class="cs-frame-name">Illustration</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">03</span><h3 class="cs-h2">A whole story in 64 × 64 px</h3>
+              <p class="cs-p">That's all the space I had. So every line had to earn its place.</p>
+              <p class="cs-p">Simple shapes, clean forms, and just enough detail to say "this isn't easy", without making anyone feel guilty.</p>
+            </div>
+            <div class="cs-tiles">
+              <figure class="cs-tile"><div class="cs-tile-art"><img class="full" src="work/tipping-widget/ill-building.png" alt="Partner looking up at a tall building" loading="lazy"></div><figcaption>The tall building<span>No lift, fourth floor</span></figcaption></figure>
+              <figure class="cs-tile"><div class="cs-tile-art"><img class="full" src="work/tipping-widget/ill-stairs.png" alt="Partner climbing stairs" loading="lazy"></div><figcaption>The stairs<span>One step at a time</span></figcaption></figure>
+              <figure class="cs-tile"><div class="cs-tile-art"><img class="full" src="work/tipping-widget/ill-rain.png" alt="Partner riding a scooter in the rain" loading="lazy"></div><figcaption>The rain<span>Still on time</span></figcaption></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- ANIMATE -->
+        <section class="cs-frame" data-chapter="animate">
+          <span class="cs-frame-name">Micro-animation</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">04</span><h3 class="cs-h2">Then I made them move</h3>
+              <p class="cs-p">People spend about 3 to 10 seconds on this widget. So each loop is short, and the whole story plays out inside that window.</p>
+              <p class="cs-p">A tired leg, one more step, and the quiet message: "this isn't always easy."</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone sq dark"><video src="work/tipping-widget/micro-animation.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Animated illustration of a partner climbing stairs"></video></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- IN THE APP -->
+        <section class="cs-frame" data-chapter="ui">
+          <span class="cs-frame-name">In the checkout</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">05</span><h3 class="cs-h2">Right where you tip</h3>
+              <p class="cs-p">The animation sits right next to the tip buttons, with one simple line: "Delivery partner feels nice when their daily hard work is appreciated."</p>
+              <p class="cs-p">No guilt trip, no big banner. Just a small, kind nudge at the right moment.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone sq"><video src="work/tipping-widget/in-checkout.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="The tipping widget inside the checkout"></video></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- IMPACT -->
+        <section class="cs-frame" data-chapter="impact">
+          <span class="cs-frame-name">Impact</span>
+          <div class="cs-card cs-impact">
+            <div>
+              <h3 class="cs-h2">What changed</h3>
+              <div class="cs-impact-grid">
+                <div><img class="cs-ill" src="work/tipping-widget/e-happy.png" alt="" loading="lazy"><b>+3%</b><span>more people tipped, taking the tip rate to 5.2%</span></div>
+                <div><img class="cs-ill" src="work/tipping-widget/e-money.png" alt="" loading="lazy"><b>~₹820</b><span>extra a week for delivery partners</span></div>
+                <div style="grid-column: 1 / -1"><img class="cs-ill" src="work/tipping-widget/e-handshake.png" alt="" loading="lazy"><b>Closer</b><span>People said they felt more connected to the person bringing their order. Some started tipping more than they used to.</span></div>
+              </div>
+            </div>
+            <p class="cs-foot">Tip numbers compared with the old widget.</p>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- REACTIONS -->
+        <section class="cs-frame" data-chapter="reactions">
+          <span class="cs-frame-name">Real reactions</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">06</span><h3 class="cs-h2">People noticed</h3>
+              <p class="cs-p">My favourite one: "Was just about to Instamart things and saw this, actually made me tip 50, instead of the regular 30."</p>
+              <p class="cs-p">People shared it, LottieFiles loved it, and folks reminded each other to tip on rainy days <span class="e">🌧️</span>.</p>
+            </div>
+            <div class="cs-reacts">
+              <div class="cs-reacts-col"><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-04.png" aria-label="A post sharing the widget"><img src="work/tipping-widget/reaction-04.png" alt="" loading="lazy"></button><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-07.png" aria-label="Reaction on X"><img src="work/tipping-widget/reaction-07.png" alt="" loading="lazy"></button></div>
+              <div class="cs-reacts-col"><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-01.png" aria-label="Always tip on a rainy day"><img src="work/tipping-widget/reaction-01.png" alt="" loading="lazy"></button><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-03.png" aria-label="It made me tip 50 instead of 30"><img src="work/tipping-widget/reaction-03.png" alt="" loading="lazy"></button><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-02.png" aria-label="LottieFiles reacted"><img src="work/tipping-widget/reaction-02.png" alt="" loading="lazy"></button><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-06.png" aria-label="Reaction on X"><img src="work/tipping-widget/reaction-06.png" alt="" loading="lazy"></button></div>
+              <div class="cs-reacts-col"><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-05.png" aria-label="A post about the widget"><img src="work/tipping-widget/reaction-05.png" alt="" loading="lazy"></button></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- END -->
+        <section class="cs-frame">
+          <span class="cs-frame-name">End</span>
+          <div class="cs-card cs-end" style="position:relative">
+            <img class="cs-ill" src="work/tipping-widget/partner-sticker.png" alt="" loading="lazy" style="top:32px;right:32px;width:88px;height:88px">
+            <span class="cs-num">Behind the scenes</span>
+            <h3 class="cs-h2">What I learned</h3>
+            <div class="cs-notes">
+              <div class="cs-note"><span class="cs-num">01</span><b>Small canvas, big feelings</b><p>64 pixels forced me to cut everything that wasn't the story. It's the best constraint I've had.</p></div>
+              <div class="cs-note"><span class="cs-num">02</span><b>Talk to the people in it</b><p>A few chats with partners and users told me more than any dashboard. Their words became the illustrations.</p></div>
+              <div class="cs-note"><span class="cs-num">03</span><b>Kind beats loud</b><p>We never asked anyone to tip more. We just showed what the job looks like, and people did the rest.</p></div>
+            </div>
+            <div class="cs-end-foot">
+              <p class="cs-p cs-thanks">Thanks for reading. Tip your delivery partner today <span class="e">🧡</span></p>
+              <button class="cs-pill" type="button" data-cs-go="intro">Back to the start
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <nav class="cs-nav" aria-label="Case study sections">
+      <button type="button" data-cs-go="intro" class="on">Intro</button>
+      <button type="button" data-cs-go="problem">Problem</button>
+      <button type="button" data-cs-go="research">Research</button>
+      <button type="button" data-cs-go="illustrate">Illustrate</button>
+      <button type="button" data-cs-go="animate">Animate</button>
+      <button type="button" data-cs-go="ui">In the app</button>
+      <button type="button" data-cs-go="impact">Impact</button>
+      <button type="button" data-cs-go="reactions">Reactions</button>
+    </nav>
+
+    <div class="cs-lightbox"><img alt=""></div>
+  </article>
+</div>
+
+<div class="cs" id="csTrack" data-hash="order-tracking-page" role="dialog" aria-modal="true" aria-labelledby="csTrackTitle" aria-hidden="true">
+  <div class="cs-backdrop" data-cs-close></div>
+  <article class="cs-sheet" tabindex="-1">
+    <div class="cs-top">
+      <span class="cs-top-title">Order Tracking Page <span>· case study</span></span>
+      <button class="cs-close" type="button" data-cs-close>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        Close
+      </button>
+    </div>
+
+    <div class="cs-canvas">
+      <div class="cs-track">
+
+        <!-- INTRO -->
+        <section class="cs-frame" data-chapter="intro">
+          <span class="cs-frame-name">Intro</span>
+          <div class="cs-card cs-intro">
+            <div class="cs-intro-text">
+              <div>
+                <span class="cs-eyebrow">Zepto · Order tracking · Shipped</span>
+                <h2 class="cs-h1" id="csTrackTitle">Order Tracking Page</h2>
+                <p class="cs-p">The tracking page was made for one order and one delivery. Then Zepto started sending one order in many boxes, and the old page couldn't keep up.</p>
+                <p class="cs-p">I cleaned it up, made room for many shipments, and added a little joy while you wait.</p>
+              </div>
+              <dl class="cs-meta">
+                <dt>Role</dt><dd>Product visual designer</dd>
+                <dt>Team</dt><dd>1 PM, 1 senior product designer, me</dd>
+                <dt>Timeline</dt><dd>4 days</dd>
+              </dl>
+            </div>
+            <div class="cs-hero-shots" aria-hidden="true">
+              <figure class="cs-phone"><img src="work/order-tracking/old.png" alt=""></figure>
+              <figure class="cs-phone"><img src="work/order-tracking/state-way.png" alt=""><div class="cs-over ot"><div class="cs-lottie" data-lottie="work/order-tracking/l-way.json"></div></div></figure>
+              <figure class="cs-phone"><img src="work/order-tracking/state-cancelled.png" alt=""></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- PROBLEM -->
+        <section class="cs-frame" data-chapter="problem">
+          <span class="cs-frame-name">The problem</span>
+          <div class="cs-card cs-problem">
+            <div>
+              <p class="cs-say">You open this page for one thing: when will it get here? <span class="dim">The old page made you hunt for it.</span></p>
+              <div class="cs-problems">
+                <div class="cs-prob"><span class="cs-num">01 · Everything shouts</span><b>No clear first thing to read</b><p>The timer, the avatar and the promo banners were all equally loud. Your order status got lost in the noise.</p></div>
+                <div class="cs-prob"><span class="cs-num">02 · Built for one</span><b>No room for more boxes</b><p>It couldn't show multiple shipments in one order, and it was hard to reuse for scheduled deliveries or returns.</p></div>
+              </div>
+            </div>
+            <div class="cs-stats">
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/package.png" alt="" loading="lazy"><b>1 → many</b><span>shipments in a single order</span></div>
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/stopwatch.png" alt="" loading="lazy"><b>4 days</b><span>from first sketch to handoff</span></div>
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/eyes.png" alt="" loading="lazy"><b>1 question</b><span>"when will it get here?"</span></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- CRITIQUE -->
+        <section class="cs-frame" data-chapter="critique">
+          <span class="cs-frame-name">An honest look at the old page</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">01</span><h3 class="cs-h2">An honest look at the old page</h3>
+              <p class="cs-p">Before drawing anything new, I wrote down what wasn't working. It was a short, slightly painful list.</p>
+            </div>
+            <div class="cs-ba">
+              <div class="cs-ba-col">
+                <figure class="cs-phone"><img src="work/order-tracking/old.png" alt="The old dark order tracking page" loading="lazy"><figcaption>Before</figcaption></figure>
+                <div class="cs-ba-list">
+                  <h4><img src="work/order-tracking/e-cross.png" alt="">What hurt</h4>
+                  <p><b>Hierarchy.</b> Timer, avatar and banners all feel equally loud.</p>
+                  <p><b>Clutter.</b> Lots of noise makes it hard to focus on the status.</p>
+                  <p><b>Multiple shipments</b> would be overwhelming here.</p>
+                  <p><b>Dark UI</b> with bright accents is harder to scan.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- ETA EXPLORATIONS -->
+        <section class="cs-frame" data-chapter="explore">
+          <span class="cs-frame-name">ETA card explorations</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">02</span><h3 class="cs-h2">ETA first, then everything else</h3>
+              <p class="cs-p">I started with a few mindless explorations <span class="e">✍️</span>, playing with hierarchy, font weights and alignment.</p>
+              <p class="cs-p">The rule I landed on: the time and the status go on top, big and bold. Everything else supports them.</p>
+            </div>
+            <div class="cs-cards">
+              <button class="cs-thumb" type="button" data-full="work/order-tracking/eta-01.png" aria-label="ETA card with delivery partner"><img src="work/order-tracking/eta-01.png" alt="" loading="lazy"></button>
+              <button class="cs-thumb" type="button" data-full="work/order-tracking/eta-02.png" aria-label="ETA card with packing status"><img src="work/order-tracking/eta-02.png" alt="" loading="lazy"></button>
+              <button class="cs-thumb" type="button" data-full="work/order-tracking/eta-04.png" aria-label="ETA card with an illustration"><img src="work/order-tracking/eta-04.png" alt="" loading="lazy"></button>
+              <button class="cs-thumb" type="button" data-full="work/order-tracking/eta-05.png" aria-label="ETA card with an early badge"><img src="work/order-tracking/eta-05.png" alt="" loading="lazy"></button>
+              <button class="cs-thumb" type="button" data-full="work/order-tracking/eta-03.png" aria-label="Dark ETA card"><img src="work/order-tracking/eta-03.png" alt="" loading="lazy"></button>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- SHIPMENTS -->
+        <section class="cs-frame" data-chapter="shipments">
+          <span class="cs-frame-name">Multiple shipments explorations</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">03</span><h3 class="cs-h2">One order, many boxes</h3>
+              <p class="cs-p">An order could now arrive in two or three shipments. I tried tabs, pills, and dark cards that peek from the side.</p>
+              <p class="cs-p">Cards won. Each shipment gets its own card, and the next one peeks in, so you know there's more without being told.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone"><img src="work/order-tracking/ship-01.png" alt="Shipments as tabs" loading="lazy"><figcaption>Tabs</figcaption></figure>
+              <figure class="cs-phone"><img src="work/order-tracking/ship-02.png" alt="Shipments as pills" loading="lazy"><figcaption>Pills</figcaption></figure>
+              <figure class="cs-phone"><img src="work/order-tracking/ship-03.png" alt="Shipments as dark peeking cards" loading="lazy"><figcaption>Peeking cards</figcaption></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- FINAL -->
+        <section class="cs-frame" data-chapter="final">
+          <span class="cs-frame-name">Final UI</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">04</span><h3 class="cs-h2">Calm, clear, and ready for more</h3>
+              <p class="cs-p">The final page reads top to bottom like a sentence: when, what's happening, who's bringing it, what's inside.</p>
+            </div>
+            <div class="cs-ba">
+              <div class="cs-ba-col">
+                <figure class="cs-phone"><img src="work/order-tracking/new.png" alt="The new order tracking page" loading="lazy"><figcaption>After</figcaption></figure>
+                <div class="cs-ba-list">
+                  <h4><img src="work/order-tracking/e-check.png" alt="">What changed</h4>
+                  <p><b>Clear hierarchy.</b> Time and status are bold and separated cleanly.</p>
+                  <p><b>A message from your partner</b> shows up only when it matters, and makes it feel human.</p>
+                  <p><b>A calmer tone.</b> Flatter illustrations and more white space.</p>
+                  <p><b>Built for shipments.</b> Each box gets its own card.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- JOY -->
+        <section class="cs-frame" data-chapter="joy">
+          <span class="cs-frame-name">Making order tracking a little more joyful</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">05</span><h3 class="cs-h2">A little joy while you wait</h3>
+              <p class="cs-p">Waiting is boring. So every state got its own tiny scene with the Zepto veggie gang <span class="e">🍅</span>.</p>
+              <p class="cs-p">They pack your bag, hold a leaf over their heads in the rain, spot your building, and do a little dance at your door.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone"><img src="work/order-tracking/state-packed.png" alt="Order getting packed" loading="lazy"><div class="cs-over ot"><div class="cs-lottie" data-lottie="work/order-tracking/l-packed.json"></div></div><figcaption>Packing</figcaption></figure>
+              <figure class="cs-phone"><img src="work/order-tracking/state-rain.png" alt="Slight delay due to rain" loading="lazy"><div class="cs-over ot"><div class="cs-lottie" data-lottie="work/order-tracking/l-rain.json"></div></div><figcaption>Rain delay</figcaption></figure>
+              <figure class="cs-phone"><img src="work/order-tracking/state-way.png" alt="Order on the way" loading="lazy"><div class="cs-over ot"><div class="cs-lottie" data-lottie="work/order-tracking/l-way.json"></div></div><figcaption>On the way</figcaption></figure>
+              <figure class="cs-phone"><img src="work/order-tracking/state-arrived.png" alt="Partner arrived" loading="lazy"><div class="cs-over ot"><div class="cs-lottie" data-lottie="work/order-tracking/l-arrived.json"></div></div><figcaption>Arrived</figcaption></figure>
+              <figure class="cs-phone"><img src="work/order-tracking/state-delivered.png" alt="Order delivered" loading="lazy"><div class="cs-over ot"><div class="cs-lottie" data-lottie="work/order-tracking/l-delivered.json"></div></div><figcaption>Delivered</figcaption></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- EDGE CASES -->
+        <section class="cs-frame" data-chapter="edge">
+          <span class="cs-frame-name">Edge cases</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">06</span><h3 class="cs-h2">When things go wrong</h3>
+              <p class="cs-p">Not every order goes to plan. Cancellations got the same care as the happy states.</p>
+              <p class="cs-p">The gang still shows up, a little sad, with a clear line on what happened. Bad news, said calmly.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone"><img src="work/order-tracking/state-cancelled.png" alt="Shipment cancelled" loading="lazy"><figcaption>Cancelled</figcaption></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- REACTIONS -->
+        <section class="cs-frame" data-chapter="reactions">
+          <span class="cs-frame-name">Real reactions</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">Impact</span><h3 class="cs-h2">People saw it, shared it, felt it</h3>
+              <p class="cs-p">It's a tracking page. People still posted about it. "This is the coolest thing I've seen today." "So cute."</p>
+              <p class="cs-p">One person said it reminded them of the OG Dunzo tracking page. Fun fact: I worked on that one too <span class="e">😄</span>.</p>
+            </div>
+            <div class="cs-wide-pic">
+              <button class="cs-proof-img" type="button" data-full="work/order-tracking/reactions.png" aria-label="Posts reacting to the new tracking page"><img src="work/order-tracking/reactions.png" alt="" loading="lazy"></button>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- END -->
+        <section class="cs-frame">
+          <span class="cs-frame-name">End</span>
+          <div class="cs-card cs-end">
+            <span class="cs-num">Behind the scenes</span>
+            <h3 class="cs-h2">What I learned</h3>
+            <div class="cs-notes">
+              <div class="cs-note"><span class="cs-num">01</span><b>Critique first, pixels later</b><p>Writing down what was broken made every later decision easy to explain.</p></div>
+              <div class="cs-note"><span class="cs-num">02</span><b>Design the system, not the screen</b><p>I worked with devs on flexible components, so the same card works for shipments, scheduled orders and returns.</p></div>
+              <div class="cs-note"><span class="cs-num">03</span><b>Joy is a feature</b><p>A few seconds of animation turned a page people check nervously into one they share.</p></div>
+            </div>
+            <div class="cs-end-foot">
+              <p class="cs-p cs-thanks">Thanks for reading. Your order is on the way <span class="e">🛵</span></p>
+              <button class="cs-pill" type="button" data-cs-go="intro">Back to the start
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <nav class="cs-nav" aria-label="Case study sections">
+      <button type="button" data-cs-go="intro" class="on">Intro</button>
+      <button type="button" data-cs-go="problem">Problem</button>
+      <button type="button" data-cs-go="critique">Critique</button>
+      <button type="button" data-cs-go="explore">Explore</button>
+      <button type="button" data-cs-go="shipments">Shipments</button>
+      <button type="button" data-cs-go="final">Final</button>
+      <button type="button" data-cs-go="joy">Joy</button>
+      <button type="button" data-cs-go="edge">Edge cases</button>
+      <button type="button" data-cs-go="reactions">Reactions</button>
+    </nav>
+
+    <div class="cs-lightbox"><img alt=""></div>
+  </article>
+</div>
+
+<div class="cs" id="csDunzo" data-hash="dunzo-visuals" role="dialog" aria-modal="true" aria-labelledby="csDunzoTitle" aria-hidden="true">
+  <div class="cs-backdrop" data-cs-close></div>
+  <article class="cs-sheet" tabindex="-1">
+    <div class="cs-top">
+      <span class="cs-top-title">Dunzo Visuals <span>· case study</span></span>
+      <button class="cs-close" type="button" data-cs-close>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        Close
+      </button>
+    </div>
+
+    <div class="cs-canvas">
+      <div class="cs-track">
+
+        <!-- INTRO -->
+        <section class="cs-frame" data-chapter="intro">
+          <span class="cs-frame-name">Intro</span>
+          <div class="cs-card cs-intro">
+            <div class="cs-intro-text">
+              <div>
+                <span class="cs-eyebrow">Dunzo · Illustration and animation</span>
+                <h2 class="cs-h1" id="csDunzoTitle">Dunzo Visuals</h2>
+                <p class="cs-p">At Dunzo, I was the person who drew things and made them move.</p>
+                <p class="cs-p">Here are three small problems where a friendly illustration did most of the work, and one sticker pack, just for fun.</p>
+              </div>
+              <dl class="cs-meta">
+                <dt>Role</dt><dd>Brand and visual designer</dd>
+                <dt>Team</dt><dd>1 PM, 1 senior visual designer, me</dd>
+                <dt>When</dt><dd>2020 – 2022</dd>
+              </dl>
+            </div>
+            <div class="cs-hero-shots" aria-hidden="true">
+              <figure class="cs-phone r37"><img src="work/dunzo/address.png" alt=""><div class="cs-over" style="left:4%;top:51%;width:92%;aspect-ratio:857/378"><img src="work/dunzo/address.gif" alt=""></div></figure>
+              <figure class="cs-phone r916"><img src="work/dunzo/onb-01.png" alt=""><div class="cs-over dz-onb"><img src="work/dunzo/onb-01.gif" alt=""></div></figure>
+              <figure class="cs-phone r36"><img src="work/dunzo/peak.png" alt=""><div class="cs-over dz-peak"><img src="work/dunzo/peak.gif" alt=""></div></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- PROBLEM -->
+        <section class="cs-frame" data-chapter="problem">
+          <span class="cs-frame-name">The problem</span>
+          <div class="cs-card cs-problem">
+            <div>
+              <p class="cs-say">Three moments where people felt a little lost. <span class="dim">Signing up, finding the address, and waiting during the rush.</span></p>
+              <div class="cs-problems cs-problems-3">
+                <div class="cs-prob"><span class="cs-num">01 · Onboarding</span><b>It felt like a form</b><p>New store partners met cold, empty screens. Nothing like the warm, chatty shops they run offline.</p></div>
+                <div class="cs-prob"><span class="cs-num">02 · Wrong address</span><b>Partners got lost</b><p>Failed and late deliveries meant re-attempts, and real money lost every single day.</p></div>
+                <div class="cs-prob"><span class="cs-num">03 · Peak hours</span><b>Waiting in the dark</b><p>Stores were slow to accept orders at rush hour, and people had no idea why. So they called support.</p></div>
+              </div>
+            </div>
+            <div class="cs-stats">
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/palette.png" alt="" loading="lazy"><b>3 flows</b><span>one illustration style</span></div>
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/film.png" alt="" loading="lazy"><b>Animated</b><span>every state, not just the hero</span></div>
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/heart.png" alt="" loading="lazy"><b>1 mascot</b><span>to guide people through it</span></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- ONBOARDING -->
+        <section class="cs-frame" data-chapter="onboarding">
+          <span class="cs-frame-name">Onboarding for the merchant app</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">01</span><h3 class="cs-h2">A warm hello</h3>
+              <p class="cs-p">Most drop-offs happened at the OTP and confirmation steps. So that's where I put a friend.</p>
+              <p class="cs-p">Our shopkeeper character holds up her phone while you type your number, waves while you wait for the OTP, and welcomes you in like a regular <span class="e">👋</span>. The animations are subtle, so they guide you without getting in the way.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone r916"><img src="work/dunzo/onb-01.png" alt="Verify your phone number" loading="lazy"><div class="cs-over dz-onb"><img src="work/dunzo/onb-01.gif" alt="" loading="lazy"></div><figcaption>Your number</figcaption></figure>
+              <figure class="cs-phone r916"><img src="work/dunzo/onb-02.png" alt="Enter the OTP" loading="lazy"><div class="cs-over dz-onb"><img src="work/dunzo/onb-02.gif" alt="" loading="lazy"></div><figcaption>The OTP</figcaption></figure>
+              <figure class="cs-phone r916"><img src="work/dunzo/onb-03.png" alt="Welcome to the store" loading="lazy"><div class="cs-over dz-onb3"><img src="work/dunzo/onb-03.gif" alt="" loading="lazy"></div><figcaption>You're in</figcaption></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- ADDRESS -->
+        <section class="cs-frame" data-chapter="address">
+          <span class="cs-frame-name">Wrong address correction</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">02</span><h3 class="cs-h2">"Is this really your address?"</h3>
+              <p class="cs-p">Partners kept getting lost, and every failed delivery cost us money.</p>
+              <p class="cs-p">So, right before you confirm, a small banner says our partners have struggled to find your address, and asks you to check it. A partner on a scooter, looking a bit confused <span class="e">🛵</span>, says it better than a warning icon ever could.</p>
+              <p class="cs-p">Not scary, just hard to ignore.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone r37"><img src="work/dunzo/address.png" alt="Confirm order with an address check banner" loading="lazy"><div class="cs-over" style="left:4%;top:51%;width:92%;aspect-ratio:857/378"><img src="work/dunzo/address.gif" alt="" loading="lazy"></div></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- PEAK -->
+        <section class="cs-frame" data-chapter="peak">
+          <span class="cs-frame-name">Peak hour rush</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">03</span><h3 class="cs-h2">Peak hour rush!</h3>
+              <p class="cs-p">At rush hour, stores took longer to accept orders. People saw a spinner, assumed the worst, and called support, even when everything was fine.</p>
+              <p class="cs-p">So I gave the wait a face. The shopkeeper is busy packing orders, one by one. You know what's happening, you know you're next, and somehow the wait feels shorter.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone r36"><img src="work/dunzo/peak.png" alt="Waiting for the store to accept" loading="lazy"><div class="cs-over dz-peak"><img src="work/dunzo/peak.gif" alt="" loading="lazy"></div></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- STICKERS -->
+        <section class="cs-frame" data-chapter="stickers">
+          <span class="cs-frame-name">Fun stickers with the Dunzo mascot</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">04</span><h3 class="cs-h2">And some stickers, for fun</h3>
+              <p class="cs-p">Our characters deserved a life outside the app. So they got an animated sticker pack for WhatsApp and Instagram.</p>
+              <p class="cs-p">"Better saaf than sorry", "Come on yaar", "Adi poli!". Little things people actually say <span class="e">🎉</span>.</p>
+              <div class="cs-pill-row">
+                <a class="cs-pill cs-ghost" href="https://www.behance.net/gallery/129978385/Dunzo-Animated-Sticker-Pack" target="_blank" rel="noopener">See the full pack on Behance
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+                </a>
+              </div>
+            </div>
+            <div class="cs-wide-pic">
+              <button class="cs-proof-img" type="button" data-full="work/dunzo/stickers.png" aria-label="Dunzo sticker pack"><img src="work/dunzo/stickers.png" alt="" loading="lazy"></button>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- END -->
+        <section class="cs-frame">
+          <span class="cs-frame-name">End</span>
+          <div class="cs-card cs-end">
+            <span class="cs-num">Behind the scenes</span>
+            <h3 class="cs-h2">What I learned</h3>
+            <div class="cs-notes">
+              <div class="cs-note"><span class="cs-num">01</span><b>Illustration can do UX work</b><p>A picture of a busy shopkeeper explained a delay better than any status text I could write.</p></div>
+              <div class="cs-note"><span class="cs-num">02</span><b>Find where it hurts first</b><p>I mapped each flow before drawing. The characters only went where people were dropping off or getting confused.</p></div>
+              <div class="cs-note"><span class="cs-num">03</span><b>Subtle is enough</b><p>Small loops that never block the button. Motion should guide, not perform.</p></div>
+            </div>
+            <div class="cs-end-foot">
+              <p class="cs-p cs-thanks">Thanks for reading. Dunzo it <span class="e">💚</span></p>
+              <button class="cs-pill" type="button" data-cs-go="intro">Back to the start
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <nav class="cs-nav" aria-label="Case study sections">
+      <button type="button" data-cs-go="intro" class="on">Intro</button>
+      <button type="button" data-cs-go="problem">Problem</button>
+      <button type="button" data-cs-go="onboarding">Onboarding</button>
+      <button type="button" data-cs-go="address">Address</button>
+      <button type="button" data-cs-go="peak">Peak hours</button>
+      <button type="button" data-cs-go="stickers">Stickers</button>
+    </nav>
+
+    <div class="cs-lightbox"><img alt=""></div>
+  </article>
+</div>
+
+<div class="cs" id="csSwiggy" data-hash="everything-visuals" role="dialog" aria-modal="true" aria-labelledby="csSwiggyTitle" aria-hidden="true">
+  <div class="cs-backdrop" data-cs-close></div>
+  <article class="cs-sheet" tabindex="-1">
+    <div class="cs-top">
+      <span class="cs-top-title">Everything Visuals <span>· case study</span></span>
+      <button class="cs-close" type="button" data-cs-close>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        Close
+      </button>
+    </div>
+
+    <div class="cs-canvas">
+      <div class="cs-track">
+
+        <!-- INTRO -->
+        <section class="cs-frame" data-chapter="intro">
+          <span class="cs-frame-name">Intro</span>
+          <div class="cs-card cs-intro">
+            <div class="cs-intro-text">
+              <div>
+                <span class="cs-eyebrow">Swiggy · 2022 – 2024 · Visual design</span>
+                <h2 class="cs-h1" id="csSwiggyTitle">Everything Visuals</h2>
+                <p class="cs-p">Two years of "can you make this a bit more fun?".</p>
+                <p class="cs-p">Banners, nav tiles, tracking states, splash screens, tiny toggles. None of them is a big project on its own, but together they're what makes an app feel alive.</p>
+              </div>
+              <dl class="cs-meta">
+                <dt>Role</dt><dd>Visual designer</dd>
+                <dt>Made with</dt><dd>Figma, After Effects, Lottie</dd>
+                <dt>When</dt><dd>2022 – 2024</dd>
+              </dl>
+            </div>
+            <div class="cs-hero-shots" aria-hidden="true">
+              <figure class="cs-phone"><video src="work/swiggy-visuals/genie-01.mp4#t=0.1" muted loop playsinline preload="metadata"></video></figure>
+              <figure class="cs-phone r9208"><img src="work/swiggy-visuals/landmark.png" alt=""><div class="cs-over sw-land"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/landmark-scooter.json"></div></div></figure>
+              <figure class="cs-phone r9195"><video src="work/swiggy-visuals/toggle-02.mp4#t=0.1" muted loop playsinline preload="metadata"></video></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- BANNERS -->
+        <section class="cs-frame" data-chapter="banners">
+          <span class="cs-frame-name">Animated banners and nav tiles</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">01</span><h3 class="cs-h2">PM: "Can we increase CTR somehow?"</h3>
+              <p class="cs-p">Me: yes.....</p>
+              <p class="cs-p">I brought the homepage to life with animated banners and nav tiles. Each one is playful, easy to spot, and says one thing clearly: free delivery, an offer, something new.</p>
+              <p class="cs-p">The motion is light. Just enough to catch your eye, never enough to get annoying.</p>
+            </div>
+            <div class="cs-swhome" aria-label="Swiggy home, made from the real animated banners">
+              <div class="l" style="aspect-ratio:1080/144"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/superfast.json"></div></div>
+              <div class="l" style="aspect-ratio:360/84"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/greetings.json"></div></div>
+              <div class="cs-swhome-row two">
+                <div style="aspect-ratio:328/87"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/pocket-hero-banner.json"></div></div>
+                <div style="aspect-ratio:1020/228"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/offer-zone-banner.json"></div></div>
+              </div>
+              <div class="cs-swhome-row tiles">
+                <div style="aspect-ratio:98/97;align-self:center"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/value-meals.json"></div></div>
+                <div style="aspect-ratio:240/288;align-self:center"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/pocket-hero-new.json"></div></div>
+                <div style="aspect-ratio:204/205;align-self:center"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/pocket-hero.json"></div></div>
+                <div class="cs-swhome-stack">
+                  <div style="aspect-ratio:156/64"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/offer-zone-tile.json"></div></div>
+                  <div style="aspect-ratio:156/64"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/gourmet-tile.json"></div></div>
+                </div>
+              </div>
+              <div class="l" style="aspect-ratio:1080/160"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/get-it-quickly.json"></div></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- CTR IMPACT -->
+        <section class="cs-frame">
+          <span class="cs-frame-name">Banners / Impact</span>
+          <div class="cs-card cs-cimpact">
+            <div class="cs-cimpact-text">
+              <span class="cs-num">01 · Impact</span>
+              <h3 class="cs-h2">A little motion, a lot more taps</h3>
+              <p class="cs-p">Same offers, same spots on the page. The only change was that they moved.</p>
+            </div>
+            <div class="cs-big">
+              <img src="work/zepto-cafe/fluent/chart-up.png" alt="" loading="lazy">
+              <b>+4–7%</b>
+              <span>higher click-through on animated banners and tiles</span>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- GENIE -->
+        <section class="cs-frame" data-chapter="genie">
+          <span class="cs-frame-name">Genie order tracking visuals</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">02</span><h3 class="cs-h2">"Can you make this tracking page a bit interesting?"</h3>
+              <p class="cs-p">Genie picks up and drops anything across the city. The wait can feel long, so I illustrated and animated every tracking state.</p>
+              <p class="cs-p">Clear about what's happening, honest about the wait, and a bit warm <span class="e">📦</span>.</p>
+              <div class="cs-swhome-row" style="grid-template-columns:repeat(3,56px);gap:12px;margin-top:20px">
+                <div style="aspect-ratio:1"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/genie-searching.json"></div></div>
+                <div style="aspect-ratio:1"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/genie-pickup.json"></div></div>
+                <div style="aspect-ratio:1"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/genie-doorstep.json"></div></div>
+              </div>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone"><video src="work/swiggy-visuals/genie-01.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Looking for a delivery partner"></video><figcaption>Looking for a partner</figcaption></figure>
+              <figure class="cs-phone"><video src="work/swiggy-visuals/genie-03.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Partner arrived at the pickup location"></video><figcaption>At pickup</figcaption></figure>
+              <figure class="cs-phone"><video src="work/swiggy-visuals/genie-02.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Partner is almost at the doorstep"></video><figcaption>Almost at your door</figcaption></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- SPLASH -->
+        <section class="cs-frame" data-chapter="splash">
+          <span class="cs-frame-name">Splash screen animation</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">03</span><h3 class="cs-h2">Hiding a wait you can't skip</h3>
+              <p class="cs-p">Web apps have a loading moment you just can't avoid. So instead of a blank screen, I made a shared splash animation that covers it.</p>
+              <p class="cs-p">Simple, on brand, tiny in file size. Nothing flashy, it just quietly does its job.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone"><video src="work/swiggy-visuals/splash-01.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Splash animation, version 1"></video></figure>
+              <figure class="cs-phone"><video src="work/swiggy-visuals/splash-02.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Splash animation, version 2"></video></figure>
+              <figure class="cs-phone"><video src="work/swiggy-visuals/splash-03.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Splash animation, version 3"></video></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- LANDMARK -->
+        <section class="cs-frame" data-chapter="landmark">
+          <span class="cs-frame-name">Requesting users to add a landmark</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">04</span><h3 class="cs-h2">"Near the blue gate"</h3>
+              <p class="cs-p">Every "where exactly is your house?" call costs time and money in the last mile.</p>
+              <p class="cs-p">So right at delivery time, we ask for a landmark, with a partner riding around the block looking for you <span class="e">🛵</span>. Fewer calls, faster drops.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone r9208"><img src="work/swiggy-visuals/landmark.png" alt="Add a nearby landmark sheet" loading="lazy"><div class="cs-over sw-land"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/landmark-scooter.json"></div></div></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- TOGGLE -->
+        <section class="cs-frame" data-chapter="toggle">
+          <span class="cs-frame-name">Delivery type toggle</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">05</span><h3 class="cs-h2">A tiny toggle, done right</h3>
+              <p class="cs-p">Picking between delivery types in the cart. It's a two-second decision, but it should still feel nice under your thumb.</p>
+              <p class="cs-p">A small micro-interaction makes the switch obvious, and a little satisfying.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone r9195"><video src="work/swiggy-visuals/toggle-01.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Delivery type toggle, version 1"></video></figure>
+              <figure class="cs-phone r9195"><video src="work/swiggy-visuals/toggle-02.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Delivery type toggle, version 2"></video></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- MORE -->
+        <section class="cs-frame" data-chapter="more">
+          <span class="cs-frame-name">More more morrreeeee :)</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">06</span><h3 class="cs-h2">More more morrreeeee :)</h3>
+              <p class="cs-p">Empty states, cart nudges, Instamart banners, restaurant awards, live activities, and a partner taking a water break.</p>
+              <p class="cs-p">A few more favourites from those two years. Most of them move.</p>
+            </div>
+            <div class="cs-wall">
+              <figure class="w2"><img class="pic" src="work/swiggy-visuals/live-01.png" alt="Live activity: restaurant is preparing your order" loading="lazy"><figcaption>Live activity · preparing</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/not-serviceable.json"></div><figcaption>Not serviceable</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/partner-water.json"></div><figcaption>Water break</figcaption></figure>
+              <figure class="w2"><img class="pic" src="work/swiggy-visuals/live-02.png" alt="Live activity: order received" loading="lazy"><figcaption>Live activity · received</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/restaurant-awards.json"></div><figcaption>Restaurant awards</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/call-partner.json"></div><figcaption>Call your partner</figcaption></figure>
+              <figure class="w2"><img class="pic" src="work/swiggy-visuals/food-ready.png" alt="Food will be ready by 12:40 pm" loading="lazy"><figcaption>Takeaway timer</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/instamart-lite.json"></div><figcaption>Instamart Lite</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/take-bag.json"></div><figcaption>Bag handover</figcaption></figure>
+              <figure class="w2"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/sweetest-fruits.json"></div><figcaption>Instamart · fresh fruits</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/fruit-basket.json"></div><figcaption>Fruit basket</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/coin-card.json"></div><figcaption>Cashback</figcaption></figure>
+              <figure class="w2"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/instamart-search.json"></div><figcaption>Instamart search</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/pocket-hero-tile.json"></div><figcaption>Pocket Hero</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/bread.json"></div><figcaption>Category icon</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/cooker.json"></div><figcaption>Cooking</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/pan.json"></div><figcaption>Tossing</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/bag-timer.json"></div><figcaption>Packed</figcaption></figure>
+              <figure class="w2"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/have-you-explored.json"></div><figcaption>Section header</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/eight-mins.json"></div><figcaption>8 min delivery</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/customer-request.json"></div><figcaption>Customer request</figcaption></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- END -->
+        <section class="cs-frame">
+          <span class="cs-frame-name">End</span>
+          <div class="cs-card cs-end">
+            <span class="cs-num">Behind the scenes</span>
+            <h3 class="cs-h2">What I learned</h3>
+            <div class="cs-notes">
+              <div class="cs-note"><span class="cs-num">01</span><b>Small asks add up</b><p>No single banner here is a big deal. Together, they're the personality of the app.</p></div>
+              <div class="cs-note"><span class="cs-num">02</span><b>Motion needs a job</b><p>Every animation here does one thing: catches your eye, explains a wait, or hides a load.</p></div>
+              <div class="cs-note"><span class="cs-num">03</span><b>Know when to stop</b><p>The best ones here are the ones you barely notice. Light motion, short loops, then out of the way.</p></div>
+            </div>
+            <div class="cs-end-foot">
+              <p class="cs-p cs-thanks">Thanks for scrolling. Now go order something <span class="e">🍔</span></p>
+              <button class="cs-pill" type="button" data-cs-go="intro">Back to the start
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <nav class="cs-nav" aria-label="Case study sections">
+      <button type="button" data-cs-go="intro" class="on">Intro</button>
+      <button type="button" data-cs-go="banners">Banners</button>
+      <button type="button" data-cs-go="genie">Genie</button>
+      <button type="button" data-cs-go="splash">Splash</button>
+      <button type="button" data-cs-go="landmark">Landmark</button>
+      <button type="button" data-cs-go="toggle">Toggle</button>
+      <button type="button" data-cs-go="more">More</button>
+    </nav>
+
+    <div class="cs-lightbox"><img alt=""></div>
   </article>
 </div>
 
 <script>
 (function(){
-  var cs = document.getElementById('cs');
-  var opener = document.getElementById('csOpen');
-  if (!cs || !opener) return;
-  var sheet = cs.querySelector('.cs-sheet');
-  var canvas = document.getElementById('csCanvas');
   var page = document.querySelector('.sheet');
-  var lightbox = document.getElementById('csLightbox');
-  var navBtns = cs.querySelectorAll('.cs-nav button');
-  var HASH = '#zepto-cafe';
-  var lastFocus = null;
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // explorations open in an overlay from the frame they belong to
   var galleries = {
-    discover: { title: 'Discoverability', files: ['e-home-04','e-home-05','e-home-06','e-home-07','e-home-08','e-home-09','e-offer-04','e-offer-05','e-home-01','e-home-12'] },
-    custom: { title: 'Customisation', files: ['e-custom-01','e-custom-04','e-custom-05','e-custom-06','e-custom-07','e-custom-09','e-custom-10','e-custom-11','e-custom-12','e-custom-13','e-custom-14','e-custom-15'] }
-  };
-  var gallery = document.getElementById('csGallery');
-  function openGallery(key){
-    var g = galleries[key]; if (!g) return;
-    document.getElementById('csGalleryTitle').textContent = g.title;
-    document.getElementById('csGalleryKicker').textContent = g.files.length + ' explorations';
-    document.getElementById('csGalleryGrid').innerHTML = g.files.map(function(f){
-      var src = 'work/zepto-cafe/' + f + '.png';
-      return '<button class="cs-thumb" type="button" data-full="' + src + '"><img src="' + src + '" alt="" loading="lazy"></button>';
-    }).join('');
-    gallery.classList.add('show');
-  }
-  function closeGallery(){ gallery.classList.remove('show'); }
-  cs.querySelectorAll('[data-gallery]').forEach(function(b){ b.addEventListener('click', function(){ openGallery(b.dataset.gallery); }); });
-  document.getElementById('csGalleryClose').addEventListener('click', closeGallery);
-  gallery.addEventListener('click', function(e){
-    var t = e.target.closest('[data-full]');
-    if (t) { lightbox.querySelector('img').src = t.dataset.full; lightbox.classList.add('show'); return; }
-    if (e.target === gallery) closeGallery();
-  });
-
-
-  function fitCanvas(){}
-
-  function chapterEl(name){ return canvas.querySelector('[data-chapter="' + name + '"]'); }
-  function goTo(name){
-    var el = chapterEl(name); if (!el) return;
-    var x = el.offsetLeft - (canvas.clientWidth - el.offsetWidth) / 2;
-    if (el.offsetWidth > canvas.clientWidth * 0.9) x = el.offsetLeft - 48;
-    canvas.scrollTo({ left: Math.max(0, x), behavior: 'smooth' });
-  }
-  function syncNav(){
-    var mid = canvas.scrollLeft + canvas.clientWidth / 2, current = 'intro';
-    ['intro','problem','discover','home','menu','custom','events','moods','impact'].forEach(function(n){ var el = chapterEl(n); if (el && el.offsetLeft <= mid) current = n; });
-    navBtns.forEach(function(b){ b.classList.toggle('on', b.dataset.csGo === current); });
-  }
-  canvas.addEventListener('scroll', function(){ requestAnimationFrame(syncNav); }, { passive: true });
-  cs.querySelectorAll('[data-cs-go]').forEach(function(b){ b.addEventListener('click', function(){ goTo(b.dataset.csGo); }); });
-
-  // vertical wheel reads as horizontal travel, like panning a canvas
-  canvas.addEventListener('wheel', function(e){
-    if (Math.abs(e.deltaY) <= Math.abs(e.deltaX) || e.target.closest('.cs-scroller')) return;
-    e.preventDefault();
-    canvas.scrollLeft += e.deltaY;
-  }, { passive: false });
-
-  // drag to pan
-  var down = false, moved = false, sx = 0, sl = 0;
-  canvas.addEventListener('pointerdown', function(e){
-    if (e.pointerType !== 'mouse' || e.button !== 0 || e.target.closest('.cs-pill, .cs-nav, .cs-scroller, [data-full]')) return;
-    down = true; moved = false; sx = e.clientX; sl = canvas.scrollLeft;
-  });
-  window.addEventListener('pointermove', function(e){
-    if (!down) return;
-    var dx = e.clientX - sx;
-    if (Math.abs(dx) > 4) { moved = true; canvas.classList.add('dragging'); }
-    if (moved) canvas.scrollLeft = sl - dx;
-  });
-  window.addEventListener('pointerup', function(){ down = false; canvas.classList.remove('dragging'); });
-  canvas.addEventListener('click', function(e){ if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
-
-  // lightbox for explorations
-  canvas.addEventListener('click', function(e){
-    var t = e.target.closest('[data-full]'); if (!t) return;
-    lightbox.querySelector('img').src = t.dataset.full;
-    lightbox.classList.add('show');
-  });
-  lightbox.addEventListener('click', function(){ lightbox.classList.remove('show'); });
-
-  function open(push){
-    if (cs.classList.contains('is-open')) return;
-    lastFocus = document.activeElement;
-    cs.setAttribute('aria-hidden', 'false');
-    cs.classList.add('is-open');
-    document.body.classList.add('cs-locked');
-    if (page) page.inert = true;
-    canvas.scrollLeft = 0;
-    fitCanvas();
-    setTimeout(fitCanvas, 650);
-    if (push && location.hash !== HASH) history.pushState({ cs: 1 }, '', HASH);
-    setTimeout(function(){ sheet.focus({ preventScroll: true }); }, 60);
-  }
-
-  function close(fromHistory){
-    if (!cs.classList.contains('is-open')) return;
-    lightbox.classList.remove('show');
-    cs.classList.remove('is-open');
-    cs.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('cs-locked');
-    if (page) page.inert = false;
-    if (!fromHistory && location.hash === HASH) {
-      if (history.state && history.state.cs) history.back();
-      else history.replaceState(null, '', location.pathname + location.search);
+    cs: {
+      discover: { title: 'Discoverability', base: 'work/zepto-cafe/', files: ['e-home-04','e-home-05','e-home-06','e-home-07','e-home-08','e-home-09','e-offer-04','e-offer-05','e-home-01','e-home-12'] },
+      custom: { title: 'Customisation', base: 'work/zepto-cafe/', files: ['e-custom-01','e-custom-04','e-custom-05','e-custom-06','e-custom-07','e-custom-09','e-custom-10','e-custom-11','e-custom-12','e-custom-13','e-custom-14','e-custom-15'] }
     }
-    if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+  };
+
+  // lottie-web loads once, the first time a case study with animations opens
+  var lottieLib = null;
+  function loadLottie(){
+    if (window.lottie) return Promise.resolve(window.lottie);
+    if (!lottieLib) lottieLib = new Promise(function(resolve, reject){
+      var s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js';
+      s.onload = function(){ resolve(window.lottie); };
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+    return lottieLib;
   }
 
-  opener.addEventListener('click', function(){ open(true); });
-  cs.querySelectorAll('[data-cs-close]').forEach(function(el){
-    el.addEventListener('click', function(){ close(false); });
-  });
-  document.addEventListener('keydown', function(e){
-    if (!cs.classList.contains('is-open')) return;
-    if (e.key === 'Escape') { if (lightbox.classList.contains('show')) lightbox.classList.remove('show'); else if (gallery.classList.contains('show')) closeGallery(); else close(false); }
-    if (e.key === 'ArrowRight') canvas.scrollBy({ left: canvas.clientWidth * 0.7, behavior: 'smooth' });
-    if (e.key === 'ArrowLeft') canvas.scrollBy({ left: -canvas.clientWidth * 0.7, behavior: 'smooth' });
-  });
-  window.addEventListener('resize', function(){ if (cs.classList.contains('is-open')) fitCanvas(); });
-  window.addEventListener('popstate', function(){
-    if (location.hash === HASH) open(false); else close(true);
-  });
-  if (location.hash === HASH) open(false);
+  function setup(cs){
+    var HASH = '#' + cs.dataset.hash;
+    var sheet = cs.querySelector('.cs-sheet');
+    var canvas = cs.querySelector('.cs-canvas');
+    var lightbox = cs.querySelector('.cs-lightbox');
+    var gallery = cs.querySelector('.cs-gallery');
+    var navBtns = cs.querySelectorAll('.cs-nav button');
+    var chapters = Array.prototype.map.call(navBtns, function(b){ return b.dataset.csGo; });
+    var openers = document.querySelectorAll('[data-cs-open="' + cs.id + '"], a[href="' + HASH + '"]');
+    var lastFocus = null;
+
+    function showFull(src){ lightbox.querySelector('img').src = src; lightbox.classList.add('show'); }
+
+    if (gallery) {
+      var openGallery = function(key){
+        var g = (galleries[cs.id] || {})[key]; if (!g) return;
+        gallery.querySelector('.cs-gallery-title').textContent = g.title;
+        gallery.querySelector('.cs-gallery-kicker').textContent = g.files.length + ' explorations';
+        gallery.querySelector('.cs-gallery-grid').innerHTML = g.files.map(function(f){
+          var src = g.base + f + '.png';
+          return '<button class="cs-thumb" type="button" data-full="' + src + '"><img src="' + src + '" alt="" loading="lazy"></button>';
+        }).join('');
+        gallery.classList.add('show');
+      };
+      var closeGallery = function(){ gallery.classList.remove('show'); };
+      cs.querySelectorAll('[data-gallery]').forEach(function(b){ b.addEventListener('click', function(){ openGallery(b.dataset.gallery); }); });
+      gallery.querySelector('.cs-gallery-close').addEventListener('click', closeGallery);
+      gallery.addEventListener('click', function(e){
+        var t = e.target.closest('[data-full]');
+        if (t) { showFull(t.dataset.full); return; }
+        if (e.target === gallery) closeGallery();
+      });
+    }
+
+    // videos and Lotties only run while they are on screen
+    var io = null;
+    var anims = new Map();
+    function playMedia(el, on){
+      if (el.tagName === 'VIDEO') {
+        if (on && !reduceMotion) { var p = el.play(); if (p && p.catch) p.catch(function(){}); }
+        else el.pause();
+        return;
+      }
+      var a = anims.get(el);
+      if (a) { if (on && !reduceMotion) a.play(); else a.pause(); return; }
+      if (!on) return;
+      anims.set(el, null);
+      loadLottie().then(function(lottie){
+        var anim = lottie.loadAnimation({ container: el, renderer: 'svg', loop: true, autoplay: false, path: el.dataset.lottie, rendererSettings: { preserveAspectRatio: 'xMidYMid meet' } });
+        anims.set(el, anim);
+        anim.addEventListener('DOMLoaded', function(){
+          if (reduceMotion) anim.goToAndStop(Math.floor(anim.totalFrames * 0.6), true);
+          else if (el.dataset.visible === '1') anim.play();
+        });
+      }).catch(function(){ anims.delete(el); });
+    }
+    function startMedia(){
+      if (io || !('IntersectionObserver' in window)) return;
+      io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          en.target.dataset.visible = en.isIntersecting ? '1' : '0';
+          playMedia(en.target, en.isIntersecting);
+        });
+      }, { root: canvas, rootMargin: '0px 400px' });
+      cs.querySelectorAll('video, [data-lottie]').forEach(function(el){ io.observe(el); });
+    }
+    function stopMedia(){
+      if (io) { io.disconnect(); io = null; }
+      cs.querySelectorAll('video').forEach(function(v){ v.pause(); });
+      anims.forEach(function(a){ if (a) a.pause(); });
+    }
+
+    function chapterEl(name){ return canvas.querySelector('[data-chapter="' + name + '"]'); }
+    function goTo(name){
+      var el = chapterEl(name); if (!el) return;
+      var x = el.offsetLeft - (canvas.clientWidth - el.offsetWidth) / 2;
+      if (el.offsetWidth > canvas.clientWidth * 0.9) x = el.offsetLeft - 48;
+      canvas.scrollTo({ left: Math.max(0, x), behavior: 'smooth' });
+    }
+    function syncNav(){
+      var mid = canvas.scrollLeft + canvas.clientWidth / 2, current = chapters[0];
+      chapters.forEach(function(n){ var el = chapterEl(n); if (el && el.offsetLeft <= mid) current = n; });
+      navBtns.forEach(function(b){ b.classList.toggle('on', b.dataset.csGo === current); });
+    }
+    canvas.addEventListener('scroll', function(){ requestAnimationFrame(syncNav); }, { passive: true });
+    cs.querySelectorAll('[data-cs-go]').forEach(function(b){ b.addEventListener('click', function(){ goTo(b.dataset.csGo); }); });
+
+    // vertical wheel reads as horizontal travel, like panning a canvas
+    canvas.addEventListener('wheel', function(e){
+      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX) || e.target.closest('.cs-scroller')) return;
+      e.preventDefault();
+      canvas.scrollLeft += e.deltaY;
+    }, { passive: false });
+
+    // drag to pan
+    var down = false, moved = false, sx = 0, sl = 0;
+    canvas.addEventListener('pointerdown', function(e){
+      if (e.pointerType !== 'mouse' || e.button !== 0 || e.target.closest('.cs-pill, .cs-nav, .cs-scroller, [data-full]')) return;
+      down = true; moved = false; sx = e.clientX; sl = canvas.scrollLeft;
+    });
+    window.addEventListener('pointermove', function(e){
+      if (!down) return;
+      var dx = e.clientX - sx;
+      if (Math.abs(dx) > 4) { moved = true; canvas.classList.add('dragging'); }
+      if (moved) canvas.scrollLeft = sl - dx;
+    });
+    window.addEventListener('pointerup', function(){ down = false; canvas.classList.remove('dragging'); });
+    canvas.addEventListener('click', function(e){ if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+
+    // lightbox for anything marked data-full
+    canvas.addEventListener('click', function(e){
+      var t = e.target.closest('[data-full]'); if (!t) return;
+      showFull(t.dataset.full);
+    });
+    lightbox.addEventListener('click', function(){ lightbox.classList.remove('show'); });
+
+    function open(push){
+      if (cs.classList.contains('is-open')) return;
+      lastFocus = document.activeElement;
+      cs.setAttribute('aria-hidden', 'false');
+      cs.classList.add('is-open');
+      document.body.classList.add('cs-locked');
+      if (page) page.inert = true;
+      canvas.scrollLeft = 0;
+      syncNav();
+      startMedia();
+      if (push && location.hash !== HASH) history.pushState({ cs: 1 }, '', HASH);
+      setTimeout(function(){ sheet.focus({ preventScroll: true }); }, 60);
+    }
+
+    function close(fromHistory){
+      if (!cs.classList.contains('is-open')) return;
+      lightbox.classList.remove('show');
+      if (gallery) gallery.classList.remove('show');
+      cs.classList.remove('is-open');
+      cs.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('cs-locked');
+      if (page) page.inert = false;
+      stopMedia();
+      if (!fromHistory && location.hash === HASH) {
+        if (history.state && history.state.cs) history.back();
+        else history.replaceState(null, '', location.pathname + location.search);
+      }
+      if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+    }
+
+    openers.forEach(function(el){
+      el.addEventListener('click', function(e){ e.preventDefault(); open(true); });
+    });
+    cs.querySelectorAll('[data-cs-close]').forEach(function(el){
+      el.addEventListener('click', function(){ close(false); });
+    });
+    document.addEventListener('keydown', function(e){
+      if (!cs.classList.contains('is-open')) return;
+      if (e.key === 'Escape') {
+        if (lightbox.classList.contains('show')) lightbox.classList.remove('show');
+        else if (gallery && gallery.classList.contains('show')) gallery.classList.remove('show');
+        else close(false);
+      }
+      if (e.key === 'ArrowRight') canvas.scrollBy({ left: canvas.clientWidth * 0.7, behavior: 'smooth' });
+      if (e.key === 'ArrowLeft') canvas.scrollBy({ left: -canvas.clientWidth * 0.7, behavior: 'smooth' });
+    });
+    window.addEventListener('popstate', function(){
+      if (location.hash === HASH) open(false); else close(true);
+    });
+    if (location.hash === HASH) open(false);
+  }
+
+  document.querySelectorAll('.cs[data-hash]').forEach(setup);
 })();
 </script>
 </body>
