@@ -665,6 +665,447 @@ body {
   overflow: hidden;
 }
 #canvas-container canvas { display: block; width: 100% !important; height: 100% !important; }
+
+/* ─── CASE STUDY (horizontal canvas) ─── */
+.cs {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.cs.is-open { visibility: visible; pointer-events: auto; }
+
+.cs-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(22,21,19,0.28);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+}
+
+.cs.is-open .cs-backdrop { opacity: 1; }
+
+.cs-sheet {
+  position: absolute;
+  inset: 12px 12px 0;
+  border-radius: 24px 24px 0 0;
+  overflow: hidden;
+  background: #f4f3f0;
+  transform: translateY(100%);
+  transition: transform 0.6s var(--island);
+  box-shadow: 0 -10px 40px rgba(22,21,19,0.08);
+}
+
+.cs.is-open .cs-sheet { transform: translateY(0); }
+.cs-sheet:focus { outline: none; }
+
+.cs-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 16px 0 24px;
+  pointer-events: none;
+}
+
+.cs-top > * { pointer-events: auto; }
+.cs-top-title { font-size: 13px; font-weight: 500; color: var(--g700); }
+.cs-top-title span { color: var(--g400); font-weight: 400; }
+
+.cs-close {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: var(--white);
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.35s var(--spring);
+}
+
+.cs-close svg { width: 11px; height: 11px; }
+.cs-close:hover { background: var(--ink); color: var(--white); border-color: var(--ink); }
+.cs-close:active { transform: scale(0.96); transition-duration: 0.1s; }
+
+/* the canvas */
+.cs-canvas {
+  position: absolute;
+  inset: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  background-color: #f4f3f0;
+  background-image: radial-gradient(rgba(22,21,19,0.09) 1px, transparent 1px);
+  background-size: 22px 22px;
+  cursor: grab;
+}
+
+.cs-canvas::-webkit-scrollbar { display: none; }
+.cs-canvas.dragging { cursor: grabbing; }
+.cs-canvas.dragging * { user-select: none; }
+
+.cs-track {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 max(48px, 6vw);
+  width: max-content;
+}
+
+.cs-frame {
+  position: relative;
+  flex: none;
+  height: min(660px, calc(100% - 150px));
+}
+
+.cs-frame-name {
+  position: absolute;
+  top: -24px;
+  left: 2px;
+  font-size: 11px;
+  color: var(--g500);
+  white-space: nowrap;
+}
+
+.cs-card {
+  height: 100%;
+  background: var(--white);
+  border-radius: 28px;
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 1px 2px rgba(22,21,19,0.03);
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cs-link {
+  flex: none;
+  width: 96px;
+  height: 24px;
+  color: #0d99ff;
+}
+
+.cs-link svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+.cs-gap { flex: none; width: 72px; }
+
+/* type */
+.cs-eyebrow { font-size: 12px; color: var(--g500); margin-bottom: 10px; }
+.cs-h1 { font-size: 44px; font-weight: 600; letter-spacing: -0.04em; line-height: 1.02; }
+.cs-h2 { font-size: 26px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.12; }
+.cs-p { font-size: 15px; line-height: 1.55; color: var(--g700); letter-spacing: -0.01em; }
+.cs-p + .cs-p { margin-top: 10px; }
+.cs-num { font-size: 12px; font-weight: 500; color: var(--g400); font-feature-settings: "tnum"; margin-bottom: 8px; display: block; }
+
+/* intro */
+.cs-intro { flex-direction: row; gap: 48px; width: auto; }
+.cs-intro-text { flex: none; width: 340px; display: flex; flex-direction: column; justify-content: space-between; padding: 8px 0; }
+.cs-intro-text .cs-p { margin-top: 16px; max-width: 360px; font-size: 16px; }
+.cs-meta { display: grid; grid-template-columns: auto 1fr; gap: 8px 20px; font-size: 12px; max-width: 360px; }
+.cs-meta dt { color: var(--g400); }
+.cs-meta dd { color: var(--g700); }
+.cs-hero-shots { flex: none; display: flex; align-items: center; gap: 14px; height: 100%; }
+.cs-hero-shots img {
+  height: 78%;
+  aspect-ratio: 9 / 20;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 22px;
+  border: 1px solid rgba(0,0,0,0.07);
+  box-shadow: 0 16px 40px rgba(22,21,19,0.10);
+  background: var(--g50);
+}
+.cs-hero-shots img:nth-child(2) { height: 100%; }
+
+/* problem */
+.cs-problem { width: min(760px, 84vw); justify-content: space-between; }
+.cs-say { font-size: 32px; font-weight: 500; letter-spacing: -0.03em; line-height: 1.28; color: var(--ink); }
+.cs-say .dim { color: var(--g400); }
+.cs-say img { display: inline-block; height: 1.15em; width: auto; vertical-align: -0.22em; margin: 0 2px; }
+.cs-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.cs-stat { background: var(--g50); border-radius: 18px; padding: 16px; }
+.cs-stat b { display: block; font-size: 22px; font-weight: 600; letter-spacing: -0.03em; font-feature-settings: "tnum"; }
+.cs-stat span { display: block; font-size: 12px; color: var(--g500); margin-top: 4px; line-height: 1.4; }
+
+/* ideas */
+.cs-ideas { width: min(900px, 84vw); }
+.cs-ideas-row { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 24px; min-height: 0; }
+.cs-idea { position: relative; background: var(--g50); border-radius: 22px; padding: 20px; overflow: hidden; }
+.cs-idea small { font-size: 12px; color: var(--g500); }
+.cs-idea b { display: block; font-size: 22px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; margin-top: 2px; }
+.cs-idea img { position: absolute; width: 62%; filter: drop-shadow(0 12px 18px rgba(22,21,19,0.16)); transition: transform 0.6s var(--island); }
+.cs-idea:hover img { transform: translateY(-6px) rotate(-3deg); }
+.cs-idea img.a { right: -6%; bottom: 4%; }
+.cs-idea img.b { left: 6%; bottom: -6%; width: 48%; }
+
+/* flow steps */
+.cs-step { flex-direction: row; gap: 40px; }
+.cs-step-text { flex: none; width: 260px; padding-top: 4px; }
+.cs-step-text .cs-p { margin-top: 8px; }
+.cs-phones { flex: 1; min-height: 0; display: flex; gap: 20px; align-items: stretch; padding-bottom: 22px; }
+.cs-phone { position: relative; height: 100%; aspect-ratio: 9 / 20; flex: none; }
+.cs-phone img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 22px;
+  border: 1px solid rgba(0,0,0,0.07);
+  background: var(--g50);
+  display: block;
+}
+.cs-phone figcaption { position: absolute; left: 4px; bottom: -22px; font-size: 11px; color: var(--g500); white-space: nowrap; }
+
+
+/* inline emoji, Apple style */
+.cs-card .e { font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; font-size: 1.12em; line-height: 1; vertical-align: -0.06em; margin: 0 0.04em; }
+
+/* lighter stat containers + Fluent illustrations */
+.cs-stat, .cs-impact-grid > div, .cs-mini { background: rgba(245,244,241,0.5) !important; }
+.cs-stat, .cs-impact-grid > div { position: relative; }
+.cs-ill { position: absolute; top: 14px; right: 14px; width: 44px; height: 44px; object-fit: contain; pointer-events: none; transition: transform 0.5s var(--island); }
+.cs-impact-grid .cs-ill { top: 18px; right: 18px; width: 64px; height: 64px; }
+.cs-stat:hover .cs-ill, .cs-impact-grid > div:hover .cs-ill { transform: translateY(-3px) rotate(-6deg) scale(1.05); }
+.cs-impact-grid span { padding-right: 76px; }
+.cs-stat { padding-right: 64px; }
+
+/* problem cards */
+.cs-problems { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 28px; }
+.cs-prob { padding: 18px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.06); }
+.cs-prob b { display: block; font-size: 17px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; }
+.cs-prob p { margin-top: 8px; font-size: 13px; line-height: 1.55; color: var(--g700); }
+
+/* small pieces inside flow frames */
+.cs-ghost { margin-top: 18px; background: var(--white); color: var(--ink); border: 1px solid rgba(0,0,0,0.1); }
+.cs-ghost:hover { background: var(--ink); color: var(--white); }
+.cs-step-wide { width: 340px; }
+.cs-step-wide .cs-p { font-size: 14px; line-height: 1.6; }
+.cs-scroll-hint { margin-top: 14px; font-size: 12px; color: var(--g400); }
+.cs-phone-scroll { border-radius: 22px; overflow: hidden; border: 1px solid rgba(0,0,0,0.07); box-shadow: 0 16px 40px rgba(22,21,19,0.08); }
+.cs-scroller { width: 100%; height: 100%; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
+.cs-scroller::-webkit-scrollbar { display: none; }
+.cs-scroller img { width: 100%; height: auto !important; aspect-ratio: auto !important; border: 0 !important; border-radius: 0 !important; display: block; }
+.cs-side-impact { flex: none; width: 200px; display: flex; flex-direction: column; gap: 10px; }
+.cs-mini { padding: 12px 14px; border-radius: 14px; background: var(--g50); }
+.cs-mini b { display: block; font-size: 22px; font-weight: 600; letter-spacing: -0.03em; font-feature-settings: "tnum"; }
+.cs-mini span { display: block; margin-top: 2px; font-size: 11px; line-height: 1.4; color: var(--g700); }
+.cs-mini-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 18px; }
+.cs-mini-row .cs-mini b { font-size: 18px; }
+.cs-proof { display: flex; gap: 6px; margin-top: 2px; }
+.cs-proof-img, .cs-chart { padding: 0; border: 0; background: none; cursor: zoom-in; }
+.cs-proof-img { flex: 1; height: 86px; }
+.cs-proof-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 8px; border: 1px solid rgba(0,0,0,0.08); display: block; }
+.cs-chart { display: block; width: 100%; margin-top: 10px; }
+.cs-chart img { width: 100%; border-radius: 12px; display: block; }
+.cs-impact-6 { grid-template-columns: repeat(3, 1fr); }
+.cs-impact-6 b { font-size: 32px; }
+
+/* customisation impact slide */
+.cs-cimpact { flex-direction: row; gap: 48px; width: auto; }
+.cs-cimpact-text { flex: none; width: 320px; }
+.cs-cimpact-text .cs-p { margin-top: 8px; }
+.cs-cimpact-stats { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+.cs-cimpact-stats .cs-mini b { font-size: 30px; }
+.cs-cimpact-proof { display: flex; gap: 14px; align-items: flex-start; height: 100%; }
+.cs-cimpact-proof .cs-proof-img { flex: none; height: auto; width: 220px; }
+.cs-cimpact-proof .cs-proof-img img { height: auto; max-height: 100%; object-fit: contain; border-radius: 14px; box-shadow: 0 10px 28px rgba(22,21,19,0.08); }
+
+.cs-chart-lg { width: 520px; margin: 0; align-self: center; }
+.cs-chart-lg img { border-radius: 18px; box-shadow: 0 16px 40px rgba(22,21,19,0.12); }
+
+/* explorations overlay */
+.cs-gallery { position: absolute; inset: 0; z-index: 4; display: grid; place-items: center; padding: 24px; background: rgba(244,243,240,0.9); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); opacity: 0; pointer-events: none; transition: opacity 0.35s var(--ease); }
+.cs-gallery.show { opacity: 1; pointer-events: auto; }
+.cs-gallery-inner { width: min(1100px, 100%); max-height: 100%; overflow: auto; background: var(--white); border-radius: 28px; padding: 28px; box-shadow: 0 30px 60px rgba(22,21,19,0.12); transform: translateY(12px); transition: transform 0.5s var(--island); }
+.cs-gallery.show .cs-gallery-inner { transform: none; }
+.cs-gallery-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
+.cs-gallery-head h4 { font-size: 22px; font-weight: 600; letter-spacing: -0.03em; }
+.cs-gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; }
+.cs-gallery-grid .cs-thumb { aspect-ratio: 9 / 20; }
+
+/* explorations */
+.cs-explore { width: auto; }
+.cs-explore-head { max-width: 420px; margin-bottom: 24px; }
+.cs-explore-head .cs-p { margin-top: 8px; }
+.cs-groups { flex: 1; min-height: 0; display: flex; gap: 40px; }
+.cs-group { display: flex; flex-direction: column; min-height: 0; }
+.cs-group-name { font-size: 12px; font-weight: 500; color: var(--g700); margin-bottom: 10px; }
+.cs-group-name span { color: var(--g400); font-weight: 400; margin-left: 4px; }
+.cs-grid { display: grid; grid-auto-flow: column; grid-template-rows: repeat(2, var(--th, 200px)); grid-auto-columns: calc(var(--th, 200px) * 0.45); gap: 12px; }
+.cs-thumb { width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
+.cs-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 12px; border: 1px solid rgba(0,0,0,0.06); display: block; background: var(--g50); transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease); }
+.cs-thumb:hover img { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(22,21,19,0.12); }
+
+/* impact */
+.cs-impact { width: min(760px, 84vw); justify-content: space-between; }
+.cs-impact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+.cs-impact-grid div { background: var(--g50); border-radius: 20px; padding: 22px 20px 20px; }
+.cs-impact-grid b { display: block; font-size: 40px; font-weight: 600; letter-spacing: -0.045em; line-height: 1; font-feature-settings: "tnum"; }
+.cs-impact-grid span { display: block; margin-top: 10px; font-size: 13px; line-height: 1.45; color: var(--g700); }
+.cs-foot { font-size: 12px; line-height: 1.5; color: var(--g500); margin-top: 16px; }
+
+/* end */
+.cs-end { width: 560px; justify-content: flex-start; align-items: stretch; padding: 44px; }
+.cs-end .cs-h2 { margin-top: 2px; }
+.cs-notes { display: flex; flex-direction: column; margin-top: 28px; }
+.cs-note { display: grid; grid-template-columns: 34px 1fr; column-gap: 8px; padding: 18px 0; border-top: 1px solid rgba(0,0,0,0.07); }
+.cs-note:last-child { border-bottom: 1px solid rgba(0,0,0,0.07); }
+.cs-note .cs-num { grid-row: span 2; margin: 2px 0 0; }
+.cs-note b { font-size: 15px; font-weight: 600; letter-spacing: -0.015em; }
+.cs-note p { margin-top: 4px; font-size: 14px; line-height: 1.55; color: var(--g700); }
+.cs-end-foot { margin-top: auto; padding-top: 28px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.cs-end .cs-thanks { margin: 0; font-size: 14px; }
+.cs-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 16px; border-radius: 100px;
+  background: var(--ink); color: var(--white);
+  border: 0; font: inherit; font-size: 13px; font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.35s var(--spring);
+}
+.cs-pill:hover { transform: translateY(-2px) scale(1.03); }
+
+/* bottom navigator */
+.cs-nav {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  z-index: 3;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  background: rgba(255,255,255,0.9);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 100px;
+  box-shadow: 0 8px 24px rgba(22,21,19,0.08);
+  max-width: calc(100% - 32px);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.cs-nav::-webkit-scrollbar { display: none; }
+.cs-nav button {
+  flex: none;
+  padding: 7px 12px;
+  border: 0;
+  border-radius: 100px;
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+  color: var(--g500);
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s;
+}
+.cs-nav button:hover { color: var(--ink); }
+.cs-nav button.on { background: var(--ink); color: var(--white); }
+
+/* lightbox */
+.cs-lightbox {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  background: rgba(244,243,240,0.92);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease);
+  cursor: zoom-out;
+}
+.cs-lightbox.show { opacity: 1; pointer-events: auto; }
+.cs-lightbox img { height: min(86%, 760px); width: auto; border-radius: 26px; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 30px 60px rgba(22,21,19,0.18); transform: scale(0.96); transition: transform 0.4s var(--island); }
+.cs-lightbox.show img { transform: none; }
+
+body.cs-locked { overflow: hidden; }
+
+@media (max-width: 768px) {
+  .cs-sheet { inset: calc(8px + env(safe-area-inset-top)) 0 0; border-radius: 20px 20px 0 0; }
+  .cs-top { padding: 12px 12px 0 18px; }
+  .cs-track { padding: 0 20px; }
+  .cs-frame { height: calc(100% - 140px); }
+  .cs-card { padding: 22px; border-radius: 24px; }
+  .cs-link { width: 48px; }
+  .cs-gap { width: 40px; }
+  .cs-h1 { font-size: 34px; }
+  .cs-h2 { font-size: 22px; }
+  .cs-p { font-size: 14px; }
+  .cs-intro { flex-direction: column; gap: 18px; width: 86vw; }
+  .cs-intro-text { flex: none; width: auto; padding: 0; }
+  .cs-intro-text .cs-p { font-size: 14px; margin-top: 10px; }
+  .cs-meta { display: none; }
+  .cs-hero-shots { flex: 1; min-height: 0; height: auto; gap: 10px; }
+  .cs-hero-shots img { border-radius: 16px; }
+  .cs-problem, .cs-ideas, .cs-impact { width: 86vw; }
+  .cs-say { font-size: 22px; }
+  .cs-stats { grid-template-columns: 1fr; gap: 8px; }
+  .cs-stat { padding: 12px 14px; display: flex; align-items: baseline; gap: 10px; }
+  .cs-stat b { font-size: 18px; }
+  .cs-stat span { margin: 0; }
+  .cs-ideas-row { grid-template-columns: 1fr; gap: 10px; }
+  .cs-idea { padding: 16px; }
+  .cs-idea b { font-size: 18px; }
+  .cs-idea img { width: 34%; }
+  .cs-idea img.b { width: 28%; left: auto; right: 34%; bottom: -10%; }
+  .cs-step { flex-direction: column; gap: 16px; }
+  .cs-step-text { width: auto; max-width: 76vw; padding: 0; }
+  .cs-phones { flex: none; height: calc(100vh - 400px); min-height: 280px; gap: 14px; padding-bottom: 0; }
+  .cs-explore-head { max-width: 76vw; }
+  .cs-problems { grid-template-columns: 1fr; }
+  .cs-cimpact { flex-direction: column; gap: 20px; }
+  .cs-cimpact-text { width: auto; }
+  .cs-cimpact-proof { height: auto; overflow-x: auto; }
+  .cs-cimpact-proof .cs-proof-img { width: 150px; }
+  .cs-step-wide { width: auto; }
+  .cs-impact-6 { grid-template-columns: 1fr 1fr; }
+  .cs-gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .cs-groups { gap: 28px; }
+  .cs-impact-grid b { font-size: 30px; }
+  .cs-impact-grid div { padding: 16px; }
+  .cs-end { width: 82vw; }
+  .cs-end { padding: 24px; }
+  .cs-notes { margin-top: 16px; }
+  .cs-end-foot { flex-direction: column; align-items: flex-start; }
+  .cs-nav { bottom: calc(12px + env(safe-area-inset-bottom)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-sheet, .cs-backdrop, .work-banner-media, .work-banner-phones img, .cs-idea img { transition: none !important; }
+}
+
+/* ─── CASE STUDY: wide entry tile ─── */
+.case-wide { grid-column: 1 / -1; aspect-ratio: auto; flex-direction: row; align-items: stretch; gap: 24px; padding: 0 0 0 32px; overflow: hidden; cursor: pointer; border: 0; font: inherit; text-align: left; min-height: 340px; }
+.case-wide-text { display: flex; flex-direction: column; justify-content: space-between; padding: 32px 0; flex: none; width: 260px; }
+.case-wide .case-title { font-size: 24px; }
+.case-wide-sub { display: block; margin-top: 8px; font-size: 14px; line-height: 1.5; color: var(--g700); max-width: 240px; }
+.case-wide-shots { position: relative; flex: 1; display: flex; justify-content: center; align-items: flex-end; gap: 16px; padding-top: 36px; min-width: 0; }
+.case-wide-shots img { width: 26%; max-width: 190px; aspect-ratio: 9 / 18; object-fit: cover; object-position: top; border-radius: 22px 22px 0 0; box-shadow: 0 -2px 24px rgba(0,0,0,0.08); transition: transform 0.6s var(--island); }
+.case-wide-shots img:nth-child(2) { width: 30%; max-width: 220px; }
+.case-wide:hover .case-wide-shots img { transform: translateY(-8px); }
+.case-wide:hover .case-wide-shots img:nth-child(2) { transition-delay: 0.04s; }
+.case-wide:hover .case-wide-shots img:nth-child(3) { transition-delay: 0.08s; }
+@media (max-width: 768px) {
+  .case-wide { flex-direction: column; padding: 0; min-height: 0; }
+  .case-wide-text { width: auto; padding: 18px 18px 0; gap: 18px; }
+  .case-wide .case-title { font-size: 18px; }
+  .case-wide-shots { padding: 8px 12px 0; gap: 8px; }
+  .case-wide-shots img { border-radius: 14px 14px 0 0; }
+}
 </style>
 </head>
 <body>
@@ -920,6 +1361,18 @@ init();
         <p class="section-sub">Work I'm proud of, crafted with care.</p>
       </div>
       <div class="cases-grid">
+        <button class="case case-wide" type="button" id="csOpen" aria-haspopup="dialog" aria-controls="cs">
+          <span class="case-wide-text">
+            <img class="case-icon" src="logos/zepto.png" alt="Zepto logo">
+            <span><span class="case-company" style="display:block">Zepto</span><span class="case-title">Zepto Cafe</span><span class="case-wide-sub">Taking a grocery app into 10-minute food. From 40 stores to 650+.</span></span>
+          </span>
+          <span class="case-wide-shots" aria-hidden="true">
+            <img src="work/zepto-cafe/01-store-picker.png" alt="" loading="lazy">
+            <img src="work/zepto-cafe/02-cafe-home.png" alt="" loading="lazy">
+            <img src="work/zepto-cafe/09-addons.png" alt="" loading="lazy">
+          </span>
+          <span class="case-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </button>
         <a class="case" href="#tipping-widget">
           <img class="case-icon" src="logos/swiggy.png" alt="Swiggy logo">
           <span class="case-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
@@ -1353,6 +1806,424 @@ renderFeatured();
     requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
+})();
+</script>
+<!-- CASE STUDY: ZEPTO CAFE (horizontal canvas) -->
+<div class="cs" id="cs" role="dialog" aria-modal="true" aria-labelledby="csTitle" aria-hidden="true">
+  <div class="cs-backdrop" data-cs-close></div>
+  <article class="cs-sheet" tabindex="-1">
+    <div class="cs-top">
+      <span class="cs-top-title">Zepto Cafe <span>· case study</span></span>
+      <button class="cs-close" type="button" data-cs-close>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        Close
+      </button>
+    </div>
+
+    <div class="cs-canvas" id="csCanvas">
+      <div class="cs-track">
+
+        <!-- INTRO -->
+        <section class="cs-frame" data-chapter="intro">
+          <span class="cs-frame-name">Intro</span>
+          <div class="cs-card cs-intro">
+            <div class="cs-intro-text">
+              <div>
+                <span class="cs-eyebrow">Zepto · V1 · Shipped</span>
+                <h2 class="cs-h1" id="csTitle">Zepto Cafe</h2>
+                <p class="cs-p">Zepto was the grocery app. The plan was to make it the food app too, and to own one idea: hot food in 10 minutes <span class="e">⏱️</span>.</p>
+                <p class="cs-p">This is V1. We started with zero Cafe kitchens, launched with 40, and grew past 650 across India.</p>
+              </div>
+              <dl class="cs-meta">
+                <dt>Role</dt><dd>Product designer</dd>
+                <dt>Team</dt><dd>3 PMs, a design manager, a visual designer, me</dd>
+                <dt>Timeline</dt><dd>No fixed end. Shipped in small pieces.</dd>
+              </dl>
+            </div>
+            <div class="cs-hero-shots" aria-hidden="true">
+              <img src="work/zepto-cafe/01-store-picker.png" alt="">
+              <img src="work/zepto-cafe/02-cafe-home.png" alt="">
+              <img src="work/zepto-cafe/09-addons.png" alt="">
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- PROBLEM -->
+        <section class="cs-frame" data-chapter="problem">
+          <span class="cs-frame-name">The problem</span>
+          <div class="cs-card cs-problem">
+            <div>
+              <p class="cs-say">Groceries <span class="e">🥦</span> in 10 minutes made sense to people. Food <span class="e">🍕</span> in 10 minutes <span class="dim">made them a little suspicious.</span></p>
+              <div class="cs-problems">
+                <div class="cs-prob"><span class="cs-num">01 · Trust</span><b>Is it fresh, or ready-made <span class="e">🧊</span>?</b><p>If food shows up in 10 minutes, people picture it sitting in a box somewhere. Every screen had to quietly show who cooks it, when, and how.</p></div>
+                <div class="cs-prob"><span class="cs-num">02 · Discoverability</span><b>Who looks for food next to shampoo?</b><p>Quick commerce apps rarely sell groceries and hot food side by side. People had to find Cafe without it getting in the way of their grocery run.</p></div>
+              </div>
+            </div>
+            <div class="cs-stats">
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/seedling.png" alt="" loading="lazy"><b>0 → 40</b><span>stores at launch</span></div>
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/pin.png" alt="" loading="lazy"><b>650+</b><span>stores across India</span></div>
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/stopwatch.png" alt="" loading="lazy"><b>10 min</b><span>the promise we had to keep</span></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- DISCOVERABILITY: CROSS-SELL -->
+        <section class="cs-frame" data-chapter="discover">
+          <span class="cs-frame-name">Discoverability / Cross-sell awareness</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">01</span><h3 class="cs-h2">Getting found</h3><p class="cs-p">We started where grocery users already were. A tooltip on the Cafe tab, a sheet that said hello when Cafe reached your area, and a small "hungry? your food is here" card in the home feed.</p><p class="cs-p">Present everywhere, never in the way of the grocery run.</p></div>
+            <div class="cs-phones">
+              <figure class="cs-phone"><img src="work/zepto-cafe/s-crosssell-01.png" alt="Tooltip introducing Cafe on the Cafe tab" loading="lazy"></figure>
+              <figure class="cs-phone"><img src="work/zepto-cafe/s-crosssell-02.png" alt="Sheet introducing Zepto Cafe" loading="lazy"></figure>
+              <figure class="cs-phone"><img src="work/zepto-cafe/s-crosssell-03.png" alt="Hungry? your food is here card on the grocery home" loading="lazy"></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- STORE SELECTION -->
+        <section class="cs-frame">
+          <span class="cs-frame-name">Discoverability / Store selection</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">02</span><h3 class="cs-h2">A front door</h3><p class="cs-p">Zepto now had three stores in one app. Cafe got its own front-door card on the store picker, with real dishes and real prices on it. A ₹49 chai <span class="e">☕</span> says food before you even tap.</p>
+              <button class="cs-pill cs-ghost" type="button" data-gallery="discover">See explorations
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone"><img src="work/zepto-cafe/01-store-picker.png" alt="Store picker with a dedicated Cafe card" loading="lazy"></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- HOME -->
+        <section class="cs-frame" data-chapter="home">
+          <span class="cs-frame-name">Cafe home</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text cs-step-wide"><span class="cs-num">03</span><h3 class="cs-h2">A home that answers two questions</h3>
+              <p class="cs-p">Every section answers "what should I eat?" or "can I trust it?". The top leads with proof: 1 crore+ orders, a 4.6 rating, top chefs. Bestsellers help people who can't decide, and Reorder <span class="e">🔁</span> is for people who order the same thing again and again. Explore by mood lets you pick a feeling instead of a category. What's on your mind and Explore categories are quick jumps for people who already know. Best picks shows what's good today, Know your food explains how and where it's made, and Snacks and drinks makes one more thing easy.</p>
+              <p class="cs-scroll-hint">Scroll the phone to see the whole page</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone cs-phone-scroll"><div class="cs-scroller" tabindex="0" aria-label="Cafe home, full page. Scroll to read."><img src="work/zepto-cafe/s-home-long.png" alt="The full Cafe home page" loading="lazy"></div></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- MENU -->
+        <section class="cs-frame" data-chapter="menu">
+          <span class="cs-frame-name">Menu on multitab and PIP</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">04</span><h3 class="cs-h2">The menu, upfront</h3><p class="cs-p">Inside the multitab app, Cafe sits next to groceries, electronics and beauty. A long scroll there feels like a supermarket aisle, not a cafe.</p><p class="cs-p">So the menu is one tap away. The floating button <span class="e">🍴</span> opens every section, breakfast, snacks, coffee, pizza, and people jump straight to what they came for, like at a cafe counter.</p></div>
+            <div class="cs-phones">
+              <figure class="cs-phone"><img src="work/zepto-cafe/02-cafe-home.png" alt="Cafe home with the floating menu button" loading="lazy"></figure>
+              <figure class="cs-phone"><img src="work/zepto-cafe/03-menu.png" alt="Menu open with all sections" loading="lazy"></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- CUSTOMISATION -->
+        <section class="cs-frame" data-chapter="custom">
+          <span class="cs-frame-name">Customisation</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">05</span><h3 class="cs-h2">One more thing in every order</h3>
+              <p class="cs-p"><strong>The goal:</strong> one more cookie <span class="e">🍪</span> in every order, without it feeling like a sales pitch.</p>
+              <p class="cs-p">We tried more than a dozen sheets: sizes and sugar, "complete your dish", add-on lists, price-drop banners, out-of-stock states. What shipped puts discounted add-ons right where you pick your Maggi, with a "price drop unlocked" <span class="e">🔓</span> moment and a tooltip that explains the deal once.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone"><img src="work/zepto-cafe/09-addons.png" alt="Customisation sheet with discounted add-ons" loading="lazy"></figure>
+              <figure class="cs-phone"><img src="work/zepto-cafe/10-addons-tooltip.png" alt="Tooltip explaining exclusive add-on prices" loading="lazy"></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- CUSTOMISATION IMPACT -->
+        <section class="cs-frame">
+          <span class="cs-frame-name">Customisation / Impact</span>
+          <div class="cs-card cs-cimpact">
+            <div class="cs-cimpact-text">
+              <span class="cs-num">05 · Impact</span>
+              <h3 class="cs-h2">It worked, and fast</h3>
+              <p class="cs-p">We tested the new sheet against the old one. More people picked add-ons, and more of them went on to order.</p>
+              <div class="cs-cimpact-stats">
+                <div class="cs-mini"><b>+20%</b><span>add-ons clicked</span></div>
+                <div class="cs-mini"><b>+13%</b><span>customisation viewed → order placed</span></div>
+                <div class="cs-mini"><b>189</b><span>combo orders in 12 hours, at a 20% rollout</span></div>
+              </div>
+            </div>
+            <div class="cs-cimpact-proof">
+              <button class="cs-proof-img" type="button" data-full="work/zepto-cafe/impact-slack-1.png" aria-label="Slack update on add-to-cart rate"><img src="work/zepto-cafe/impact-slack-1.png" alt="" loading="lazy"></button>
+              <button class="cs-proof-img" type="button" data-full="work/zepto-cafe/impact-slack-2.png" aria-label="Slack update on early results"><img src="work/zepto-cafe/impact-slack-2.png" alt="" loading="lazy"></button>
+              <button class="cs-proof-img" type="button" data-full="work/zepto-cafe/impact-slack-3.png" aria-label="Slack update on combo orders"><img src="work/zepto-cafe/impact-slack-3.png" alt="" loading="lazy"></button>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- EVENTS -->
+        <section class="cs-frame" data-chapter="events">
+          <span class="cs-frame-name">Events</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">06</span><h3 class="cs-h2">Make it feel alive</h3><p class="cs-p">A cafe changes with the season. Festive takeovers turned the home into an event: Cafe Carnival <span class="e">🎪</span>, Christmas, New Year. Launch moments like a free Vietnamese cold coffee gave people a reason to try Cafe for the first time.</p></div>
+            <div class="cs-phones">
+              <figure class="cs-phone"><img src="work/zepto-cafe/e-moment-04.png" alt="Free Vietnamese cold coffee launch" loading="lazy"></figure>
+              <figure class="cs-phone"><img src="work/zepto-cafe/e-moment-01.png" alt="Cafe Carnival takeover" loading="lazy"></figure>
+              <figure class="cs-phone"><img src="work/zepto-cafe/e-moment-02.png" alt="Christmas takeover" loading="lazy"></figure>
+              <figure class="cs-phone"><img src="work/zepto-cafe/e-home-03.png" alt="New Year takeover" loading="lazy"></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- MOODS -->
+        <section class="cs-frame" data-chapter="moods">
+          <span class="cs-frame-name">Explore by mood</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">07</span><h3 class="cs-h2">Shop by mood</h3><p class="cs-p">Nobody searches for "beverages". They want something crispy <span class="e">🍿</span> at 1 AM. So the menu is grouped by moments, late night, gourmet, healthy, each with its own look, plans like Bold Brews and Sassy Sweets, and its own deals.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone"><img src="work/zepto-cafe/04-mood-entry.png" alt="Explore by mood tiles" loading="lazy"></figure>
+              <figure class="cs-phone"><img src="work/zepto-cafe/s-cat-01.png" alt="Late night munchies" loading="lazy"></figure>
+              <figure class="cs-phone"><img src="work/zepto-cafe/s-cat-02.png" alt="Gourmet" loading="lazy"></figure>
+              <figure class="cs-phone"><img src="work/zepto-cafe/s-cat-03.png" alt="Healthy" loading="lazy"></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- MOODS IMPACT -->
+        <section class="cs-frame">
+          <span class="cs-frame-name">Explore by mood / Impact</span>
+          <div class="cs-card cs-cimpact">
+            <div class="cs-cimpact-text">
+              <span class="cs-num">07 · Impact</span>
+              <h3 class="cs-h2">Moods turned taps into orders</h3>
+              <p class="cs-p">In the first two months, a mood tap was one of the most reliable ways into an order.</p>
+              <div class="cs-cimpact-stats">
+                <div class="cs-mini"><b>676K</b><span>taps on a mood</span></div>
+                <div class="cs-mini"><b>1 in 3</b><span>added something to cart</span></div>
+                <div class="cs-mini"><b>60K</b><span>orders delivered</span></div>
+              </div>
+            </div>
+            <div class="cs-cimpact-proof">
+              <button class="cs-chart cs-chart-lg" type="button" data-full="work/zepto-cafe/impact-mood-overall.png" aria-label="Mood collections funnel, April to June 2025"><img src="work/zepto-cafe/impact-mood-overall.png" alt="" loading="lazy"></button>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- IMPACT -->
+        <section class="cs-frame" data-chapter="impact">
+          <span class="cs-frame-name">Impact</span>
+          <div class="cs-card cs-impact">
+            <div>
+              <h3 class="cs-h2">What changed</h3>
+              <div class="cs-impact-grid cs-impact-6">
+                <div><img class="cs-ill" src="work/zepto-cafe/fluent/store.png" alt="" loading="lazy"><b>40 → 650</b><span>Cafe stores, from launch to today</span></div>
+                <div><img class="cs-ill" src="work/zepto-cafe/fluent/moon.png" alt="" loading="lazy"><b>60K</b><span>orders straight from mood collections in their first two months</span></div>
+                <div><img class="cs-ill" src="work/zepto-cafe/fluent/cart.png" alt="" loading="lazy"><b>1 in 3</b><span>people who tapped a mood added something to their cart</span></div>
+                <div><img class="cs-ill" src="work/zepto-cafe/fluent/drink.png" alt="" loading="lazy"><b>+20%</b><span>more add-ons picked with the new customisation sheet</span></div>
+                <div><img class="cs-ill" src="work/zepto-cafe/fluent/chart.png" alt="" loading="lazy"><b>+13%</b><span>more people went from customising to ordering</span></div>
+                <div><img class="cs-ill" src="work/zepto-cafe/fluent/plate.png" alt="" loading="lazy"><b>189</b><span>combo orders in the first 12 hours, with only a fifth of users seeing it</span></div>
+              </div>
+            </div>
+            <p class="cs-foot">Mood numbers from April 12 to June 11, 2025. Customisation numbers from an A/B test against the old design.</p>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <section class="cs-frame">
+          <span class="cs-frame-name">End</span>
+          <div class="cs-card cs-end">
+            <span class="cs-num">Behind the scenes</span>
+            <h3 class="cs-h2">What it took</h3>
+            <div class="cs-notes">
+              <div class="cs-note"><span class="cs-num">01</span><b>A visual designer, end to end</b><p>I came in as a visual designer. Owning a product end to end, from research to rollout, was new for me, and hard.</p></div>
+              <div class="cs-note"><span class="cs-num">02</span><b>Shameless about feedback</b><p>I asked for it constantly. Rahul, Ayush, Chirag, Akhil and the whole Zepto team gave it generously, and it shaped every screen.</p></div>
+              <div class="cs-note"><span class="cs-num">03</span><b>Research at street speed</b><p>A fast pod meant no time for formal studies. I went to NIFT campuses, tea shops, cafes and sidewalks, and asked people what they thought of Zepto Cafe <span class="e">☕</span>.</p></div>
+            </div>
+            <div class="cs-end-foot">
+            <p class="cs-p cs-thanks">Thanks for scrolling this far. Hungry yet? <span class="e">😋</span></p>
+            <button class="cs-pill" type="button" data-cs-go="intro">Back to the start
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+            </button>
+            </div>
+          </div>
+        </section>
+
+
+      </div>
+    </div>
+
+    <nav class="cs-nav" aria-label="Case study sections">
+      <button type="button" data-cs-go="intro" class="on">Intro</button>
+      <button type="button" data-cs-go="problem">Problem</button>
+      <button type="button" data-cs-go="discover">Discover</button>
+      <button type="button" data-cs-go="home">Home</button>
+      <button type="button" data-cs-go="menu">Menu</button>
+      <button type="button" data-cs-go="custom">Customise</button>
+      <button type="button" data-cs-go="events">Events</button>
+      <button type="button" data-cs-go="moods">Moods</button>
+      <button type="button" data-cs-go="impact">Impact</button>
+    </nav>
+
+    <div class="cs-gallery" id="csGallery" role="dialog" aria-label="Explorations">
+      <div class="cs-gallery-inner">
+        <div class="cs-gallery-head"><div><span class="cs-num" id="csGalleryKicker">Explorations</span><h4 id="csGalleryTitle"></h4></div><button class="cs-close" type="button" id="csGalleryClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Close</button></div>
+        <div class="cs-gallery-grid" id="csGalleryGrid"></div>
+      </div>
+    </div>
+
+    <div class="cs-lightbox" id="csLightbox"><img alt=""></div>
+  </article>
+</div>
+
+<script>
+(function(){
+  var cs = document.getElementById('cs');
+  var opener = document.getElementById('csOpen');
+  if (!cs || !opener) return;
+  var sheet = cs.querySelector('.cs-sheet');
+  var canvas = document.getElementById('csCanvas');
+  var page = document.querySelector('.sheet');
+  var lightbox = document.getElementById('csLightbox');
+  var navBtns = cs.querySelectorAll('.cs-nav button');
+  var HASH = '#zepto-cafe';
+  var lastFocus = null;
+
+  // explorations open in an overlay from the frame they belong to
+  var galleries = {
+    discover: { title: 'Discoverability', files: ['e-home-04','e-home-05','e-home-06','e-home-07','e-home-08','e-home-09','e-offer-04','e-offer-05','e-home-01','e-home-12'] },
+    custom: { title: 'Customisation', files: ['e-custom-01','e-custom-04','e-custom-05','e-custom-06','e-custom-07','e-custom-09','e-custom-10','e-custom-11','e-custom-12','e-custom-13','e-custom-14','e-custom-15'] }
+  };
+  var gallery = document.getElementById('csGallery');
+  function openGallery(key){
+    var g = galleries[key]; if (!g) return;
+    document.getElementById('csGalleryTitle').textContent = g.title;
+    document.getElementById('csGalleryKicker').textContent = g.files.length + ' explorations';
+    document.getElementById('csGalleryGrid').innerHTML = g.files.map(function(f){
+      var src = 'work/zepto-cafe/' + f + '.png';
+      return '<button class="cs-thumb" type="button" data-full="' + src + '"><img src="' + src + '" alt="" loading="lazy"></button>';
+    }).join('');
+    gallery.classList.add('show');
+  }
+  function closeGallery(){ gallery.classList.remove('show'); }
+  cs.querySelectorAll('[data-gallery]').forEach(function(b){ b.addEventListener('click', function(){ openGallery(b.dataset.gallery); }); });
+  document.getElementById('csGalleryClose').addEventListener('click', closeGallery);
+  gallery.addEventListener('click', function(e){
+    var t = e.target.closest('[data-full]');
+    if (t) { lightbox.querySelector('img').src = t.dataset.full; lightbox.classList.add('show'); return; }
+    if (e.target === gallery) closeGallery();
+  });
+
+  function fitCanvas(){}
+
+  function chapterEl(name){ return canvas.querySelector('[data-chapter="' + name + '"]'); }
+  function goTo(name){
+    var el = chapterEl(name); if (!el) return;
+    var x = el.offsetLeft - (canvas.clientWidth - el.offsetWidth) / 2;
+    if (el.offsetWidth > canvas.clientWidth * 0.9) x = el.offsetLeft - 48;
+    canvas.scrollTo({ left: Math.max(0, x), behavior: 'smooth' });
+  }
+  function syncNav(){
+    var mid = canvas.scrollLeft + canvas.clientWidth / 2, current = 'intro';
+    ['intro','problem','discover','home','menu','custom','events','moods','impact'].forEach(function(n){ var el = chapterEl(n); if (el && el.offsetLeft <= mid) current = n; });
+    navBtns.forEach(function(b){ b.classList.toggle('on', b.dataset.csGo === current); });
+  }
+  canvas.addEventListener('scroll', function(){ requestAnimationFrame(syncNav); }, { passive: true });
+  cs.querySelectorAll('[data-cs-go]').forEach(function(b){ b.addEventListener('click', function(){ goTo(b.dataset.csGo); }); });
+
+  // vertical wheel reads as horizontal travel, like panning a canvas
+  canvas.addEventListener('wheel', function(e){
+    if (Math.abs(e.deltaY) <= Math.abs(e.deltaX) || e.target.closest('.cs-scroller')) return;
+    e.preventDefault();
+    canvas.scrollLeft += e.deltaY;
+  }, { passive: false });
+
+  // drag to pan
+  var down = false, moved = false, sx = 0, sl = 0;
+  canvas.addEventListener('pointerdown', function(e){
+    if (e.pointerType !== 'mouse' || e.button !== 0 || e.target.closest('.cs-pill, .cs-nav, .cs-scroller, [data-full]')) return;
+    down = true; moved = false; sx = e.clientX; sl = canvas.scrollLeft;
+  });
+  window.addEventListener('pointermove', function(e){
+    if (!down) return;
+    var dx = e.clientX - sx;
+    if (Math.abs(dx) > 4) { moved = true; canvas.classList.add('dragging'); }
+    if (moved) canvas.scrollLeft = sl - dx;
+  });
+  window.addEventListener('pointerup', function(){ down = false; canvas.classList.remove('dragging'); });
+  canvas.addEventListener('click', function(e){ if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+
+  // lightbox for explorations
+  canvas.addEventListener('click', function(e){
+    var t = e.target.closest('[data-full]'); if (!t) return;
+    lightbox.querySelector('img').src = t.dataset.full;
+    lightbox.classList.add('show');
+  });
+  lightbox.addEventListener('click', function(){ lightbox.classList.remove('show'); });
+
+  function open(push){
+    if (cs.classList.contains('is-open')) return;
+    lastFocus = document.activeElement;
+    cs.setAttribute('aria-hidden', 'false');
+    cs.classList.add('is-open');
+    document.body.classList.add('cs-locked');
+    if (page) page.inert = true;
+    canvas.scrollLeft = 0;
+    fitCanvas();
+    setTimeout(fitCanvas, 650);
+    if (push && location.hash !== HASH) history.pushState({ cs: 1 }, '', HASH);
+    setTimeout(function(){ sheet.focus({ preventScroll: true }); }, 60);
+  }
+
+  function close(fromHistory){
+    if (!cs.classList.contains('is-open')) return;
+    lightbox.classList.remove('show');
+    cs.classList.remove('is-open');
+    cs.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('cs-locked');
+    if (page) page.inert = false;
+    if (!fromHistory && location.hash === HASH) {
+      if (history.state && history.state.cs) history.back();
+      else history.replaceState(null, '', location.pathname + location.search);
+    }
+    if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+  }
+
+  opener.addEventListener('click', function(){ open(true); });
+  cs.querySelectorAll('[data-cs-close]').forEach(function(el){
+    el.addEventListener('click', function(){ close(false); });
+  });
+  document.addEventListener('keydown', function(e){
+    if (!cs.classList.contains('is-open')) return;
+    if (e.key === 'Escape') { if (lightbox.classList.contains('show')) lightbox.classList.remove('show'); else if (gallery.classList.contains('show')) closeGallery(); else close(false); }
+    if (e.key === 'ArrowRight') canvas.scrollBy({ left: canvas.clientWidth * 0.7, behavior: 'smooth' });
+    if (e.key === 'ArrowLeft') canvas.scrollBy({ left: -canvas.clientWidth * 0.7, behavior: 'smooth' });
+  });
+  window.addEventListener('resize', function(){ if (cs.classList.contains('is-open')) fitCanvas(); });
+  window.addEventListener('popstate', function(){
+    if (location.hash === HASH) open(false); else close(true);
+  });
+  if (location.hash === HASH) open(false);
 })();
 </script>
 </body>
