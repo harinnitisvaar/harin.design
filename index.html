@@ -176,14 +176,10 @@ body {
   letter-spacing: -0.015em;
 }
 
-/* ─── ABOUT (statement + company logos) ─── */
+/* ─── ABOUT (statement with inline company logos) ─── */
 .about {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 64px;
-  align-items: center;
   padding: 56px 0 96px;
-  max-width: 1000px;
+  max-width: 880px;
   margin: 0 auto;
 }
 
@@ -195,51 +191,38 @@ body {
   color: var(--g400);
 }
 
+.about-statement b.co { white-space: nowrap; }
+
 .about-statement b {
   font-weight: 500;
   color: var(--ink);
 }
 
-.about-logos {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+/* Inline 1:1 logos sitting in the sentence, Apple-style */
+.ilogo {
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  border-radius: 0.24em;
+  vertical-align: -0.12em;
+  margin: 0 0.04em 0 0.14em;
+  object-fit: cover;
+  box-shadow: 0 0.06em 0.18em rgba(0,0,0,0.12);
 }
-
-.logo-tile {
-  aspect-ratio: 1 / 1;
-  background: var(--tile);
-  border-radius: 22px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.logo-icon {
-  width: 46%;
-  aspect-ratio: 1 / 1;
-  border-radius: 24%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-weight: 700;
-  box-shadow: 0 6px 16px -8px rgba(0,0,0,0.3);
-}
-
-img.logo-icon { display: block; object-fit: cover; }
 
 /* Stand-in marks until real logo files are added */
-.logo-icon.is-cred { background: #0e0e0e; font-size: 12px; letter-spacing: 0.12em; }
-.logo-icon.is-meesho { background: #9f2089; font-size: 11px; letter-spacing: -0.02em; }
-
-.logo-name {
-  font-size: 11px;
-  color: var(--g500);
-  letter-spacing: -0.01em;
+span.ilogo {
+  overflow: hidden; /* baseline = bottom edge, same as the <img> logos */
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+  line-height: 0.9em;
 }
+span.ilogo > span { display: inline-block; vertical-align: middle; line-height: 1; }
+.ilogo.is-cred { background: #0e0e0e; }
+.ilogo.is-cred > span { font-size: 0.22em; letter-spacing: 0.08em; }
+.ilogo.is-meesho { background: #9f2089; }
+.ilogo.is-meesho > span { font-size: 0.2em; letter-spacing: -0.02em; }
 
 /* ─── SECTION HEAD ─── */
 .section-head {
@@ -515,7 +498,6 @@ img.logo-icon { display: block; object-fit: cover; }
 /* ─── RESPONSIVE ─── */
 @media (max-width: 1024px) {
   .grid { grid-template-columns: repeat(2, 1fr); }
-  .about { grid-template-columns: 1fr; gap: 40px; }
 }
 
 @media (max-width: 768px) {
@@ -871,14 +853,7 @@ init();
     <div class="grid" id="grid"></div>
 
     <section class="about" aria-label="About">
-      <p class="about-statement"><b>6 years</b> into design, currently at <b>CRED</b>. Previously at <b>Zepto</b>, <b>Swiggy</b>, <b>Dunzo</b>, and <b>Meesho</b>. It started with posters, then illustrations, animations, UI, product thinking and interactions—slowly shaping me into a <b>generalist designer</b>.</p>
-      <div class="about-logos" aria-label="Companies">
-        <div class="logo-tile"><span class="logo-icon is-cred" role="img" aria-label="CRED logo">CRED</span><span class="logo-name">CRED</span></div>
-        <div class="logo-tile"><img class="logo-icon" src="logos/zepto.png" alt="Zepto logo"><span class="logo-name">Zepto</span></div>
-        <div class="logo-tile"><img class="logo-icon" src="logos/swiggy.png" alt="Swiggy logo"><span class="logo-name">Swiggy</span></div>
-        <div class="logo-tile"><img class="logo-icon" src="logos/dunzo.png" alt="Dunzo logo"><span class="logo-name">Dunzo</span></div>
-        <div class="logo-tile"><span class="logo-icon is-meesho" role="img" aria-label="Meesho logo">meesho</span><span class="logo-name">Meesho</span></div>
-      </div>
+      <p class="about-statement"><b>6 years</b> into design, currently at <b class="co">CRED<span class="ilogo is-cred" role="img" aria-label="CRED logo"><span>CRED</span></span></b>. Previously at <b class="co">Zepto<img class="ilogo" src="logos/zepto.png" alt="Zepto logo"></b>, <b class="co">Swiggy<img class="ilogo" src="logos/swiggy.png" alt="Swiggy logo"></b>, <b class="co">Dunzo<img class="ilogo" src="logos/dunzo.png" alt="Dunzo logo"></b>, and <b class="co">Meesho<span class="ilogo is-meesho" role="img" aria-label="Meesho logo"><span>meesho</span></span></b>. It started with posters, then illustrations, animations, UI, product thinking and interactions—slowly shaping me into a <b>generalist designer</b>.</p>
     </section>
 
     <!-- FEATURED -->
