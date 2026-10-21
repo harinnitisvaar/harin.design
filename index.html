@@ -7,7 +7,7 @@
 <meta name="description" content="Interaction designer. Currently at CRED. Previously Swiggy, Zepto, Meesho, Dunzo.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <script type="importmap">
 {
   "imports": {
@@ -432,6 +432,211 @@ body {
 
 .card.is-unmuted .card-unmuted-dot { opacity: 1; }
 
+/* ─── FILMOGRAPHY (peelable movie posters) ─── */
+.films { margin-top: 24px; overflow-x: clip; }
+
+.films-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+
+.film {
+  position: relative;
+  aspect-ratio: 5 / 7.4;
+}
+
+/* Backing paper revealed when a poster is peeled */
+.film-backing {
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  background: var(--g100);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--g400);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+}
+
+.poster {
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  background: var(--brand);
+  padding: 8px 8px 0;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06), 0 12px 28px -14px rgba(0,0,0,0.28);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.poster-art {
+  position: relative;
+  flex: 1;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--art);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 12px 12px 14px;
+  isolation: isolate;
+}
+
+/* Oversized initial as poster artwork */
+.poster-art::before {
+  content: attr(data-initial);
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  transform: translate(-50%, -50%);
+  font-family: "DM Serif Display", Georgia, serif;
+  font-style: italic;
+  font-size: 230px;
+  line-height: 1;
+  color: var(--glyph);
+  opacity: 0.55;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Film grain */
+.poster-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.poster-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.poster-credit {
+  font-size: 7.5px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  white-space: nowrap;
+}
+
+.imdb {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px 2px 2px;
+  border-radius: 5px;
+  background: rgba(0,0,0,0.55);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  font-size: 9px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.imdb b {
+  background: #f5c518;
+  color: #000;
+  font-weight: 800;
+  font-size: 8.5px;
+  letter-spacing: -0.02em;
+  padding: 1.5px 4px;
+  border-radius: 3px;
+}
+
+.imdb i { font-style: normal; color: #f5c518; }
+
+.poster-bottom { text-align: center; }
+
+.poster-title {
+  font-family: "DM Serif Display", Georgia, serif;
+  font-style: italic;
+  font-size: 30px;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.35);
+}
+
+.poster-billing {
+  margin-top: 8px;
+  font-size: 6px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  opacity: 0.7;
+}
+
+.poster-label {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6px 0 8px;
+  color: var(--label, #fff);
+}
+
+.poster-name {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.poster-status {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border-radius: 100px;
+  border: 1px solid currentColor;
+  opacity: 0.85;
+}
+
+/* The curled-back flap (underside of the poster) */
+.peel-flap-wrap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 8px rgba(0,0,0,0.22)) drop-shadow(0 1px 1px rgba(0,0,0,0.12));
+}
+
+.peel-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 22px;
+  transform-origin: 0 0;
+  visibility: hidden;
+}
+
+/* Grab zones at each corner */
+.peel-hot {
+  position: absolute;
+  width: 34%;
+  height: 26%;
+  z-index: 3;
+  touch-action: none;
+  cursor: grab;
+}
+.peel-hot[data-c="0"] { left: 0; top: 0; }
+.peel-hot[data-c="1"] { right: 0; top: 0; }
+.peel-hot[data-c="2"] { right: 0; bottom: 0; }
+.peel-hot[data-c="3"] { left: 0; bottom: 0; }
+.film.is-peeling .peel-hot { cursor: grabbing; }
+
 /* ─── FEATURED SECTION ─── */
 .featured-section {
   margin-top: 120px;
@@ -502,6 +707,16 @@ body {
 /* ─── RESPONSIVE ─── */
 @media (max-width: 1024px) {
   .grid { grid-template-columns: repeat(2, 1fr); }
+  .films-row {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    margin: 0 -40px;
+    padding: 12px 40px 24px;
+  }
+  .films-row::-webkit-scrollbar { display: none; }
+  .film { flex: 0 0 220px; scroll-snap-align: center; }
   .about { grid-template-columns: 1fr; gap: 40px; }
 }
 
@@ -525,6 +740,8 @@ body {
   .card-title { font-size: 13px; }
   .card-year { font-size: 11px; }
   .featured-section { margin-top: 80px; }
+  .films-row { margin: 0 -16px; padding: 12px 16px 24px; }
+  .film { flex-basis: 200px; }
   .feat-card, .feat-card-img { width: 200px; }
   .footer { flex-direction: column; align-items: flex-start; gap: 4px; margin-top: 40px; }
 }
@@ -864,6 +1081,15 @@ init();
         <div class="fact"><span class="fact-num">5</span><span class="fact-label">Product teams</span></div>
         <div class="fact"><span class="fact-num" id="factWorks">14</span><span class="fact-label">Explorations shared</span></div>
       </div>
+    </section>
+
+    <!-- FILMOGRAPHY -->
+    <section class="films" aria-label="Companies I've worked with">
+      <div class="section-head">
+        <h2 class="section-title">Filmography</h2>
+        <p class="section-sub">Teams I've worked with. Grab a corner and peel one.</p>
+      </div>
+      <div class="films-row" id="films"></div>
     </section>
 
     <!-- FEATURED -->
@@ -1277,6 +1503,207 @@ renderFeatured();
     requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
+})();
+</script>
+<script>
+/* ── Filmography: movie posters you can peel like stickers ──
+   The fold line is the perpendicular bisector between the grabbed corner C
+   and the drag point P. The front is clipped to one side of it; the flap
+   (the poster's underside) is the cut-off part reflected across the line. */
+(function(){
+  var films = [
+    { name: 'CRED',   initial: 'C', status: 'Now showing', brand: '#0e0e0e', label: '#f1e3c0', glyph: '#c9a96e',
+      art: 'radial-gradient(120% 70% at 50% 0%, #4a412e 0%, #17150f 55%, #050505 100%)' },
+    { name: 'Zepto',  initial: 'Z', status: 'Previously', brand: '#3a0a63', glyph: '#ff3c8a',
+      art: 'radial-gradient(110% 70% at 80% 10%, #8c2bd9 0%, #4b0f86 45%, #1d0336 100%)' },
+    { name: 'Swiggy', initial: 'S', status: 'Previously', brand: '#fc5a1e', glyph: '#ffd2a8',
+      art: 'radial-gradient(120% 80% at 20% 0%, #ffb067 0%, #fc8019 40%, #b83a0b 100%)' },
+    { name: 'Dunzo',  initial: 'D', status: 'Previously', brand: '#00e0a0', label: '#04291f', glyph: '#00e0a0',
+      art: 'radial-gradient(120% 75% at 50% 0%, #0f5a44 0%, #07342a 50%, #021610 100%)' },
+    { name: 'Meesho', initial: 'M', status: 'Previously', brand: '#9f2089', glyph: '#ffb3dc',
+      art: 'radial-gradient(120% 80% at 80% 0%, #ff5fae 0%, #d1268f 40%, #57104f 100%)' }
+  ];
+
+  var row = document.getElementById('films');
+  if (!row) return;
+
+  row.innerHTML = films.map(function(f){
+    return '<div class="film" style="--brand:' + f.brand + ';--art:' + f.art + ';--glyph:' + f.glyph + (f.label ? ';--label:' + f.label : '') + '">' +
+      '<div class="film-backing" aria-hidden="true">★★★★★</div>' +
+      '<div class="poster">' +
+        '<div class="poster-art" data-initial="' + f.initial + '">' +
+          '<div class="poster-top"><span class="poster-credit">Harin Nitisvaar</span>' +
+            '<span class="imdb" aria-label="IMDb rating 5 out of 5"><b>IMDb</b><i>★</i>5/5</span></div>' +
+          '<div class="poster-bottom"><div class="poster-title">' + f.name + '</div>' +
+            '<div class="poster-billing">Design · Motion · Interactions<br>Product thinking</div></div>' +
+        '</div>' +
+        '<div class="poster-label"><span class="poster-name">' + f.name + '</span><span class="poster-status">' + f.status + '</span></div>' +
+      '</div>' +
+      '<div class="peel-flap-wrap" aria-hidden="true"><div class="peel-flap"></div></div>' +
+      '<div class="peel-hot" data-c="0"></div><div class="peel-hot" data-c="1"></div>' +
+      '<div class="peel-hot" data-c="2"></div><div class="peel-hot" data-c="3"></div>' +
+    '</div>';
+  }).join('');
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var REST_CURL = 36;      // px of resting curl on the bottom-right corner
+  var MAX_PEEL = 0.62;     // max drag distance as a fraction of poster width
+
+  // Keep only the part of a polygon on one side of the fold line (Sutherland–Hodgman, one edge)
+  function clipHalf(poly, M, n, keepFront){
+    var out = [];
+    function side(p){ var s = (p[0] - M[0]) * n[0] + (p[1] - M[1]) * n[1]; return keepFront ? -s : s; }
+    for (var i = 0; i < poly.length; i++) {
+      var a = poly[i], b = poly[(i + 1) % poly.length];
+      var sa = side(a), sb = side(b);
+      if (sa >= 0) out.push(a);
+      if ((sa >= 0) !== (sb >= 0)) {
+        var t = sa / (sa - sb);
+        out.push([a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]);
+      }
+    }
+    return out;
+  }
+  function polyCss(poly){
+    return 'polygon(' + poly.map(function(p){ return p[0].toFixed(2) + 'px ' + p[1].toFixed(2) + 'px'; }).join(',') + ')';
+  }
+
+  Array.prototype.forEach.call(row.querySelectorAll('.film'), function(film){
+    var poster = film.querySelector('.poster');
+    var flap = film.querySelector('.peel-flap');
+    var W = 0, H = 0;
+    var corner = 2;              // 0 TL, 1 TR, 2 BR, 3 BL
+    var P = null, V = [0, 0];    // current drag point + velocity
+    var target = null;           // where P is heading
+    var dragging = false, grab = [0, 0], raf = 0;
+
+    function C(){ return [corner === 1 || corner === 2 ? W : 0, corner >= 2 ? H : 0]; }
+    function inward(){ var c = C(); var dx = W / 2 - c[0], dy = H / 2 - c[1]; var l = Math.hypot(dx, dy); return [dx / l, dy / l]; }
+    function measure(){ W = film.offsetWidth; H = film.offsetHeight; flap.style.width = W + 'px'; flap.style.height = H + 'px'; }
+    function restPoint(){ var c = C(); if (corner !== 2) return c; var d = inward(); return [c[0] + d[0] * REST_CURL, c[1] + d[1] * REST_CURL]; }
+
+    function draw(){
+      var c = C();
+      var vx = P[0] - c[0], vy = P[1] - c[1];
+      var d = inward();
+      // Flat if barely moved, or pulled outward past the corner
+      if (Math.hypot(vx, vy) < 0.5 || vx * d[0] + vy * d[1] <= 0) {
+        poster.style.clipPath = ''; flap.style.visibility = 'hidden';
+        return;
+      }
+      var len = Math.hypot(vx, vy);
+      var n = [-vx / len, -vy / len];                       // fold normal, pointing to the corner
+      var M = [(c[0] + P[0]) / 2, (c[1] + P[1]) / 2];       // a point on the fold line
+      var rect = [[0, 0], [W, 0], [W, H], [0, H]];
+
+      poster.style.clipPath = polyCss(clipHalf(rect, M, n, true));
+      flap.style.clipPath = polyCss(clipHalf(rect, M, n, false));
+
+      // Reflection across the fold line: x' = x - 2((x - M)·n) n
+      var k = 2 * (M[0] * n[0] + M[1] * n[1]);
+      flap.style.transform = 'matrix(' + [1 - 2 * n[0] * n[0], -2 * n[0] * n[1], -2 * n[0] * n[1], 1 - 2 * n[1] * n[1], k * n[0], k * n[1]].map(function(v){ return v.toFixed(5); }).join(',') + ')';
+
+      // Underside shading: darker along the fold, brighter towards the tip
+      var ang = Math.atan2(n[0], -n[1]) * 180 / Math.PI;
+      var L = Math.abs(W * n[0]) + Math.abs(H * n[1]);
+      var s0 = ((M[0] - W / 2) * n[0] + (M[1] - H / 2) * n[1] + L / 2) / L * 100;
+      var span = len / 2 / L * 100;
+      flap.style.background = 'linear-gradient(' + ang.toFixed(1) + 'deg, #b9b9bc ' + s0.toFixed(2) + '%, #ececee ' + (s0 + span * 0.35).toFixed(2) + '%, #fbfbfb ' + (s0 + span * 0.7).toFixed(2) + '%, #e2e2e5 ' + (s0 + span).toFixed(2) + '%)';
+      flap.style.visibility = 'visible';
+    }
+
+    function clampPeel(p){
+      var c = C(), vx = p[0] - c[0], vy = p[1] - c[1], len = Math.hypot(vx, vy), max = W * MAX_PEEL;
+      if (len > max) {
+        // Soft limit: resist past the max instead of stopping dead
+        var over = len - max, eased = max + over * 0.15;
+        return [c[0] + vx / len * eased, c[1] + vy / len * eased];
+      }
+      return p;
+    }
+
+    function step(){
+      raf = 0;
+      if (dragging) {
+        P = [P[0] + (target[0] - P[0]) * 0.55, P[1] + (target[1] - P[1]) * 0.55];
+      } else {
+        // Spring back towards the target
+        V[0] = (V[0] + (target[0] - P[0]) * 0.16) * 0.72;
+        V[1] = (V[1] + (target[1] - P[1]) * 0.16) * 0.72;
+        P = [P[0] + V[0], P[1] + V[1]];
+      }
+      draw();
+      var settled = !dragging && Math.hypot(target[0] - P[0], target[1] - P[1]) < 0.2 && Math.hypot(V[0], V[1]) < 0.2;
+      if (settled) {
+        P = target.slice(); draw();
+        // After springing flat on another corner, return to the resting curl
+        if (corner !== 2 && P[0] === C()[0] && P[1] === C()[1]) { corner = 2; P = C(); target = restPoint(); kick(); }
+        return;
+      }
+      kick();
+    }
+    function kick(){ if (!raf) raf = requestAnimationFrame(step); }
+
+    function local(e){ var r = film.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; }
+
+    function setCorner(cn){
+      if (cn === corner) return;
+      corner = cn;
+      P = C(); V = [0, 0];
+    }
+
+    Array.prototype.forEach.call(film.querySelectorAll('.peel-hot'), function(hot){
+      var cn = +hot.dataset.c;
+      hot.addEventListener('pointerenter', function(e){
+        if (dragging || e.pointerType !== 'mouse' || reduce) return;
+        setCorner(cn);
+        var c = C(), d = inward();
+        target = [c[0] + d[0] * 30, c[1] + d[1] * 30];
+        kick();
+      });
+      hot.addEventListener('pointerleave', function(){
+        if (dragging) return;
+        target = restPoint();
+        kick();
+      });
+      hot.addEventListener('pointerdown', function(e){
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        e.preventDefault();
+        measure();
+        setCorner(cn);
+        dragging = true;
+        film.classList.add('is-peeling');
+        var p = local(e);
+        grab = [P[0] - p[0], P[1] - p[1]];
+        target = P.slice();
+        try { hot.setPointerCapture(e.pointerId); } catch (_) {}
+      });
+      hot.addEventListener('pointermove', function(e){
+        if (!dragging) return;
+        var p = local(e);
+        target = clampPeel([p[0] + grab[0], p[1] + grab[1]]);
+        if (reduce) { P = target.slice(); draw(); } else kick();
+      });
+      function release(e){
+        if (!dragging) return;
+        dragging = false;
+        film.classList.remove('is-peeling');
+        try { hot.releasePointerCapture(e.pointerId); } catch (_) {}
+        V = [0, 0];
+        target = restPoint();
+        if (reduce) { P = restPoint(); corner = 2; draw(); } else kick();
+      }
+      hot.addEventListener('pointerup', release);
+      hot.addEventListener('pointercancel', release);
+    });
+
+    measure();
+    P = C();
+    target = restPoint();
+    if (reduce) { P = target.slice(); draw(); } else kick();
+
+    if (window.ResizeObserver) new ResizeObserver(function(){ measure(); draw(); }).observe(film);
+  });
 })();
 </script>
 </body>
