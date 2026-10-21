@@ -21,13 +21,15 @@
 :root {
   --white: #ffffff;
   --cream: #ffffff;
-  --g50: #f5f4f1;
-  --g100: #ebeae5;
-  --g200: #d8d6d0;
-  --g400: #a8a59e;
-  --g500: #8a877f;
-  --g700: #4a4842;
-  --ink: #161513;
+  --canvas: #ececee;
+  --tile: #f5f5f7;
+  --g50: #f5f5f7;
+  --g100: #ebebed;
+  --g200: #d8d8dc;
+  --g400: #a1a1a6;
+  --g500: #86868b;
+  --g700: #515154;
+  --ink: #1d1d1f;
   --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --island: cubic-bezier(0.32, 0.72, 0, 1);
@@ -36,234 +38,219 @@
 html { overflow-y: scroll; scroll-behavior: smooth; }
 
 body, input, button, select, textarea {
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Helvetica Neue", sans-serif;
 }
 
 .loader-text, .loader-bar { position: relative; z-index: 1; }
 
 body {
-  background: var(--cream);
+  background: var(--canvas);
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
   letter-spacing: -0.01em;
+  padding: 16px;
 }
 
-/* ─── SPLIT LAYOUT ─── */
-.page {
-  display: flex;
-  max-width: 1200px;
+/* ─── SHEET (white canvas floating on grey) ─── */
+.sheet {
+  max-width: 1240px;
   margin: 0 auto;
-  min-height: 100vh;
+  background: var(--white);
+  border-radius: 32px;
+  min-height: calc(100vh - 32px);
   padding: 0 40px;
-  gap: 64px;
 }
 
-/* ─── LEFT PANEL (sticky sidebar) ─── */
-.sidebar {
-  width: 280px;
-  flex-shrink: 0;
-  padding: 72px 0;
-  position: sticky;
-  top: 0;
-  height: 100vh;
+/* ─── TOP BAR ─── */
+.topbar {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: space-between;
-  border-right: 1px solid rgba(0,0,0,0.05);
-  padding-right: 48px;
+  gap: 16px;
+  padding: 24px 0;
 }
 
-.sidebar-top {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.sidebar-name {
-  font-size: 28px;
-  font-weight: 600;
-  letter-spacing: -0.035em;
-  line-height: 1.15;
-  color: var(--ink);
-  margin-bottom: 10px;
-  background: #ffffff;
-  padding: 4px 10px 6px;
-  border-radius: 6px;
-  display: inline-block;
-  width: fit-content;
-}
-
-.sidebar-bio {
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  line-height: 1.55;
-  color: var(--g500);
-  margin-bottom: 32px;
-  background: #ffffff;
-  padding: 12px 14px;
-  border-radius: 8px;
-}
-
-.bio-highlight {
-  background: rgba(0,0,0,0.05);
-  color: var(--g700);
-  padding: 1px 4px;
-  margin: 0 -4px;
-  border-radius: 2px;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
-}
-
-.sidebar-links {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-left: 4px;
-}
-
-.sidebar-link {
+.brand {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  background: #ffffff;
+  gap: 10px;
   color: var(--ink);
   text-decoration: none;
-  border: 1px solid rgba(0,0,0,0.05);
-  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.brand-mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.topbar-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  color: var(--ink);
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: -0.01em;
-  transition: all 0.35s var(--spring);
-  cursor: pointer;
-  width: fit-content;
+  transition: border-color 0.25s var(--ease), background 0.25s var(--ease), transform 0.3s var(--spring);
 }
 
-.sidebar-link:hover {
-  background: var(--ink);
-  color: var(--cream);
-  border-color: var(--ink);
-  transform: translateY(-2px) scale(1.04);
-  box-shadow: 0 4px 16px rgba(22,21,19,0.15);
+.pill:hover { border-color: var(--g200); }
+.pill:active { transform: scale(0.96); }
+.pill.is-outline { border-color: var(--g200); }
+.pill.is-outline:hover { background: var(--ink); border-color: var(--ink); color: var(--white); }
+.pill svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+/* ─── HERO ─── */
+.hero {
+  text-align: center;
+  padding: 72px 0 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.sidebar-link:active {
-  transform: translateY(0) scale(0.97);
-  transition-duration: 0.1s;
-}
-
-.sidebar-link svg {
-  width: 14px; height: 14px;
-  transition: transform 0.35s var(--spring);
-}
-
-.sidebar-link:hover svg {
-  transform: rotate(-8deg) scale(1.15);
-}
-
-.sidebar-bottom {
-  font-size: 11px;
-  color: var(--g400);
-  letter-spacing: -0.01em;
-  position: relative;
-  z-index: 1;
-  background: #ffffff;
-  padding: 5px 10px;
-  border-radius: 4px;
-  display: inline-block;
-  width: fit-content;
-}
-
-.sidebar-name .name-line { display: block; }
-
-/* ─── MOBILE FLOATING NAV (hidden on desktop) ─── */
-.m-nav { display: none; }
-
-.sidebar-halftone {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: -40px;
-  width: calc(100% + 40px);
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.15;
-  -webkit-mask-image: linear-gradient(to top, #000 0%, #000 var(--fade-start, 30%), transparent 100%);
-  mask-image: linear-gradient(to top, #000 0%, #000 var(--fade-start, 30%), transparent 100%);
-}
-
-.sidebar > .sidebar-top,
-.sidebar > .sidebar-bottom { position: relative; z-index: 1; }
-
-.sidebar-bottom a {
-  color: var(--g500);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.sidebar-bottom a:hover { color: var(--ink); }
-
-/* ── Three.js particle canvas (loader) ── */
-#canvas-container {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-#canvas-container canvas { display: block; width: 100% !important; height: 100% !important; }
-
-/* ─── RIGHT PANEL (content) ─── */
-.content {
-  flex: 1;
-  min-width: 0;
-  padding: 72px 0 64px;
-}
-
-.content-label {
-  font-size: 12px;
-  font-weight: 400;
+.hero-glyph {
+  width: 28px;
+  height: 28px;
+  margin-bottom: 20px;
   color: var(--ink);
-  letter-spacing: -0.01em;
-  line-height: 1.55;
-  margin: 0 0 28px -14px;
-  background: #ffffff;
-  padding: 12px 14px;
-  border-radius: 8px;
-  display: block;
-  width: fit-content;
 }
 
-.content-sub {
-  font-size: 11px;
+.hero-title {
+  font-size: 44px;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  margin-bottom: 14px;
+}
+
+.hero-sub {
+  max-width: 460px;
+  font-size: 17px;
+  line-height: 1.45;
+  color: var(--g500);
+  letter-spacing: -0.015em;
+}
+
+/* ─── ABOUT (statement + facts) ─── */
+.about {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 64px;
+  align-items: end;
+  padding: 56px 0 96px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.about-statement {
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1.22;
+  letter-spacing: -0.03em;
+  color: var(--g400);
+}
+
+.about-statement b {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.about-facts {
+  display: flex;
+  flex-direction: column;
+}
+
+.fact {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  border-top: 1px solid var(--g100);
+}
+
+.fact:last-child { border-bottom: 1px solid var(--g100); }
+
+.fact-num {
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  font-feature-settings: "tnum";
+}
+
+.fact-label {
+  font-size: 12px;
+  color: var(--g400);
+}
+
+/* ─── SECTION HEAD ─── */
+.section-head {
+  text-align: center;
+  margin: 0 auto 40px;
+}
+
+.section-title {
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+
+.section-sub {
+  font-size: 15px;
   color: var(--g500);
   letter-spacing: -0.01em;
-  margin: 0 0 28px -14px;
-  background: #ffffff;
-  padding: 4px 14px 10px;
-  border-radius: 8px;
-  display: block;
-  width: fit-content;
 }
 
 /* ─── WORK GRID ─── */
+.content { padding-bottom: 40px; }
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  column-gap: 16px;
-  row-gap: 72px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
 }
 
 .card {
   display: flex;
   flex-direction: column;
+  background: var(--tile);
+  border-radius: 28px;
+  overflow: hidden;
   animation: cardIn 0.5s var(--ease) both;
   cursor: pointer;
+  transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 48px -20px rgba(0,0,0,0.14);
 }
 
 @keyframes cardIn {
@@ -271,28 +258,38 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+.card-info {
+  padding: 22px 24px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.card-year {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--g500);
+  letter-spacing: -0.01em;
+}
+
+.card-title {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  line-height: 1.2;
+  min-width: 0;
+}
+
 .card-media {
   position: relative;
   aspect-ratio: 9/16;
-  background: transparent;
-  border-radius: 50px;
+  background: var(--white);
   overflow: hidden;
-  transition: transform 0.35s var(--ease);
-  border: none;
-}
-
-.card-media-stroke {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  display: block;
-}
-
-
-.card:hover .card-media {
-  transform: translateY(-3px);
+  margin-top: -8px;
+  /* Composite poster + video on white first, then melt the whole layer into the tile */
+  mix-blend-mode: multiply;
 }
 
 .card-media video {
@@ -302,13 +299,16 @@ body {
 
 .card .card-media video,
 .card .card-media .card-poster {
+  filter: brightness(1.04); /* lift near-white (≈245–254, after colour conversion) to pure white so no box shows */
   transform: scale(0.9);
+  transition: transform 0.6s var(--ease);
 }
 
+.card:hover .card-media video,
+.card:hover .card-media .card-poster { transform: scale(0.92); }
+
 .card[data-idx="2"] .card-media video,
-.card[data-idx="2"] .card-media .card-poster {
-  transform: scale(0.85);
-}
+.card[data-idx="2"] .card-media .card-poster { transform: scale(0.85); }
 
 .card-poster {
   position: absolute;
@@ -318,21 +318,14 @@ body {
   object-fit: cover;
   pointer-events: none;
   transition: opacity 450ms ease;
-  background: var(--g50);
 }
 .card-media.video-ready .card-poster { opacity: 0; }
 
-/* ─── PREMIUM VIDEO CONTROLS ─── */
-
-
-
 /* ─── HOVER CONTROLS (inside video) ─── */
-
 .card-bar {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  padding: 12px 30px 14px;
-  background: transparent;
+  padding: 12px 30px 18px;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -347,7 +340,7 @@ body {
 .card-bar-progress {
   width: 100%;
   height: 2.5px;
-  background: rgba(0,0,0,0.15);
+  background: rgba(0,0,0,0.12);
   border-radius: 100px;
   cursor: pointer;
   position: relative;
@@ -403,14 +396,13 @@ body {
   font-feature-settings: "tnum";
 }
 
-/* Mute indicator */
+/* Sound-on indicator */
 .card-unmuted-dot {
   position: absolute;
-  top: 10px; right: 10px;
+  top: 18px; right: 22px;
   width: 6px; height: 6px;
   border-radius: 50%;
-  background: var(--white);
-  box-shadow: 0 0 6px rgba(255,255,255,0.5);
+  background: var(--ink);
   opacity: 0;
   transition: opacity 0.3s ease;
   z-index: 3;
@@ -419,56 +411,9 @@ body {
 
 .card.is-unmuted .card-unmuted-dot { opacity: 1; }
 
-
-
-.card-info {
-  padding: 14px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
-}
-
-.card-title {
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: -0.015em;
-  color: var(--ink);
-  line-height: 1.3;
-  min-width: 0;
-}
-
-.card-year {
-  font-size: 11px;
-  font-weight: 400;
-  color: var(--g500);
-  letter-spacing: -0.01em;
-}
-
 /* ─── FEATURED SECTION ─── */
 .featured-section {
-  margin-top: 96px;
-  padding: 0;
-  background: transparent;
-}
-
-.featured-head {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
-  margin: 0 0 20px 0;
-}
-
-.featured-head .content-label {
-  background: transparent;
-  padding: 0;
-  margin: 0;
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--g500);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  margin-top: 120px;
 }
 
 .featured-scroll {
@@ -478,7 +423,7 @@ body {
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   cursor: grab;
-  padding: 16px 0 28px;
+  padding: 8px 0 28px;
   user-select: none;
   -webkit-user-select: none;
   scroll-behavior: auto;
@@ -486,35 +431,27 @@ body {
 }
 .featured-scroll.dragging { cursor: grabbing; }
 .featured-scroll::-webkit-scrollbar { display: none; }
-.feat-card-img img {
-  pointer-events: none;
-  -webkit-user-drag: none;
-  user-select: none;
-}
 
 .feat-card {
   flex-shrink: 0;
-  width: 220px;
+  width: 240px;
   cursor: pointer;
-  transition: transform 0.4s var(--ease);
+  transition: transform 0.45s var(--ease);
 }
 
 .feat-card:hover { transform: translateY(-4px); }
 
 .feat-card-img {
-  width: 220px;
+  width: 240px;
   aspect-ratio: 1 / 1;
-  border-radius: 18px;
+  border-radius: 28px;
   overflow: hidden;
-  background: var(--white);
-  border: 1px solid rgba(0,0,0,0.05);
-  padding: 6px 14px 14px;
-  transition: border-color 0.4s var(--ease);
+  background: var(--tile);
+  padding: 18px;
+  transition: box-shadow 0.45s var(--ease);
 }
 
-.feat-card:hover .feat-card-img {
-  border-color: rgba(0,0,0,0.09);
-}
+.feat-card:hover .feat-card-img { box-shadow: 0 24px 48px -20px rgba(0,0,0,0.14); }
 
 .feat-card-img img {
   width: 100%;
@@ -522,183 +459,59 @@ body {
   object-fit: contain;
   object-position: center;
   display: block;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  user-select: none;
 }
 
-
+/* ─── FOOTER ─── */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 28px 0 32px;
+  margin-top: 64px;
+  border-top: 1px solid var(--g100);
+  font-size: 12px;
+  color: var(--g400);
+}
 
 /* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .about { grid-template-columns: 1fr; gap: 40px; }
+}
+
 @media (max-width: 768px) {
-  /* Desktop sidebar is hidden; the floating m-nav takes over on mobile */
-  .sidebar { display: none; }
-
-  .page {
-    flex-direction: column;
-    padding: 0 20px;
-    gap: 0;
-  }
-
-  .content {
-    padding: calc(78px + env(safe-area-inset-top)) 0 48px;
-    transition: padding-top 0.45s var(--island);
-  }
-
-  .grid { column-gap: 12px; row-gap: 56px; }
-
-  /* ── Floating header: flush to top, absorbs safe-area so nothing shows behind the status bar ── */
-  .m-nav {
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    background: var(--cream);
-    border-bottom: 1px solid rgba(0,0,0,0.06);
-    border-radius: 0 0 22px 22px;
-    padding-top: env(safe-area-inset-top);
-    box-shadow: 0 10px 28px rgba(0,0,0,0.06);
-    overflow: hidden;
-    will-change: transform;
-  }
-
-  .m-nav-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 13px 13px 13px 20px;
-  }
-
-  .m-nav-name {
-    font-size: 17px;
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1.2;
-    color: var(--ink);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-width: 0;
-  }
-
-  .m-nav-toggle {
-    flex-shrink: 0;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--white);
-    border: 1px solid rgba(0,0,0,0.06);
-    border-radius: 100px;
-    color: var(--ink);
-    padding: 0;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .m-nav-toggle svg {
-    width: 15px;
-    height: 15px;
-    transition: transform 0.42s var(--island);
-  }
-  .m-nav[data-state="expanded"] .m-nav-toggle svg {
-    transform: rotate(180deg);
-  }
-
-  /* Panel uses grid-template-rows 0fr→1fr to animate to the real content height
-     without touching `height: auto` and without scroll listeners. */
-  .m-nav-panel {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.45s var(--island);
-  }
-  .m-nav[data-state="expanded"] .m-nav-panel {
-    grid-template-rows: 1fr;
-  }
-
-  .m-nav-panel-inner {
-    min-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(-4px);
-    transition:
-      opacity 0.32s var(--island),
-      transform 0.42s var(--island);
-  }
-  .m-nav[data-state="expanded"] .m-nav-panel-inner {
-    opacity: 1;
-    transform: translateY(0);
-    transition-delay: 0.06s;
-  }
-
-  .m-nav-panel-scroll {
-    max-height: calc(100vh - 110px - env(safe-area-inset-top));
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .m-nav-bio {
-    padding: 0 20px 14px;
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: -0.01em;
-    line-height: 1.55;
-    color: var(--g500);
-  }
-  .m-nav-bio .bio-highlight {
-    background: rgba(0,0,0,0.05);
-    color: var(--g700);
-    padding: 1px 4px;
-    margin: 0 -4px;
-    border-radius: 2px;
-    box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
-  }
-
-  .m-nav-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    padding: 0 18px 14px;
-  }
-  .m-nav-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding: 7px 12px;
-    background: var(--white);
-    color: var(--ink);
-    text-decoration: none;
-    border: 1px solid rgba(0,0,0,0.06);
-    border-radius: 100px;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: -0.01em;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .m-nav-link svg { width: 12px; height: 12px; }
-
-  .m-nav-footer {
-    border-top: 1px solid rgba(0,0,0,0.05);
-    margin: 0 20px;
-    padding: 12px 0 14px;
-    font-size: 11px;
-    color: var(--g400);
-    letter-spacing: -0.01em;
-  }
+  body { padding: 8px; }
+  .sheet { border-radius: 24px; padding: 0 16px; min-height: calc(100vh - 16px); }
+  .topbar { padding: 16px 0; }
+  .pill-label { display: none; }
+  .pill { padding: 8px; }
+  .pill.is-outline { padding: 6px 12px; }
+  .pill.is-outline .pill-label { display: inline; }
+  .hero { padding: 48px 0 16px; }
+  .hero-title { font-size: 34px; }
+  .hero-sub { font-size: 15px; }
+  .about { padding: 40px 4px 64px; }
+  .about-statement { font-size: 24px; }
+  .section-title { font-size: 26px; }
+  .grid { gap: 10px; }
+  .card { border-radius: 22px; }
+  .card-info { padding: 16px 16px 0; }
+  .card-title { font-size: 15px; }
+  .card-year { font-size: 11px; }
+  .featured-section { margin-top: 80px; }
+  .feat-card, .feat-card-img { width: 200px; }
+  .footer { flex-direction: column; align-items: flex-start; gap: 4px; margin-top: 40px; }
 }
 
 @media (max-width: 480px) {
-  .grid { grid-template-columns: 1fr; row-gap: 48px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .m-nav-panel,
-  .m-nav-panel-inner,
-  .m-nav-toggle svg {
-    transition: none !important;
-  }
+  .grid { grid-template-columns: 1fr; gap: 12px; }
+  .card-title { font-size: 18px; }
+  .card-info { padding: 20px 20px 0; }
 }
 
 /* ---- Loader ---- */
@@ -713,7 +526,6 @@ body {
 .loader.hide { opacity: 0; pointer-events: none; }
 
 .loader-text {
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 22px;
   font-weight: 500;
   letter-spacing: -0.02em;
@@ -738,10 +550,7 @@ body {
   height: 100%;
   width: 0%;
   border-radius: inherit;
-  background: linear-gradient(90deg,
-    #161513 0%,
-    #4a4842 55%,
-    #8a877f 100%);
+  background: linear-gradient(90deg, #1d1d1f 0%, #515154 55%, #86868b 100%);
   animation: loaderFill 3s cubic-bezier(0.4, 0, 0.2, 1) 380ms forwards;
   overflow: visible;
 }
@@ -771,7 +580,18 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .loader-bar-fill { animation: none; width: 100%; }
   .loader-bar-fill::before { animation: none; opacity: 0; }
+  .card, .card-media video, .card-media .card-poster { transition: none; }
 }
+
+/* ── Three.js particle canvas (loader) ── */
+#canvas-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+#canvas-container canvas { display: block; width: 100% !important; height: 100% !important; }
 </style>
 </head>
 <body>
@@ -979,82 +799,59 @@ function init() {
 init();
 </script>
 
-<div class="page">
-  <!-- LEFT SIDEBAR (desktop only; hidden on mobile) -->
-  <aside class="sidebar">
-    <canvas class="sidebar-halftone" id="sidebarHalftone" aria-hidden="true"></canvas>
-    <div class="sidebar-top">
-      <h1 class="sidebar-name"><span class="name-line">Interactions</span><span class="name-line">by Harin</span></h1>
-      <p class="sidebar-bio"><span class="bio-highlight">6 years</span> into design, currently at <span class="bio-highlight">CRED</span>. Previously at <span class="bio-highlight">Zepto</span>, <span class="bio-highlight">Swiggy</span>, <span class="bio-highlight">Dunzo</span>, and <span class="bio-highlight">Meesho</span>.<br><br>My journey started with posters, then moved through illustrations, animations, UI, product thinking, and interactions, slowly shaping me into a <span class="bio-highlight">generalist designer</span>.<br><br>I share weekly explorations here, so come by whenever you need a little inspiration.<br><br>GitHub link coming soon.</p>
-      <div class="sidebar-links">
-        <a class="sidebar-link" href="https://instagram.com/harin.design" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-          Instagram
-        </a>
-        <a class="sidebar-link" href="https://x.com/HNitisvaar" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          Twitter
-        </a>
-        <a class="sidebar-link" href="https://www.linkedin.com/in/harinnitisvaar/" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          LinkedIn
-        </a>
-      </div>
-    </div>
-    <div class="sidebar-bottom">
-      © 2026 Harin Nitisvaar
-    </div>
-  </aside>
-
-  <!-- MOBILE FLOATING NAV (hidden on desktop; controlled by JS) -->
-  <header class="m-nav" id="mNav" data-state="collapsed" aria-label="Site">
-    <div class="m-nav-bar">
-      <h1 class="m-nav-name">Interactions by Harin</h1>
-      <button class="m-nav-toggle" id="mNavToggle" type="button"
-              aria-expanded="false"
-              aria-controls="mNavPanel"
-              aria-label="Show bio and links">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-      </button>
-    </div>
-    <div class="m-nav-panel" id="mNavPanel">
-      <div class="m-nav-panel-inner">
-        <div class="m-nav-panel-scroll">
-          <p class="m-nav-bio"><span class="bio-highlight">6 years</span> into design, currently at <span class="bio-highlight">CRED</span>. Previously at <span class="bio-highlight">Zepto</span>, <span class="bio-highlight">Swiggy</span>, <span class="bio-highlight">Dunzo</span>, and <span class="bio-highlight">Meesho</span>.<br><br>My journey started with posters, then moved through illustrations, animations, UI, product thinking, and interactions, slowly shaping me into a <span class="bio-highlight">generalist designer</span>.<br><br>I share weekly explorations here, so come by whenever you need a little inspiration.<br><br>GitHub link coming soon.</p>
-          <div class="m-nav-links">
-            <a class="m-nav-link" href="https://instagram.com/harin.design" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-              Instagram
-            </a>
-            <a class="m-nav-link" href="https://x.com/HNitisvaar" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-              Twitter
-            </a>
-            <a class="m-nav-link" href="https://www.linkedin.com/in/harinnitisvaar/" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-              LinkedIn
-            </a>
-          </div>
-          <div class="m-nav-footer">© 2026 Harin Nitisvaar</div>
-        </div>
-      </div>
-    </div>
+<div class="sheet">
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Interactions by Harin, home">
+      <span class="brand-mark" aria-hidden="true">H</span>
+      <span>Harin</span>
+    </a>
+    <nav class="topbar-links" aria-label="Social">
+      <a class="pill" href="https://instagram.com/harin.design" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        <span class="pill-label">Instagram</span>
+      </a>
+      <a class="pill" href="https://x.com/HNitisvaar" target="_blank" rel="noopener" aria-label="Twitter">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        <span class="pill-label">Twitter</span>
+      </a>
+      <a class="pill is-outline" href="https://www.linkedin.com/in/harinnitisvaar/" target="_blank" rel="noopener">
+        <span class="pill-label">LinkedIn</span>
+      </a>
+    </nav>
   </header>
 
-  <!-- RIGHT CONTENT -->
+  <section class="hero">
+    <svg class="hero-glyph" viewBox="0 0 28 28" fill="currentColor" aria-hidden="true"><circle cx="14" cy="6" r="4"/><circle cx="21.6" cy="11.5" r="4"/><circle cx="18.7" cy="20.5" r="4"/><circle cx="9.3" cy="20.5" r="4"/><circle cx="6.4" cy="11.5" r="4"/></svg>
+    <h1 class="hero-title">Interactions by Harin</h1>
+    <p class="hero-sub">Weekly explorations in motion and interaction—made with SwiftUI, Figma &amp; a lot of coffee.</p>
+  </section>
+
   <main class="content">
-    <div class="content-label">Made with SwiftUI, Figma & a lot of coffee</div>
     <div class="grid" id="grid"></div>
 
+    <section class="about" aria-label="About">
+      <p class="about-statement"><b>6 years</b> into design, currently at <b>CRED</b>. Previously at <b>Zepto</b>, <b>Swiggy</b>, <b>Dunzo</b>, and <b>Meesho</b>. It started with posters, then illustrations, animations, UI, product thinking and interactions—slowly shaping me into a <b>generalist designer</b>.</p>
+      <div class="about-facts">
+        <div class="fact"><span class="fact-num">6</span><span class="fact-label">Years in design</span></div>
+        <div class="fact"><span class="fact-num">5</span><span class="fact-label">Product teams</span></div>
+        <div class="fact"><span class="fact-num" id="factWorks">14</span><span class="fact-label">Explorations shared</span></div>
+      </div>
+    </section>
+
     <!-- FEATURED -->
-    <div class="featured-section">
-      <div class="featured-head">
-        <span class="content-label" style="margin:0;">Featured</span>
-        <span class="content-sub" style="margin:0;padding:0;background:transparent;font-size:12px;color:var(--g500);letter-spacing:-0.01em;text-transform:none;font-weight:400;">a few kind mentions I'm grateful for</span>
+    <section class="featured-section">
+      <div class="section-head">
+        <h2 class="section-title">Featured</h2>
+        <p class="section-sub">A few kind mentions I'm grateful for.</p>
       </div>
       <div class="featured-scroll" id="featured-scroll"></div>
-    </div>
+    </section>
   </main>
+
+  <footer class="footer">
+    <span>© 2026 Harin Nitisvaar</span>
+    <span>GitHub link coming soon.</span>
+  </footer>
 </div>
 
 <script>
@@ -1078,11 +875,14 @@ const works = [
 function render() {
   document.getElementById('grid').innerHTML = works.map((w, i) => `
     <div class="card" style="animation-delay:${i * 0.06}s" data-idx="${i}">
+      <div class="card-info">
+        <div class="card-year">${w.context}</div>
+        <div class="card-title">${w.title}</div>
+      </div>
       <div class="card-media" onclick="handleCardClick(${i})">
         ${w.video ? `<video
           playsinline muted loop
           preload="${i === 0 ? 'metadata' : 'none'}"
-          poster="${w.poster}"
           data-idx="${i}"
           data-src="${w.video}"
         >
@@ -1102,10 +902,6 @@ function render() {
             <span class="card-bar-time" data-idx="${i}">0:00</span>
           </div>
         </div>` : ''}
-      </div>
-      <div class="card-info">
-        <div class="card-title">${w.title}</div>
-        <div class="card-year">${w.context}</div>
       </div>
     </div>
   `).join('');
@@ -1293,6 +1089,7 @@ function fmt(s) {
 }
 
 render();
+document.getElementById('factWorks').textContent = works.length;
 
 // Featured horizontal scroll
 const featured = [
@@ -1404,289 +1201,6 @@ function renderFeatured() {
 }
 
 renderFeatured();
-</script>
-
-<script>
-(function(){
-  function squirclePath(w, h, R, S){
-    var maxR = Math.min(w, h) / 2;
-    R = Math.min(R, maxR);
-    var p = Math.min((1 + S) * R, maxR);
-    var arcMeasure = 90 * (1 - S);
-    var arcLen = Math.sin((arcMeasure / 2) * Math.PI / 180) * R * Math.SQRT2;
-    var alpha = (90 - arcMeasure) / 2;
-    var p3p4 = R * Math.tan((alpha / 2) * Math.PI / 180);
-    var beta = 45 * S;
-    var c = p3p4 * Math.cos(beta * Math.PI / 180);
-    var d = c * Math.tan(beta * Math.PI / 180);
-    var b = (p - arcLen - c - d) / 3;
-    var a = 2 * b;
-    var TR = 'c ' + a + ' 0 ' + (a+b) + ' 0 ' + (a+b+c) + ' ' + d +
-             ' a ' + R + ' ' + R + ' 0 0 1 ' + arcLen + ' ' + arcLen +
-             ' c ' + d + ' ' + c + ' ' + d + ' ' + (b+c) + ' ' + d + ' ' + (a+b+c);
-    var BR = 'c 0 ' + a + ' 0 ' + (a+b) + ' ' + (-d) + ' ' + (a+b+c) +
-             ' a ' + R + ' ' + R + ' 0 0 1 ' + (-arcLen) + ' ' + arcLen +
-             ' c ' + (-c) + ' ' + d + ' ' + (-(b+c)) + ' ' + d + ' ' + (-(a+b+c)) + ' ' + d;
-    var BL = 'c ' + (-a) + ' 0 ' + (-(a+b)) + ' 0 ' + (-(a+b+c)) + ' ' + (-d) +
-             ' a ' + R + ' ' + R + ' 0 0 1 ' + (-arcLen) + ' ' + (-arcLen) +
-             ' c ' + (-d) + ' ' + (-c) + ' ' + (-d) + ' ' + (-(b+c)) + ' ' + (-d) + ' ' + (-(a+b+c));
-    var TL = 'c 0 ' + (-a) + ' 0 ' + (-(a+b)) + ' ' + d + ' ' + (-(a+b+c)) +
-             ' a ' + R + ' ' + R + ' 0 0 1 ' + arcLen + ' ' + (-arcLen) +
-             ' c ' + c + ' ' + (-d) + ' ' + (b+c) + ' ' + (-d) + ' ' + (a+b+c) + ' ' + (-d);
-    return 'M ' + p + ' 0 L ' + (w - p) + ' 0 ' + TR +
-           ' L ' + w + ' ' + (h - p) + ' ' + BR +
-           ' L ' + p + ' ' + h + ' ' + BL +
-           ' L 0 ' + p + ' ' + TL + ' Z';
-  }
-
-  var SVG_NS = 'http://www.w3.org/2000/svg';
-
-  function apply(el){
-    var r = el.getBoundingClientRect();
-    if (r.width < 4 || r.height < 4) return;
-    var d = squirclePath(r.width, r.height, 50, 1);
-    el.style.clipPath = 'path("' + d + '")';
-    el.style.webkitClipPath = el.style.clipPath;
-
-    var svg = el.querySelector(':scope > .card-media-stroke');
-    if (!svg) {
-      svg = document.createElementNS(SVG_NS, 'svg');
-      svg.setAttribute('class', 'card-media-stroke');
-      svg.setAttribute('aria-hidden', 'true');
-      svg.setAttribute('preserveAspectRatio', 'none');
-      var path = document.createElementNS(SVG_NS, 'path');
-      path.setAttribute('fill', 'none');
-      path.setAttribute('stroke', 'rgba(0,0,0,0.05)');
-      path.setAttribute('stroke-width', '2');
-      path.setAttribute('vector-effect', 'non-scaling-stroke');
-      svg.appendChild(path);
-      el.appendChild(svg);
-    }
-    svg.setAttribute('viewBox', '0 0 ' + r.width + ' ' + r.height);
-    svg.firstChild.setAttribute('d', d);
-  }
-
-  var ro = window.ResizeObserver ? new ResizeObserver(function(entries){
-    for (var i = 0; i < entries.length; i++) apply(entries[i].target);
-  }) : null;
-
-  function scan(){
-    document.querySelectorAll('.card-media').forEach(function(el){
-      if (el.dataset.sqInit) return;
-      el.dataset.sqInit = '1';
-      apply(el);
-      if (ro) ro.observe(el);
-    });
-  }
-
-  scan();
-  setTimeout(scan, 300);
-  setTimeout(scan, 1200);
-
-  var mo = new MutationObserver(scan);
-  mo.observe(document.body, { childList: true, subtree: true });
-})();
-</script>
-
-<script>
-(function(){
-  var cvs = document.getElementById('sidebarHalftone');
-  if (!cvs || !cvs.getContext) return;
-  var ctx = cvs.getContext('2d');
-  var dpr = Math.min(window.devicePixelRatio || 1, 2);
-  var W = 0, H = 0;
-  var mx = -9999, my = -9999;
-  var targetMx = -9999, targetMy = -9999;
-  var step = 7;
-  var cols = 0, rows = 0;
-  var originX = 0, originY = 0;
-
-  var sidebar = cvs.closest('.sidebar');
-
-  function updateFadeStart(){
-    if (!sidebar) return;
-    var links = sidebar.querySelectorAll('.sidebar-link');
-    var last = links[links.length - 1];
-    if (!last) return;
-    var sRect = sidebar.getBoundingClientRect();
-    var lRect = last.getBoundingClientRect();
-    var gap = 14;
-    var below = lRect.bottom - sRect.top + gap;
-    var pct = Math.max(0, Math.min(95, (1 - below / sRect.height) * 100));
-    sidebar.style.setProperty('--fade-start', pct.toFixed(1) + '%');
-  }
-
-  function build(){
-    var rect = cvs.getBoundingClientRect();
-    W = Math.max(1, rect.width);
-    H = Math.max(1, rect.height);
-    cvs.width = Math.floor(W * dpr);
-    cvs.height = Math.floor(H * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    cols = Math.floor(W / step);
-    rows = Math.floor(H / step);
-    originX = (W - (cols - 1) * step) * 0.5;
-    originY = (H - (rows - 1) * step) * 0.5;
-    updateFadeStart();
-  }
-
-  var resizeTimer;
-  window.addEventListener('resize', function(){
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(build, 160);
-  });
-
-  window.addEventListener('mousemove', function(e){
-    var rect = cvs.getBoundingClientRect();
-    targetMx = e.clientX - rect.left;
-    targetMy = e.clientY - rect.top;
-  });
-  window.addEventListener('mouseleave', function(){ targetMx = -9999; targetMy = -9999; });
-
-  build();
-
-  var MR = 110;
-  var MR2 = MR * MR;
-  var baseR = 0.55;
-
-  function draw(){
-    mx += (targetMx - mx) * 0.14;
-    my += (targetMy - my) * 0.14;
-
-    ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = '#141210';
-
-    for (var j = 0; j < rows; j++) {
-      var y = originY + j * step;
-      for (var i = 0; i < cols; i++) {
-        var x = originX + i * step;
-        var dx = x - mx, dy = y - my;
-        var d2 = dx*dx + dy*dy;
-        var r = baseR;
-        if (d2 < MR2) {
-          var u = 1 - Math.sqrt(d2) / MR;
-          r += u * u * 1.7;
-        }
-        ctx.beginPath();
-        ctx.arc(x, y, r, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
-
-/* ── Mobile floating nav ──
-   Auto-expands when scrolled to the top, auto-collapses once scrolled away.
-   Manual tap always wins and temporarily suspends auto-mode until the user
-   has clearly left the top region again (hysteresis gap prevents flicker).
-   Height animates via CSS `grid-template-rows` 0fr → 1fr — never touches
-   `height: auto`. The m-nav is `position: fixed`, so state changes never
-   reflow the page, which kills the old feedback-loop flicker at its root. */
-(function(){
-  var nav = document.getElementById('mNav');
-  var toggle = document.getElementById('mNavToggle');
-  var panel = document.getElementById('mNavPanel');
-  var panelInner = panel && panel.querySelector('.m-nav-panel-inner');
-  var content = document.querySelector('.content');
-  if (!nav || !toggle || !panel || !panelInner) return;
-
-  var mql = window.matchMedia('(max-width: 768px)');
-  var EXPAND_BELOW = 24;    // scrollY under this → auto-expand
-  var COLLAPSE_ABOVE = 80;  // scrollY over this → auto-collapse
-  var autoMode = true;      // disabled on manual action, restored when user scrolls well away from top
-  var rafPending = false;
-
-  function isExpanded(){ return nav.dataset.state === 'expanded'; }
-
-  // Intrinsic panel height — scrollHeight works even when the grid row is 0fr
-  function panelHeight(){ return panelInner.scrollHeight; }
-
-  function applyContentPush(expanded){
-    if (!content) return;
-    if (!mql.matches) { content.style.paddingTop = ''; return; }
-    // Only push content when the nav expands at the top of the page.
-    // Mid-page taps float the panel over the content.
-    if (expanded && window.scrollY < EXPAND_BELOW) {
-      content.style.paddingTop = 'calc(78px + env(safe-area-inset-top) + ' + panelHeight() + 'px)';
-    } else {
-      content.style.paddingTop = '';
-    }
-  }
-
-  function setExpanded(expanded){
-    if (isExpanded() === expanded) return;
-    nav.dataset.state = expanded ? 'expanded' : 'collapsed';
-    toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-    toggle.setAttribute('aria-label', expanded ? 'Hide bio and links' : 'Show bio and links');
-    applyContentPush(expanded);
-  }
-
-  function manualSet(expanded){
-    autoMode = false;
-    setExpanded(expanded);
-  }
-
-  function checkScroll(){
-    if (!mql.matches) return;
-    var y = window.scrollY;
-    // Re-arm auto-mode once the user has clearly scrolled past the top
-    if (!autoMode && y > COLLAPSE_ABOVE) autoMode = true;
-    if (!autoMode) return;
-    if (y < EXPAND_BELOW) setExpanded(true);
-    else if (y > COLLAPSE_ABOVE) setExpanded(false);
-  }
-
-  function onScroll(){
-    if (rafPending) return;
-    rafPending = true;
-    requestAnimationFrame(function(){
-      rafPending = false;
-      checkScroll();
-    });
-  }
-
-  toggle.addEventListener('click', function(e){
-    e.stopPropagation();
-    manualSet(!isExpanded());
-  });
-
-  // Tap outside to close (manual — won't auto-reopen at the top)
-  document.addEventListener('click', function(e){
-    if (!mql.matches) return;
-    if (!isExpanded()) return;
-    if (nav.contains(e.target)) return;
-    manualSet(false);
-  });
-
-  // Escape to close
-  document.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' && isExpanded()) manualSet(false);
-  });
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  // Re-sync content push after viewport resize (panel height can change with width / vh)
-  var resizeRaf = false;
-  window.addEventListener('resize', function(){
-    if (resizeRaf) return;
-    resizeRaf = true;
-    requestAnimationFrame(function(){
-      resizeRaf = false;
-      applyContentPush(isExpanded());
-    });
-  }, { passive: true });
-
-  var onMql = function(){
-    if (mql.matches) { autoMode = true; checkScroll(); applyContentPush(isExpanded()); }
-    else { setExpanded(false); applyContentPush(false); }
-  };
-  mql.addEventListener ? mql.addEventListener('change', onMql) : mql.addListener(onMql);
-
-  // Initial state derived from scroll position (handles hard-refresh-while-scrolled)
-  if (mql.matches) checkScroll();
-})();
 </script>
 </body>
 </html>
