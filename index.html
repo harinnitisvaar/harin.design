@@ -176,12 +176,12 @@ body {
   letter-spacing: -0.015em;
 }
 
-/* ─── ABOUT (statement + facts) ─── */
+/* ─── ABOUT (statement + company logos) ─── */
 .about {
   display: grid;
   grid-template-columns: 1.4fr 1fr;
   gap: 64px;
-  align-items: end;
+  align-items: center;
   padding: 56px 0 96px;
   max-width: 1000px;
   margin: 0 auto;
@@ -200,32 +200,45 @@ body {
   color: var(--ink);
 }
 
-.about-facts {
+.about-logos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.logo-tile {
+  aspect-ratio: 1 / 1;
+  background: var(--tile);
+  border-radius: 22px;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
-.fact {
+.logo-icon {
+  width: 46%;
+  aspect-ratio: 1 / 1;
+  border-radius: 24%;
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 14px 0;
-  border-top: 1px solid var(--g100);
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 6px 16px -8px rgba(0,0,0,0.3);
 }
 
-.fact:last-child { border-bottom: 1px solid var(--g100); }
+img.logo-icon { display: block; object-fit: cover; }
 
-.fact-num {
-  font-size: 22px;
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  font-feature-settings: "tnum";
-}
+/* Stand-in marks until real logo files are added */
+.logo-icon.is-cred { background: #0e0e0e; font-size: 12px; letter-spacing: 0.12em; }
+.logo-icon.is-meesho { background: #9f2089; font-size: 11px; letter-spacing: -0.02em; }
 
-.fact-label {
-  font-size: 12px;
-  color: var(--g400);
+.logo-name {
+  font-size: 11px;
+  color: var(--g500);
+  letter-spacing: -0.01em;
 }
 
 /* ─── SECTION HEAD ─── */
@@ -859,10 +872,12 @@ init();
 
     <section class="about" aria-label="About">
       <p class="about-statement"><b>6 years</b> into design, currently at <b>CRED</b>. Previously at <b>Zepto</b>, <b>Swiggy</b>, <b>Dunzo</b>, and <b>Meesho</b>. It started with posters, then illustrations, animations, UI, product thinking and interactions—slowly shaping me into a <b>generalist designer</b>.</p>
-      <div class="about-facts">
-        <div class="fact"><span class="fact-num">6</span><span class="fact-label">Years in design</span></div>
-        <div class="fact"><span class="fact-num">5</span><span class="fact-label">Product teams</span></div>
-        <div class="fact"><span class="fact-num" id="factWorks">14</span><span class="fact-label">Explorations shared</span></div>
+      <div class="about-logos" aria-label="Companies">
+        <div class="logo-tile"><span class="logo-icon is-cred" role="img" aria-label="CRED logo">CRED</span><span class="logo-name">CRED</span></div>
+        <div class="logo-tile"><img class="logo-icon" src="logos/zepto.png" alt="Zepto logo"><span class="logo-name">Zepto</span></div>
+        <div class="logo-tile"><img class="logo-icon" src="logos/swiggy.png" alt="Swiggy logo"><span class="logo-name">Swiggy</span></div>
+        <div class="logo-tile"><img class="logo-icon" src="logos/dunzo.png" alt="Dunzo logo"><span class="logo-name">Dunzo</span></div>
+        <div class="logo-tile"><span class="logo-icon is-meesho" role="img" aria-label="Meesho logo">meesho</span><span class="logo-name">Meesho</span></div>
       </div>
     </section>
 
@@ -1117,7 +1132,6 @@ function fmt(s) {
 }
 
 render();
-document.getElementById('factWorks').textContent = works.length;
 
 // Featured horizontal scroll
 const featured = [
