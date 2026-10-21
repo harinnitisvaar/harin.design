@@ -1225,6 +1225,10 @@ a.cs-pill { text-decoration: none; }
 
 /* Swiggy: the scooter rides above the landmark sheet */
 .cs-over.sw-land { left: 4%; top: 43%; width: 92%; aspect-ratio: 360 / 156; }
+
+/* about statement, centred under the hero */
+.about { padding: 8px 0 72px; text-align: center; }
+@media (max-width: 768px) { .about { padding: 4px 4px 48px; } }
 </style>
 </head>
 <body>
@@ -1480,11 +1484,11 @@ init();
   </section>
 
   <main class="content">
-    <div class="grid" id="grid"></div>
-
     <section class="about" aria-label="About">
       <p class="about-statement"><b>6 years</b> into design, currently at <b>CRED</b>. Previously at <b>Zepto</b>, <b>Swiggy</b>, <b>Dunzo</b>, and <b>Meesho</b>. It started with posters, then illustrations, animations, UI, product thinking and interactions—slowly shaping me into a <b>generalist designer</b>.</p>
     </section>
+
+    <div class="grid" id="grid"></div>
 
     <!-- CASE STUDIES -->
     <section class="cases" aria-label="Case studies">
