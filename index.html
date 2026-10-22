@@ -1166,10 +1166,11 @@ body.cs-locked { overflow: hidden; }
 .cs-ba-list p { font-size: 13px; line-height: 1.5; color: var(--g700); }
 .cs-ba-list b { color: var(--ink); font-weight: 600; }
 
-/* exploration cards with their own shape (not phone screens) */
-.cs-cards { flex: 1; min-height: 0; display: grid; grid-template-rows: repeat(2, minmax(0, 1fr)); grid-auto-flow: column; grid-auto-columns: max-content; gap: 14px; padding-bottom: 22px; }
-.cs-cards .cs-thumb { height: 100%; width: auto; }
-.cs-cards .cs-thumb img { height: 100%; width: auto; object-fit: contain; background: var(--white); border-radius: 16px; }
+/* exploration cards with their own shape (not phone screens): equal cells */
+.cs-cards { flex: none; height: 100%; display: grid; grid-template-columns: repeat(3, 290px); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 14px; padding-bottom: 22px; }
+.cs-cards .cs-thumb { position: relative; width: 100%; height: 100%; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 40px 18px 18px; border-radius: 20px; background: var(--g50); }
+.cs-cards .cs-thumb img { width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 14px; border: 1px solid rgba(0,0,0,0.06); background: var(--white); }
+.cs-tag { position: absolute; top: 14px; left: 16px; font-size: 11px; font-weight: 500; color: var(--g500); letter-spacing: 0; }
 
 /* reactions */
 .cs-reacts { flex: none; display: flex; gap: 12px; align-items: flex-start; align-self: center; padding-bottom: 22px; }
@@ -1214,6 +1215,7 @@ a.cs-pill { text-decoration: none; }
   .cs-ba-list { width: auto; }
   .cs-reacts { overflow-x: auto; max-width: 86vw; }
   .cs-reacts-col { width: 220px; flex: none; }
+  .cs-cards { grid-template-columns: repeat(3, 200px); }
   .cs-cards, .cs-wall, .cs-wide-pic { flex: none; height: calc(100vh - 400px); min-height: 280px; }
   .cs-cards, .cs-wall, .cs-wide-pic { max-width: 100%; overflow-x: auto; }
   .cs-swhome { width: 78vw; }
@@ -2587,18 +2589,18 @@ renderFeatured();
 
         <!-- ETA EXPLORATIONS -->
         <section class="cs-frame" data-chapter="explore">
-          <span class="cs-frame-name">ETA card explorations</span>
+          <span class="cs-frame-name">Explorations / ETA card</span>
           <div class="cs-card cs-step">
             <div class="cs-step-text"><span class="cs-num">02</span><h3 class="cs-h2">ETA first, then everything else</h3>
               <p class="cs-p">I started with a few mindless explorations <span class="e">✍️</span>, playing with hierarchy, font weights and alignment.</p>
               <p class="cs-p">The rule I landed on: the time and the status go on top, big and bold. Everything else supports them.</p>
             </div>
             <div class="cs-cards">
-              <button class="cs-thumb" type="button" data-full="work/order-tracking/eta-01.png" aria-label="ETA card with delivery partner"><img src="work/order-tracking/eta-01.png" alt="" loading="lazy"></button>
-              <button class="cs-thumb" type="button" data-full="work/order-tracking/eta-02.png" aria-label="ETA card with packing status"><img src="work/order-tracking/eta-02.png" alt="" loading="lazy"></button>
-              <button class="cs-thumb" type="button" data-full="work/order-tracking/eta-04.png" aria-label="ETA card with an illustration"><img src="work/order-tracking/eta-04.png" alt="" loading="lazy"></button>
-              <button class="cs-thumb" type="button" data-full="work/order-tracking/eta-05.png" aria-label="ETA card with an early badge"><img src="work/order-tracking/eta-05.png" alt="" loading="lazy"></button>
-              <button class="cs-thumb" type="button" data-full="work/order-tracking/eta-03.png" aria-label="Dark ETA card"><img src="work/order-tracking/eta-03.png" alt="" loading="lazy"></button>
+              <button class="cs-thumb" type="button" data-full="work/order-tracking/eta-01.png" aria-label="ETA card with delivery partner"><span class="cs-tag">Exploration 01</span><img src="work/order-tracking/eta-01.png" alt="" loading="lazy"></button>
+              <button class="cs-thumb" type="button" data-full="work/order-tracking/eta-02.png" aria-label="ETA card with packing status"><span class="cs-tag">Exploration 02</span><img src="work/order-tracking/eta-02.png" alt="" loading="lazy"></button>
+              <button class="cs-thumb" type="button" data-full="work/order-tracking/eta-04.png" aria-label="ETA card with an illustration"><span class="cs-tag">Exploration 03</span><img src="work/order-tracking/eta-04.png" alt="" loading="lazy"></button>
+              <button class="cs-thumb" type="button" data-full="work/order-tracking/eta-05.png" aria-label="ETA card with an early badge"><span class="cs-tag">Exploration 04</span><img src="work/order-tracking/eta-05.png" alt="" loading="lazy"></button>
+              <button class="cs-thumb" type="button" data-full="work/order-tracking/eta-03.png" aria-label="Dark ETA card"><span class="cs-tag">Exploration 05</span><img src="work/order-tracking/eta-03.png" alt="" loading="lazy"></button>
             </div>
           </div>
         </section>
@@ -2607,16 +2609,16 @@ renderFeatured();
 
         <!-- SHIPMENTS -->
         <section class="cs-frame" data-chapter="shipments">
-          <span class="cs-frame-name">Multiple shipments explorations</span>
+          <span class="cs-frame-name">Explorations / Multiple shipments</span>
           <div class="cs-card cs-step">
             <div class="cs-step-text"><span class="cs-num">03</span><h3 class="cs-h2">One order, many boxes</h3>
               <p class="cs-p">An order could now arrive in two or three shipments. I tried tabs, pills, and dark cards that peek from the side.</p>
               <p class="cs-p">Cards won. Each shipment gets its own card, and the next one peeks in, so you know there's more without being told.</p>
             </div>
             <div class="cs-phones">
-              <figure class="cs-phone"><img src="work/order-tracking/ship-01.png" alt="Shipments as tabs" loading="lazy"><figcaption>Tabs</figcaption></figure>
-              <figure class="cs-phone"><img src="work/order-tracking/ship-02.png" alt="Shipments as pills" loading="lazy"><figcaption>Pills</figcaption></figure>
-              <figure class="cs-phone"><img src="work/order-tracking/ship-03.png" alt="Shipments as dark peeking cards" loading="lazy"><figcaption>Peeking cards</figcaption></figure>
+              <figure class="cs-phone"><img src="work/order-tracking/ship-01.png" alt="Shipments as tabs" loading="lazy"><figcaption>Exploration 01 · Tabs</figcaption></figure>
+              <figure class="cs-phone"><img src="work/order-tracking/ship-02.png" alt="Shipments as pills" loading="lazy"><figcaption>Exploration 02 · Pills</figcaption></figure>
+              <figure class="cs-phone"><img src="work/order-tracking/ship-03.png" alt="Shipments as dark peeking cards" loading="lazy"><figcaption>Exploration 03 · Peeking cards</figcaption></figure>
             </div>
           </div>
         </section>
