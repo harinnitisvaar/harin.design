@@ -1195,7 +1195,7 @@ body.cs-locked { overflow: hidden; }
 .cs-wall figure { margin: 0; display: flex; flex-direction: column; min-height: 0; min-width: 0; background: var(--white); border: 0.7px solid var(--g200); border-radius: 18px; padding: 10px 10px 8px; }
 .cs-wall figure.w2 { grid-column: span 2; }
 .cs-wall .cs-lottie, .cs-wall .pic { flex: 1; min-height: 0; }
-.cs-wall .pic { width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+.cs-wall .pic { flex: 1 1 0; min-height: 0; width: auto; max-width: 100%; align-self: center; object-fit: contain; border-radius: 22px; }
 .cs-wall figcaption { flex: none; margin-top: 6px; font-size: 11px; color: var(--g500); white-space: nowrap; text-align: center; }
 
 /* the impact slide for a single strong number */
@@ -3102,13 +3102,13 @@ renderFeatured();
               <p class="cs-p">A few more favourites from those two years. Most of them move.</p>
             </div>
             <div class="cs-wall">
-              <figure class="w2"><img class="pic" src="work/swiggy-visuals/live-01.png" alt="Live activity: restaurant is preparing your order" loading="lazy"><figcaption>Live activity · preparing</figcaption></figure>
+              <figure><img class="pic" src="work/swiggy-visuals/live-01.png" alt="Live activity: restaurant is preparing your order" loading="lazy"><figcaption>Live activity · preparing</figcaption></figure>
               <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/not-serviceable.json"></div><figcaption>Not serviceable</figcaption></figure>
               <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/partner-water.json"></div><figcaption>Water break</figcaption></figure>
-              <figure class="w2"><img class="pic" src="work/swiggy-visuals/live-02.png" alt="Live activity: order received" loading="lazy"><figcaption>Live activity · received</figcaption></figure>
+              <figure><img class="pic" src="work/swiggy-visuals/live-02.png" alt="Live activity: order received" loading="lazy"><figcaption>Live activity · received</figcaption></figure>
               <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/restaurant-awards.json"></div><figcaption>Restaurant awards</figcaption></figure>
               <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/call-partner.json"></div><figcaption>Call your partner</figcaption></figure>
-              <figure class="w2"><img class="pic" src="work/swiggy-visuals/food-ready.png" alt="Food will be ready by 12:40 pm" loading="lazy"><figcaption>Takeaway timer</figcaption></figure>
+              <figure><img class="pic" src="work/swiggy-visuals/food-ready.png" alt="Food will be ready by 12:40 pm" loading="lazy"><figcaption>Takeaway timer</figcaption></figure>
               <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/instamart-lite.json"></div><figcaption>Instamart Lite</figcaption></figure>
               <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/take-bag.json"></div><figcaption>Bag handover</figcaption></figure>
               <figure class="w2"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/sweetest-fruits.json"></div><figcaption>Instamart · fresh fruits</figcaption></figure>
