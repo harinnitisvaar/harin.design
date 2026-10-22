@@ -1113,6 +1113,8 @@ body.cs-locked { overflow: hidden; }
 .cs-phone.r37 { aspect-ratio: 720 / 1480; }
 .cs-phone.r36 { aspect-ratio: 720 / 1456; }
 .cs-phone.r9195 { aspect-ratio: 720 / 1558; }
+.cs-phone.rgenie { aspect-ratio: 1848 / 3784; }
+.cs-phone.rgenie video { object-fit: contain; background: #fff; }
 .cs-phone.r9208 { aspect-ratio: 1081 / 2341; }
 .cs-phone.dark video { background: #000; }
 .cs-hero-shots .cs-phone { height: 78%; }
@@ -2962,7 +2964,7 @@ renderFeatured();
               </dl>
             </div>
             <div class="cs-hero-shots" aria-hidden="true">
-              <figure class="cs-phone"><video src="work/swiggy-visuals/genie-01.mp4#t=0.1" muted loop playsinline preload="metadata"></video></figure>
+              <figure class="cs-phone rgenie"><video src="work/swiggy-visuals/genie-01.mp4#t=0.1" muted loop playsinline preload="metadata"></video></figure>
               <figure class="cs-phone r9208"><img src="work/swiggy-visuals/landmark.png" alt=""><div class="cs-over sw-land"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/landmark-scooter.json"></div></div></figure>
               <figure class="cs-phone r9195"><video src="work/swiggy-visuals/toggle-02.mp4#t=0.1" muted loop playsinline preload="metadata"></video></figure>
             </div>
@@ -2980,23 +2982,17 @@ renderFeatured();
               <p class="cs-p">I brought the homepage to life with animated banners and nav tiles. Each one is playful, easy to spot, and says one thing clearly: free delivery, an offer, something new.</p>
               <p class="cs-p">The motion is light. Just enough to catch your eye, never enough to get annoying.</p>
             </div>
-            <div class="cs-swhome" aria-label="Swiggy home, made from the real animated banners">
-              <div class="l" style="aspect-ratio:1080/144"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/superfast.json"></div></div>
-              <div class="l" style="aspect-ratio:360/84"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/greetings.json"></div></div>
-              <div class="cs-swhome-row two">
-                <div style="aspect-ratio:328/87"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/pocket-hero-banner.json"></div></div>
-                <div style="aspect-ratio:1020/228"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/offer-zone-banner.json"></div></div>
-              </div>
-              <div class="cs-swhome-row tiles">
-                <div style="aspect-ratio:98/97;align-self:center"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/value-meals.json"></div></div>
-                <div style="aspect-ratio:240/288;align-self:center"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/pocket-hero-new.json"></div></div>
-                <div style="aspect-ratio:204/205;align-self:center"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/pocket-hero.json"></div></div>
-                <div class="cs-swhome-stack">
-                  <div style="aspect-ratio:156/64"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/offer-zone-tile.json"></div></div>
-                  <div style="aspect-ratio:156/64"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/gourmet-tile.json"></div></div>
-                </div>
-              </div>
-              <div class="l" style="aspect-ratio:1080/160"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/get-it-quickly.json"></div></div>
+            <div class="cs-wall">
+              <figure class="w2"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/superfast.json"></div><figcaption>Delivery time strip</figcaption></figure>
+              <figure class="w2"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/greetings.json"></div><figcaption>Greeting banner</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/value-meals.json"></div><figcaption>Value Meals tile</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/pocket-hero-new.json"></div><figcaption>Pocket Hero tile</figcaption></figure>
+              <figure class="w2"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/pocket-hero-banner.json"></div><figcaption>Pocket Hero banner</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/pocket-hero.json"></div><figcaption>Pocket Hero icon</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/offer-zone-tile.json"></div><figcaption>Offer Zone tile</figcaption></figure>
+              <figure class="w2"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/offer-zone-banner.json"></div><figcaption>Offer Zone banner</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/gourmet-tile.json"></div><figcaption>Gourmet tile</figcaption></figure>
+              <figure class="w2"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/get-it-quickly.json"></div><figcaption>Section header</figcaption></figure>
             </div>
           </div>
         </section>
@@ -3036,9 +3032,9 @@ renderFeatured();
               </div>
             </div>
             <div class="cs-phones">
-              <figure class="cs-phone"><video src="work/swiggy-visuals/genie-01.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Looking for a delivery partner"></video><figcaption>Looking for a partner</figcaption></figure>
-              <figure class="cs-phone"><video src="work/swiggy-visuals/genie-03.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Partner arrived at the pickup location"></video><figcaption>At pickup</figcaption></figure>
-              <figure class="cs-phone"><video src="work/swiggy-visuals/genie-02.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Partner is almost at the doorstep"></video><figcaption>Almost at your door</figcaption></figure>
+              <figure class="cs-phone rgenie"><video src="work/swiggy-visuals/genie-01.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Looking for a delivery partner"></video><figcaption>Looking for a partner</figcaption></figure>
+              <figure class="cs-phone rgenie"><video src="work/swiggy-visuals/genie-03.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Partner arrived at the pickup location"></video><figcaption>At pickup</figcaption></figure>
+              <figure class="cs-phone rgenie"><video src="work/swiggy-visuals/genie-02.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Partner is almost at the doorstep"></video><figcaption>Almost at your door</figcaption></figure>
             </div>
           </div>
         </section>
