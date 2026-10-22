@@ -1127,6 +1127,12 @@ body.cs-locked { overflow: hidden; }
 .cs-lottie { width: 100%; height: 100%; }
 .cs-lottie svg { display: block; }
 
+/* Order Tracking intro: one big screen running off the bottom of the card */
+.ot-intro { overflow: hidden; }
+.ot-intro .cs-hero-shots { align-items: flex-start; }
+.cs-hero-shots .cs-phone.ot-hero { height: 132%; }
+.cs-hero-shots .cs-phone.ot-hero img { border-radius: 30px; }
+
 /* problem grid with three columns */
 .cs-problems-3 { grid-template-columns: repeat(3, 1fr); }
 
@@ -1211,6 +1217,7 @@ a.cs-pill { text-decoration: none; }
   .cs-cards, .cs-wall, .cs-wide-pic { flex: none; height: calc(100vh - 400px); min-height: 280px; }
   .cs-cards, .cs-wall, .cs-wide-pic { max-width: 100%; overflow-x: auto; }
   .cs-swhome { width: 78vw; }
+  .cs-hero-shots .cs-phone.ot-hero { height: 118%; }
   .cs-hero-shots .cs-phone.sq { height: auto; width: 100%; align-self: center; }
   .cs-big { padding: 20px; }
   .cs-big img { width: 72px; height: 72px; margin-bottom: 8px; }
@@ -2511,7 +2518,7 @@ renderFeatured();
         <!-- INTRO -->
         <section class="cs-frame" data-chapter="intro">
           <span class="cs-frame-name">Intro</span>
-          <div class="cs-card cs-intro">
+          <div class="cs-card cs-intro ot-intro">
             <div class="cs-intro-text">
               <div>
                 <span class="cs-eyebrow">Zepto · Order tracking · Shipped</span>
@@ -2526,7 +2533,7 @@ renderFeatured();
               </dl>
             </div>
             <div class="cs-hero-shots" aria-hidden="true">
-              <figure class="cs-phone" style="height:100%"><img src="work/order-tracking/state-way.png" alt=""><div class="cs-over ot"><div class="cs-lottie" data-lottie="work/order-tracking/l-way.json"></div></div></figure>
+              <figure class="cs-phone ot-hero"><img src="work/order-tracking/state-way.png" alt=""><div class="cs-over ot"><div class="cs-lottie" data-lottie="work/order-tracking/l-way.json"></div></div></figure>
             </div>
           </div>
         </section>
