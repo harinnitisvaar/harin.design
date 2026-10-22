@@ -1229,6 +1229,39 @@ a.cs-pill { text-decoration: none; }
 /* about statement, centred under the hero */
 .about { padding: 8px 0 72px; text-align: center; }
 @media (max-width: 768px) { .about { padding: 4px 4px 48px; } }
+
+/* selected work: small tiles with a peek of the work */
+.case-sm { aspect-ratio: 1 / 1.08; justify-content: flex-start; gap: 14px; overflow: hidden; }
+.case-sm .case-icon { width: 44px; height: 44px; border-radius: 26%; }
+.case-sm .case-title { font-size: 17px; }
+.case-hero { position: absolute; left: 22px; right: 22px; bottom: 0; top: 50%; display: flex; justify-content: center; align-items: flex-end; gap: 8px; pointer-events: none; }
+.case-hero img { display: block; transition: transform 0.6s var(--island); }
+.ch-tiles { align-items: center; padding-bottom: 22px; }
+.ch-tiles img { position: relative; width: 40%; margin: 0 -3%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 18px; border: 3px solid var(--tile); }
+.ch-tiles img:nth-child(1) { transform: rotate(-8deg) translateY(6px); }
+.ch-tiles img:nth-child(2) { z-index: 1; transform: translateY(-8px); }
+.ch-tiles img:nth-child(3) { transform: rotate(8deg) translateY(6px); }
+.ch-phones img { width: 40%; height: 100%; object-fit: cover; object-position: top; border-radius: 16px 16px 0 0; border: 1px solid rgba(0,0,0,0.06); border-bottom: 0; }
+.ch-pic img { width: 100%; height: calc(100% - 22px); margin-bottom: 22px; object-fit: cover; border-radius: 16px; }
+.case-sm:hover .case-hero img { transform: translateY(-6px); }
+.case-sm:hover .ch-tiles img:nth-child(1) { transform: rotate(-12deg) translate(-6px, 2px); }
+.case-sm:hover .ch-tiles img:nth-child(2) { transform: translateY(-14px); }
+.case-sm:hover .ch-tiles img:nth-child(3) { transform: rotate(12deg) translate(6px, 2px); }
+@media (max-width: 1024px) {
+  .case-sm { aspect-ratio: 3 / 2; }
+  .case-hero { left: 42%; top: 70px; right: 22px; }
+  .ch-tiles { padding-bottom: 0; }
+  .ch-pic img { height: calc(100% - 22px); }
+}
+@media (max-width: 768px) {
+  .case-sm { aspect-ratio: 1 / 1.25; gap: 10px; }
+  .case-sm .case-icon { width: 36px; height: 36px; }
+  .case-hero { left: 14px; right: 14px; top: 56%; }
+  .ch-tiles { padding-bottom: 14px; }
+  .ch-pic img { height: calc(100% - 14px); margin-bottom: 14px; border-radius: 12px; }
+  .ch-tiles img { border-radius: 10px; }
+  .ch-phones img { border-radius: 10px 10px 0 0; }
+}
 </style>
 </head>
 <body>
@@ -1497,22 +1530,26 @@ init();
           </span>
           <span class="case-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </button>
-        <a class="case" href="#tipping-widget">
+        <a class="case case-sm" href="#tipping-widget">
+          <span class="case-hero ch-tiles" aria-hidden="true"><img src="work/tipping-widget/ill-building.png" alt="" loading="lazy"><img src="work/tipping-widget/ill-stairs.png" alt="" loading="lazy"><img src="work/tipping-widget/ill-rain.png" alt="" loading="lazy"></span>
           <img class="case-icon" src="logos/swiggy.png" alt="Swiggy logo">
           <span class="case-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           <span><span class="case-company" style="display:block">Swiggy</span><span class="case-title">Tipping Widget</span></span>
         </a>
-        <a class="case" href="#dunzo-visuals">
+        <a class="case case-sm" href="#dunzo-visuals">
+          <span class="case-hero ch-pic" aria-hidden="true"><img src="work/dunzo/stickers.png" alt="" loading="lazy"></span>
           <img class="case-icon" src="logos/dunzo.png" alt="Dunzo logo">
           <span class="case-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           <span><span class="case-company" style="display:block">Dunzo</span><span class="case-title">Dunzo Visuals</span></span>
         </a>
-        <a class="case" href="#order-tracking-page">
+        <a class="case case-sm" href="#order-tracking-page">
+          <span class="case-hero ch-phones" aria-hidden="true"><img src="work/order-tracking/new.png" alt="" loading="lazy"><img src="work/order-tracking/state-cancelled.png" alt="" loading="lazy"></span>
           <img class="case-icon" src="logos/zepto.png" alt="Zepto logo">
           <span class="case-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           <span><span class="case-company" style="display:block">Zepto</span><span class="case-title">Order Tracking Page</span></span>
         </a>
-        <a class="case" href="#everything-visuals">
+        <a class="case case-sm" href="#everything-visuals">
+          <span class="case-hero ch-pic" aria-hidden="true"><img src="work/swiggy-visuals/live-01.png" alt="" loading="lazy"></span>
           <img class="case-icon" src="logos/swiggy.png" alt="Swiggy logo">
           <span class="case-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           <span><span class="case-company" style="display:block">Swiggy</span><span class="case-title">Everything Visuals</span></span>
