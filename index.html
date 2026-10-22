@@ -1113,8 +1113,9 @@ body.cs-locked { overflow: hidden; }
 .cs-phone.r37 { aspect-ratio: 720 / 1480; }
 .cs-phone.r36 { aspect-ratio: 720 / 1456; }
 .cs-phone.r9195 { aspect-ratio: 720 / 1558; }
-.cs-phone.rgenie { aspect-ratio: 1848 / 3784; }
-.cs-phone.rgenie video { object-fit: contain; background: #fff; }
+/* Genie recordings: trim the black line at the top and bottom edges */
+.cs-phone.rgenie { aspect-ratio: 1848 / 3700; }
+.cs-phone.rgenie video { object-fit: cover; object-position: center; background: #fff; }
 .cs-phone.r9208 { aspect-ratio: 1081 / 2341; }
 .cs-phone.dark video { background: #000; }
 .cs-hero-shots .cs-phone { height: 78%; }
