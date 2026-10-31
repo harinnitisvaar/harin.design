@@ -1256,6 +1256,10 @@ a.cs-pill { text-decoration: none; }
 .ch-phones img { width: 40%; height: 100%; object-fit: cover; object-position: top; border-radius: 16px 16px 0 0; border: 1px solid rgba(0,0,0,0.06); border-bottom: 0; }
 .ch-pic img { width: 100%; height: calc(100% - 22px); margin-bottom: 22px; object-fit: cover; border-radius: 16px; }
 .case-sm:hover .case-hero img { transform: translateY(-6px); }
+.ch-icon { align-items: center; padding-bottom: 22px; }
+.case-lottie { display: block; height: 100%; max-height: 190px; max-width: 100%; aspect-ratio: 1 / 1; transition: transform 0.6s var(--island); }
+.case-lottie svg { display: block; }
+.case-sm:hover .case-lottie { transform: translateY(-6px) rotate(-4deg); }
 .case-sm:hover .ch-tiles img:nth-child(1) { transform: rotate(-12deg) translate(-6px, 2px); }
 .case-sm:hover .ch-tiles img:nth-child(2) { transform: translateY(-14px); }
 .case-sm:hover .ch-tiles img:nth-child(3) { transform: rotate(12deg) translate(6px, 2px); }
@@ -1269,11 +1273,18 @@ a.cs-pill { text-decoration: none; }
   .case-sm { aspect-ratio: 1 / 1.25; gap: 10px; }
   .case-sm .case-icon { width: 36px; height: 36px; }
   .case-hero { left: 14px; right: 14px; top: 56%; }
-  .ch-tiles { padding-bottom: 14px; }
+  .ch-tiles, .ch-icon { padding-bottom: 14px; }
   .ch-pic img { height: calc(100% - 14px); margin-bottom: 14px; border-radius: 12px; }
   .ch-tiles img { border-radius: 10px; }
   .ch-phones img { border-radius: 10px 10px 0 0; }
 }
+
+/* a fully black card, for slides built around dark screenshots */
+.cs-card.cs-dark { background: #000; border-color: #000; }
+.cs-dark .cs-h2 { color: #fff; }
+.cs-dark .cs-p { color: #a1a1a6; }
+.cs-dark .cs-num { color: #6e6e73; }
+.cs-dark .cs-wide-pic img { border: 0; }
 </style>
 </head>
 <body>
@@ -1561,7 +1572,7 @@ init();
           <span><span class="case-company" style="display:block">Zepto</span><span class="case-title">Order Tracking Page</span></span>
         </a>
         <a class="case case-sm" href="#everything-visuals">
-          <span class="case-hero ch-pic" aria-hidden="true"><img src="work/swiggy-visuals/live-01.png" alt="" loading="lazy"></span>
+          <span class="case-hero ch-icon" aria-hidden="true"><span class="case-lottie" data-lottie="work/swiggy-visuals/l/genie-searching.json"></span></span>
           <img class="case-icon" src="logos/swiggy.png" alt="Swiggy logo">
           <span class="case-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           <span><span class="case-company" style="display:block">Swiggy</span><span class="case-title">Everything Visuals</span></span>
@@ -2710,13 +2721,13 @@ renderFeatured();
         <!-- REACTIONS -->
         <section class="cs-frame" data-chapter="reactions">
           <span class="cs-frame-name">Real reactions</span>
-          <div class="cs-card cs-step">
+          <div class="cs-card cs-step cs-dark">
             <div class="cs-step-text"><span class="cs-num">Impact</span><h3 class="cs-h2">People saw it, shared it, felt it</h3>
               <p class="cs-p">It's a tracking page. People still posted about it. "This is the coolest thing I've seen today." "So cute."</p>
               <p class="cs-p">One person said it reminded them of the OG Dunzo tracking page. Fun fact: I worked on that one too <span class="e">😄</span>.</p>
             </div>
             <div class="cs-wide-pic">
-              <button class="cs-proof-img" type="button" data-full="work/order-tracking/reactions.png" aria-label="Posts reacting to the new tracking page"><img src="work/order-tracking/reactions.png" alt="" loading="lazy"></button>
+              <button class="cs-proof-img" type="button" data-full="work/order-tracking/reactions-dark.png" aria-label="Posts reacting to the new tracking page"><img src="work/order-tracking/reactions-dark.png" alt="" loading="lazy"></button>
             </div>
           </div>
         </section>
@@ -3362,6 +3373,38 @@ renderFeatured();
   }
 
   document.querySelectorAll('.cs[data-hash]').forEach(setup);
+})();
+</script>
+<script>
+// selected work: tile Lotties load and play only while on screen
+(function(){
+  var els = document.querySelectorAll('.case-lottie[data-lottie]');
+  if (!els.length || !('IntersectionObserver' in window)) return;
+  var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var lib = null;
+  function load(){
+    if (window.lottie) return Promise.resolve(window.lottie);
+    if (!lib) lib = new Promise(function(resolve, reject){
+      var s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js';
+      s.onload = function(){ resolve(window.lottie); };
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+    return lib;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      var el = e.target;
+      if (!e.isIntersecting) { if (el._anim) el._anim.pause(); return; }
+      if (el._anim) { if (!still) el._anim.play(); return; }
+      load().then(function(lottie){
+        el._anim = lottie.loadAnimation({ container: el, renderer: 'svg', loop: true, autoplay: !still, path: el.dataset.lottie });
+        if (still) el._anim.addEventListener('DOMLoaded', function(){ el._anim.goToAndStop(Math.floor(el._anim.totalFrames * 0.6), true); });
+      }).catch(function(){});
+    });
+  }, { rootMargin: '200px' });
+  els.forEach(function(el){ io.observe(el); });
 })();
 </script>
 </body>
