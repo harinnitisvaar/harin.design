@@ -1124,7 +1124,7 @@ body.cs-locked { overflow: hidden; }
 
 /* an animation laid over a static screen, placed in % of the screen */
 .cs-over { position: absolute; pointer-events: none; }
-.cs-phone .cs-over > img { width: 100%; height: 100%; object-fit: contain; border: 0; border-radius: 0; background: none; }
+.cs-phone .cs-over > img { width: 100%; height: 100%; object-fit: contain; border: 0; border-radius: 10px; background: none; }
 /* Zepto ETA card illustration slot */
 .cs-over.ot { left: 6.8%; top: 15%; width: 74.4%; aspect-ratio: 268 / 188; }
 .cs-lottie { width: 100%; height: 100%; }
@@ -1285,6 +1285,14 @@ a.cs-pill { text-decoration: none; }
 .cs-dark .cs-p { color: #a1a1a6; }
 .cs-dark .cs-num { color: #6e6e73; }
 .cs-dark .cs-wide-pic img { border: 0; }
+
+/* Order Tracking tile: just the delivered card, cut from the full screen */
+.ch-crop { position: relative; display: block; height: 100%; max-height: 230px; aspect-ratio: 584 / 728; border-radius: 16px; overflow: hidden; background: #fff; transition: transform 0.6s var(--island); }
+.ch-crop img { position: absolute; left: -4.11%; top: -30.49%; width: 123.3%; height: auto; max-width: none; }
+.case-sm:hover .case-hero .ch-crop img { transform: none; }
+.ch-crop .case-lottie { position: absolute; left: 4.28%; top: 2.47%; width: 91.7%; height: auto; max-height: none; aspect-ratio: 268 / 188; }
+.case-sm:hover .ch-crop .case-lottie { transform: none; }
+.case-sm:hover .ch-crop { transform: translateY(-6px); }
 </style>
 </head>
 <body>
@@ -1566,7 +1574,7 @@ init();
           <span><span class="case-company" style="display:block">Dunzo</span><span class="case-title">Dunzo Visuals</span></span>
         </a>
         <a class="case case-sm" href="#order-tracking-page">
-          <span class="case-hero ch-phones" aria-hidden="true"><img src="work/order-tracking/new.png" alt="" loading="lazy"><img src="work/order-tracking/state-cancelled.png" alt="" loading="lazy"></span>
+          <span class="case-hero ch-icon" aria-hidden="true"><span class="ch-crop"><img src="work/order-tracking/state-delivered.png" alt="" loading="lazy"><span class="case-lottie" data-lottie="work/order-tracking/l-delivered.json"></span></span></span>
           <img class="case-icon" src="logos/zepto.png" alt="Zepto logo">
           <span class="case-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           <span><span class="case-company" style="display:block">Zepto</span><span class="case-title">Order Tracking Page</span></span>
