@@ -1293,6 +1293,11 @@ a.cs-pill { text-decoration: none; }
 .ch-crop .case-lottie { position: absolute; left: 4.28%; top: 2.47%; width: 91.7%; height: auto; max-height: none; aspect-ratio: 268 / 188; }
 .case-sm:hover .ch-crop .case-lottie { transform: none; }
 .case-sm:hover .ch-crop { transform: translateY(-6px); }
+
+/* Dunzo tile: the logo and the waving shopkeeper from the onboarding screen */
+.ch-crop.dz { aspect-ratio: 1 / 1; }
+.ch-crop.dz img { left: -19.23%; top: -10.58%; width: 138.46%; }
+.ch-crop.dz img.ch-gif { left: 7.12%; top: 14.04%; width: 85.87%; }
 </style>
 </head>
 <body>
@@ -1568,7 +1573,7 @@ init();
           <span><span class="case-company" style="display:block">Swiggy</span><span class="case-title">Tipping Widget</span></span>
         </a>
         <a class="case case-sm" href="#dunzo-visuals">
-          <span class="case-hero ch-pic" aria-hidden="true"><img src="work/dunzo/stickers.png" alt="" loading="lazy"></span>
+          <span class="case-hero ch-icon" aria-hidden="true"><span class="ch-crop dz"><img src="work/dunzo/onb-01.png" alt="" loading="lazy"><img class="ch-gif" src="work/dunzo/onb-01.gif" alt="" loading="lazy"></span></span>
           <img class="case-icon" src="logos/dunzo.png" alt="Dunzo logo">
           <span class="case-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           <span><span class="case-company" style="display:block">Dunzo</span><span class="case-title">Dunzo Visuals</span></span>
