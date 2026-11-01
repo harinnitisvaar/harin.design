@@ -498,33 +498,38 @@ body {
 
 .feat-card {
   flex-shrink: 0;
-  width: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
   cursor: pointer;
   transition: transform 0.45s var(--ease);
 }
 
 .feat-card:hover { transform: translateY(-4px); }
 
-.feat-card-img {
-  width: 240px;
-  aspect-ratio: 1 / 1;
-  border-radius: 28px;
-  overflow: hidden;
-  background: var(--tile);
-  padding: 18px;
-}
-
-.feat-card-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
+.feat-clip {
   display: block;
-  mix-blend-mode: multiply;
+  height: 230px;
+  width: auto;
+  border-radius: 14px;
+  border: 0.7px solid #e5e5ea;
   pointer-events: none;
   -webkit-user-drag: none;
   user-select: none;
 }
+
+.feat-src {
+  display: flex;
+  align-items: center;
+  height: 22px;
+  padding-left: 2px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--g500, #6e6e73);
+}
+.feat-src img { height: 100%; width: auto; mix-blend-mode: multiply; pointer-events: none; -webkit-user-drag: none; }
 
 /* ─── FOOTER ─── */
 .footer {
@@ -571,7 +576,8 @@ body {
   .case-arrow { top: 16px; right: 16px; width: 28px; height: 28px; }
   .case-title { font-size: 15px; }
   .case-company { font-size: 11px; }
-  .feat-card, .feat-card-img { width: 200px; }
+  .feat-clip { height: 190px; }
+  .feat-src { height: 18px; }
   .footer { flex-direction: column; align-items: flex-start; gap: 4px; margin-top: 40px; }
 }
 
@@ -1847,12 +1853,12 @@ render();
 
 // Featured horizontal scroll
 const featured = [
-  { img: 'press/hindustan-times-3.png', url: 'https://www.newindianexpress.com/cities/bengaluru/2025/Sep/23/game-of-chaos-bengaluru-traffic-reimagined-to-a-quirky-game' },
-  { img: 'press/hindustan-times-1.png', url: 'https://www.ndtv.com/offbeat/grand-theft-auto-grand-theft-autorickshaw-bengaluru-techie-traffic-ai-game-9245578' },
-  { img: 'press/hindustan-times.png', url: 'https://www.hindustantimes.com/trending/bengaluru-techie-turns-potholes-into-ai-racing-game-grand-theft-autorickshaw-101757419518214-amp.html' },
-  { img: 'press/hindustan-times-2.png', url: 'https://analyticsindiamag.com/ai-news-updates/bengaluru-developer-builds-mission-office-iphone-game-with-potholes-and-cows-using-chatgpt/' },
-  { img: 'press/60fps.png', url: 'https://www.instagram.com/p/DOdA95_CDWR/' },
-  { img: 'press/60fps-1.png', url: 'https://www.instagram.com/p/DObZigwDBmg/' },
+  { img: 'press/clip-nie.jpg', logo: 'press/logo-nie.png', name: 'The New Indian Express', url: 'https://www.newindianexpress.com/cities/bengaluru/2025/Sep/23/game-of-chaos-bengaluru-traffic-reimagined-to-a-quirky-game' },
+  { img: 'press/clip-ndtv.jpg', logo: 'press/logo-ndtv.png', name: 'NDTV', url: 'https://www.ndtv.com/offbeat/grand-theft-auto-grand-theft-autorickshaw-bengaluru-techie-traffic-ai-game-9245578' },
+  { img: 'press/clip-ht.jpg', logo: 'press/logo-ht.png', name: 'Hindustan Times', url: 'https://www.hindustantimes.com/trending/bengaluru-techie-turns-potholes-into-ai-racing-game-grand-theft-autorickshaw-101757419518214-amp.html' },
+  { img: 'press/clip-aim.jpg', logo: 'press/logo-aim.png', name: 'Analytics India Magazine', url: 'https://analyticsindiamag.com/ai-news-updates/bengaluru-developer-builds-mission-office-iphone-game-with-potholes-and-cows-using-chatgpt/' },
+  { img: 'press/clip-60fps.jpg', name: '60fps', url: 'https://www.instagram.com/p/DOdA95_CDWR/' },
+  { img: 'press/clip-spline.jpg', name: 'Spline', url: 'https://www.instagram.com/p/DObZigwDBmg/' },
 ];
 
 function renderFeatured() {
@@ -1860,7 +1866,8 @@ function renderFeatured() {
   if (!wrap) return;
   wrap.innerHTML = featured.map((f, i) =>
     `<div class="feat-card" onclick="window.open('${f.url}','_blank','noopener')">
-      <div class="feat-card-img"><img src="${f.img}" alt="" onerror="this.style.display='none'"></div>
+      <img class="feat-clip" src="${f.img}" alt="${f.name}" loading="lazy">
+      <span class="feat-src">${f.logo ? `<img src="${f.logo}" alt="">` : f.name}</span>
     </div>`
   ).join('');
 
