@@ -1304,6 +1304,68 @@ a.cs-pill { text-decoration: none; }
 .ch-crop.dz { aspect-ratio: 1 / 1; }
 .ch-crop.dz img { left: -19.23%; top: -10.58%; width: 138.46%; }
 .ch-crop.dz .ch-gif { left: 7.12%; top: 14.04%; width: 85.87%; }
+
+/* ─── CASE STUDY on phones: one vertical read instead of a sideways canvas ─── */
+@media (max-width: 768px) {
+  .cs-sheet { inset: calc(10px + env(safe-area-inset-top)) 0 0; }
+  .cs-top { padding: 10px 10px 18px 20px; background: linear-gradient(#f4f3f0 62%, rgba(244,243,240,0)); }
+  .cs-top-title { font-size: 14px; }
+  .cs-canvas { overflow-x: hidden; overflow-y: auto; cursor: auto; -webkit-overflow-scrolling: touch; }
+  .cs-track { flex-direction: column; align-items: stretch; width: auto; height: auto; padding: 68px 10px calc(96px + env(safe-area-inset-bottom)); }
+  .cs-frame { height: auto; scroll-margin-top: 64px; }
+  .cs-frame-name { position: static; display: block; margin: 0 0 8px 12px; font-size: 12px; white-space: normal; }
+  .cs-link { display: none; }
+  .cs-gap { width: auto; height: 28px; }
+  .cs-frame + .cs-link + .cs-frame, .cs-link + .cs-frame { margin-top: 28px; }
+
+  /* every card takes the full width and grows with its content */
+  .cs-card, .cs-intro, .cs-problem, .cs-ideas, .cs-impact, .cs-end, .cs-cimpact, .cs-explore { width: auto; height: auto; }
+  .cs-card { padding: 22px 20px; border-radius: 22px; gap: 20px; }
+  .cs-h1 { font-size: 36px; }
+  .cs-h2 { font-size: 24px; }
+  .cs-p { font-size: 15px; line-height: 1.55; }
+  .cs-step-text, .cs-step-wide, .cs-explore-head { width: auto; max-width: none; }
+  .cs-intro-text .cs-p { font-size: 15px; }
+  .cs-meta { display: grid; margin-top: 18px; }
+
+  /* media rows: a fixed height, swipe sideways when they don't fit, bleed to the card edge */
+  .cs-hero-shots, .cs-phones, .cs-tiles, .cs-cards, .cs-wall, .cs-wide-pic, .cs-reacts, .cs-cimpact-proof, .cs-groups {
+    flex: none; max-width: none; min-height: 0;
+    margin: 0 -20px; padding: 0 20px 26px;
+    overflow-x: auto; overflow-y: hidden;
+    scroll-snap-type: x mandatory; scroll-padding: 0 20px;
+    scrollbar-width: none; overscroll-behavior-x: contain;
+  }
+  .cs-hero-shots::-webkit-scrollbar, .cs-phones::-webkit-scrollbar, .cs-tiles::-webkit-scrollbar, .cs-cards::-webkit-scrollbar, .cs-wall::-webkit-scrollbar, .cs-wide-pic::-webkit-scrollbar, .cs-reacts::-webkit-scrollbar, .cs-cimpact-proof::-webkit-scrollbar, .cs-groups::-webkit-scrollbar { display: none; }
+  .cs-phones > *, .cs-hero-shots > *, .cs-tiles > *, .cs-reacts > *, .cs-cimpact-proof > *, .cs-groups > * { scroll-snap-align: start; }
+  .cs-phones { height: 470px; gap: 12px; }
+  .cs-hero-shots { height: 440px; padding-bottom: 0; justify-content: flex-start; align-items: center; }
+  .ot-intro .cs-hero-shots { height: 380px; align-items: flex-start; }
+  .cs-hero-shots img, .cs-hero-shots .cs-phone { scroll-snap-align: start; }
+  .cs-hero-shots .cs-phone.sq { height: 100%; width: auto; }
+  .cs-phone img, .cs-phone video, .cs-phone-scroll { border-radius: 18px; }
+  .cs-tiles { height: 360px; }
+  .cs-ba-col { height: 440px; overflow-x: auto; margin: 0 -20px; padding: 0 20px; scrollbar-width: none; }
+  .cs-cards { height: 440px; grid-template-columns: repeat(3, 220px); }
+  .cs-wall { height: 460px; grid-auto-columns: 150px; }
+  .cs-wide-pic { height: 380px; }
+  .cs-reacts { align-self: stretch; }
+  .cs-reacts-col { width: 240px; }
+  .cs-cimpact-proof .cs-proof-img { width: 180px; }
+  .cs-chart-lg { width: 100%; }
+  .cs-swhome { width: auto; align-self: stretch; margin-bottom: 0; }
+  .cs-big { align-self: stretch; }
+  .cs-dark .cs-wide-pic img { border-radius: 14px; }
+  .cs-end-foot { padding-top: 22px; }
+
+  .cs-impact-grid, .cs-impact-6 { grid-template-columns: 1fr; gap: 10px; }
+  .cs-impact-grid div { padding: 18px 18px 16px; min-width: 0; }
+  .cs-impact-grid b, .cs-impact-6 b { font-size: 34px; padding-right: 64px; }
+  .cs-impact-grid .cs-ill { width: 52px; height: 52px; top: 16px; right: 16px; }
+  .cs-impact-grid span { padding-right: 64px; }
+  .cs-nav { bottom: calc(14px + env(safe-area-inset-bottom)); box-shadow: 0 8px 24px rgba(22,21,19,0.10); }
+  .cs-nav button { padding: 9px 14px; font-size: 13px; }
+}
 </style>
 </head>
 <body>
@@ -3224,6 +3286,10 @@ renderFeatured();
     return lottieLib;
   }
 
+  // phones read the case study top to bottom; wider screens pan a sideways canvas
+  var mqVertical = window.matchMedia('(max-width: 768px)');
+  function vertical(){ return mqVertical.matches; }
+
   function setup(cs){
     var HASH = '#' + cs.dataset.hash;
     var sheet = cs.querySelector('.cs-sheet');
@@ -3287,7 +3353,7 @@ renderFeatured();
           en.target.dataset.visible = en.isIntersecting ? '1' : '0';
           playMedia(en.target, en.isIntersecting);
         });
-      }, { root: canvas, rootMargin: '0px 400px' });
+      }, { root: canvas, rootMargin: vertical() ? '400px 0px' : '0px 400px' });
       cs.querySelectorAll('video, [data-lottie]').forEach(function(el){ io.observe(el); });
     }
     function stopMedia(){
@@ -3299,21 +3365,30 @@ renderFeatured();
     function chapterEl(name){ return canvas.querySelector('[data-chapter="' + name + '"]'); }
     function goTo(name){
       var el = chapterEl(name); if (!el) return;
+      if (vertical()) { canvas.scrollTo({ top: Math.max(0, el.offsetTop - 64), behavior: reduceMotion ? 'auto' : 'smooth' }); return; }
       var x = el.offsetLeft - (canvas.clientWidth - el.offsetWidth) / 2;
       if (el.offsetWidth > canvas.clientWidth * 0.9) x = el.offsetLeft - 48;
       canvas.scrollTo({ left: Math.max(0, x), behavior: 'smooth' });
     }
     function syncNav(){
-      var mid = canvas.scrollLeft + canvas.clientWidth / 2, current = chapters[0];
-      chapters.forEach(function(n){ var el = chapterEl(n); if (el && el.offsetLeft <= mid) current = n; });
-      navBtns.forEach(function(b){ b.classList.toggle('on', b.dataset.csGo === current); });
+      var v = vertical(), current = chapters[0];
+      var mid = v ? canvas.scrollTop + canvas.clientHeight * 0.4 : canvas.scrollLeft + canvas.clientWidth / 2;
+      chapters.forEach(function(n){ var el = chapterEl(n); if (el && (v ? el.offsetTop : el.offsetLeft) <= mid) current = n; });
+      navBtns.forEach(function(b){
+        var on = b.dataset.csGo === current;
+        if (on && v && !b.classList.contains('on')) {
+          var nav = b.parentNode;
+          nav.scrollTo({ left: b.offsetLeft - (nav.clientWidth - b.offsetWidth) / 2, behavior: 'smooth' });
+        }
+        b.classList.toggle('on', on);
+      });
     }
     canvas.addEventListener('scroll', function(){ requestAnimationFrame(syncNav); }, { passive: true });
     cs.querySelectorAll('[data-cs-go]').forEach(function(b){ b.addEventListener('click', function(){ goTo(b.dataset.csGo); }); });
 
     // vertical wheel reads as horizontal travel, like panning a canvas
     canvas.addEventListener('wheel', function(e){
-      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX) || e.target.closest('.cs-scroller')) return;
+      if (vertical() || Math.abs(e.deltaY) <= Math.abs(e.deltaX) || e.target.closest('.cs-scroller')) return;
       e.preventDefault();
       canvas.scrollLeft += e.deltaY;
     }, { passive: false });
@@ -3321,7 +3396,7 @@ renderFeatured();
     // drag to pan
     var down = false, moved = false, sx = 0, sl = 0;
     canvas.addEventListener('pointerdown', function(e){
-      if (e.pointerType !== 'mouse' || e.button !== 0 || e.target.closest('.cs-pill, .cs-nav, .cs-scroller, [data-full]')) return;
+      if (vertical() || e.pointerType !== 'mouse' || e.button !== 0 || e.target.closest('.cs-pill, .cs-nav, .cs-scroller, [data-full]')) return;
       down = true; moved = false; sx = e.clientX; sl = canvas.scrollLeft;
     });
     window.addEventListener('pointermove', function(e){
@@ -3348,6 +3423,7 @@ renderFeatured();
       document.body.classList.add('cs-locked');
       if (page) page.inert = true;
       canvas.scrollLeft = 0;
+      canvas.scrollTop = 0;
       syncNav();
       startMedia();
       if (push && location.hash !== HASH) history.pushState({ cs: 1 }, '', HASH);
