@@ -1387,6 +1387,30 @@ a.cs-pill { text-decoration: none; }
   .cs-nav button { padding: 9px 15px; font-size: 13px; font-weight: 500; color: var(--g700); background: var(--white); border: 0.7px solid var(--g200); }
   .cs-nav button.on { background: var(--ink); color: var(--white); border-color: var(--ink); }
 }
+
+.cs-close-back, .cs-back-label { display: none; }
+
+/* phones: a case study is its own page, scrolled by the browser itself */
+@media (max-width: 768px) {
+  body.cs-page { overflow: visible; }
+  body.cs-page > *:not(.cs.is-open):not(script) { display: none !important; }
+  body.cs-page { background: #f4f3f0; }
+  .cs.is-open { position: relative; inset: auto; }
+  .cs.is-open .cs-backdrop { display: none; }
+  .cs.is-open .cs-sheet { position: relative; inset: auto; border-radius: 0; overflow: visible; transform: none; transition: none; }
+  .cs.is-open .cs-track { animation: csPageIn 0.35s var(--ease) both; }
+  .cs.is-open .cs-canvas { position: static; overflow: visible; }
+  .cs.is-open .cs-top { position: sticky; top: 0; margin-bottom: -60px; padding: calc(10px + env(safe-area-inset-top)) 14px 18px 10px; justify-content: flex-start; gap: 10px; }
+  .cs.is-open .cs-close { order: -1; padding: 8px 14px 8px 10px; font-size: 13px; }
+  .cs.is-open .cs-close-x, .cs.is-open .cs-close-label { display: none; }
+  .cs.is-open .cs-close-back { display: block; width: 14px; height: 14px; }
+  .cs.is-open .cs-back-label { display: inline; }
+  .cs.is-open .cs-top-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cs.is-open .cs-nav, .cs.is-open .cs-sheet::after, .cs.is-open .cs-lightbox, .cs.is-open .cs-gallery { position: fixed; }
+  .cs.is-open .cs-nav { left: 0; right: 0; }
+}
+@keyframes csPageIn { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .cs.is-open .cs-track { animation: none !important; } }
 </style>
 </head>
 <body>
@@ -2121,8 +2145,9 @@ renderFeatured();
     <div class="cs-top">
       <span class="cs-top-title">Zepto Cafe <span>· case study</span></span>
       <button class="cs-close" type="button" data-cs-close>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
-        Close
+        <svg class="cs-close-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        <svg class="cs-close-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        <span class="cs-close-label">Close</span><span class="cs-back-label">Back</span>
       </button>
     </div>
 
@@ -2425,8 +2450,9 @@ renderFeatured();
     <div class="cs-top">
       <span class="cs-top-title">Tipping Widget <span>· case study</span></span>
       <button class="cs-close" type="button" data-cs-close>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
-        Close
+        <svg class="cs-close-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        <svg class="cs-close-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        <span class="cs-close-label">Close</span><span class="cs-back-label">Back</span>
       </button>
     </div>
 
@@ -2643,8 +2669,9 @@ renderFeatured();
     <div class="cs-top">
       <span class="cs-top-title">Order Tracking Page <span>· case study</span></span>
       <button class="cs-close" type="button" data-cs-close>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
-        Close
+        <svg class="cs-close-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        <svg class="cs-close-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        <span class="cs-close-label">Close</span><span class="cs-back-label">Back</span>
       </button>
     </div>
 
@@ -2880,8 +2907,9 @@ renderFeatured();
     <div class="cs-top">
       <span class="cs-top-title">Dunzo Visuals <span>· case study</span></span>
       <button class="cs-close" type="button" data-cs-close>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
-        Close
+        <svg class="cs-close-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        <svg class="cs-close-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        <span class="cs-close-label">Close</span><span class="cs-back-label">Back</span>
       </button>
     </div>
 
@@ -3051,8 +3079,9 @@ renderFeatured();
     <div class="cs-top">
       <span class="cs-top-title">Everything Visuals <span>· case study</span></span>
       <button class="cs-close" type="button" data-cs-close>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
-        Close
+        <svg class="cs-close-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        <svg class="cs-close-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        <span class="cs-close-label">Close</span><span class="cs-back-label">Back</span>
       </button>
     </div>
 
@@ -3318,7 +3347,7 @@ renderFeatured();
     var navBtns = cs.querySelectorAll('.cs-nav button');
     var chapters = Array.prototype.map.call(navBtns, function(b){ return b.dataset.csGo; });
     var openers = document.querySelectorAll('[data-cs-open="' + cs.id + '"], a[href="' + HASH + '"]');
-    var lastFocus = null;
+    var lastFocus = null, pageY = 0;
 
     function showFull(src){ lightbox.querySelector('img').src = src; lightbox.classList.add('show'); }
 
@@ -3372,7 +3401,7 @@ renderFeatured();
           en.target.dataset.visible = en.isIntersecting ? '1' : '0';
           playMedia(en.target, en.isIntersecting);
         });
-      }, { root: canvas, rootMargin: vertical() ? '400px 0px' : '0px 400px' });
+      }, { root: vertical() ? null : canvas, rootMargin: vertical() ? '400px 0px' : '0px 400px' });
       cs.querySelectorAll('video, [data-lottie]').forEach(function(el){ io.observe(el); });
     }
     function stopMedia(){
@@ -3384,15 +3413,29 @@ renderFeatured();
     function chapterEl(name){ return canvas.querySelector('[data-chapter="' + name + '"]'); }
     function goTo(name){
       var el = chapterEl(name); if (!el) return;
-      if (vertical()) { canvas.scrollTo({ top: Math.max(0, el.offsetTop - 64), behavior: reduceMotion ? 'auto' : 'smooth' }); return; }
+      if (vertical()) {
+        // images below load on the way down and push the target; re-aim until it settles
+        var tries = 0, cancelled = false, stop = function(){ cancelled = true; };
+        window.addEventListener('touchstart', stop, { once: true, passive: true });
+        window.addEventListener('wheel', stop, { once: true, passive: true });
+        var aim = function(){
+          if (cancelled || !cs.classList.contains('is-open')) return;
+          var d = el.getBoundingClientRect().top - 64;
+          if (tries > 0 && Math.abs(d) < 4) return;
+          window.scrollTo({ top: Math.max(0, window.scrollY + d), behavior: reduceMotion ? 'auto' : 'smooth' });
+          if (++tries < 5) setTimeout(aim, 650);
+        };
+        aim();
+        return;
+      }
       var x = el.offsetLeft - (canvas.clientWidth - el.offsetWidth) / 2;
       if (el.offsetWidth > canvas.clientWidth * 0.9) x = el.offsetLeft - 48;
       canvas.scrollTo({ left: Math.max(0, x), behavior: 'smooth' });
     }
     function syncNav(){
       var v = vertical(), current = chapters[0];
-      var mid = v ? canvas.scrollTop + canvas.clientHeight * 0.4 : canvas.scrollLeft + canvas.clientWidth / 2;
-      chapters.forEach(function(n){ var el = chapterEl(n); if (el && (v ? el.offsetTop : el.offsetLeft) <= mid) current = n; });
+      var mid = v ? window.innerHeight * 0.4 : canvas.scrollLeft + canvas.clientWidth / 2;
+      chapters.forEach(function(n){ var el = chapterEl(n); if (el && (v ? el.getBoundingClientRect().top : el.offsetLeft) <= mid) current = n; });
       navBtns.forEach(function(b){
         var on = b.dataset.csGo === current;
         if (on && v && !b.classList.contains('on')) {
@@ -3403,6 +3446,7 @@ renderFeatured();
       });
     }
     canvas.addEventListener('scroll', function(){ requestAnimationFrame(syncNav); }, { passive: true });
+    window.addEventListener('scroll', function(){ if (cs.classList.contains('is-open') && vertical()) requestAnimationFrame(syncNav); }, { passive: true });
     cs.querySelectorAll('[data-cs-go]').forEach(function(b){ b.addEventListener('click', function(){ goTo(b.dataset.csGo); }); });
 
     // vertical wheel reads as horizontal travel, like panning a canvas
@@ -3439,10 +3483,13 @@ renderFeatured();
       lastFocus = document.activeElement;
       cs.setAttribute('aria-hidden', 'false');
       cs.classList.add('is-open');
+      pageY = window.scrollY;
       document.body.classList.add('cs-locked');
+      if (vertical()) document.body.classList.add('cs-page');
       if (page) page.inert = true;
       canvas.scrollLeft = 0;
       canvas.scrollTop = 0;
+      if (vertical()) window.scrollTo({ top: 0, behavior: 'instant' });
       syncNav();
       startMedia();
       if (push && location.hash !== HASH) history.pushState({ cs: 1 }, '', HASH);
@@ -3455,8 +3502,13 @@ renderFeatured();
       if (gallery) gallery.classList.remove('show');
       cs.classList.remove('is-open');
       cs.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('cs-locked');
+      var wasPage = document.body.classList.contains('cs-page');
+      document.body.classList.remove('cs-locked', 'cs-page');
       if (page) page.inert = false;
+      if (wasPage) {
+        var restore = function(){ window.scrollTo({ top: pageY, behavior: 'instant' }); };
+        restore(); requestAnimationFrame(restore); setTimeout(restore, 60);
+      }
       stopMedia();
       if (!fromHistory && location.hash === HASH) {
         if (history.state && history.state.cs) history.back();
