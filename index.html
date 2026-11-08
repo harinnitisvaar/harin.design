@@ -1372,58 +1372,69 @@ a.cs-pill { text-decoration: none; }
   .cs-nav button { padding: 9px 14px; font-size: 13px; }
 }
 
-/* case study footer on phones: a row of chips on a band that fades into the page */
-@media (max-width: 768px) {
-  .cs-sheet::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; height: calc(104px + env(safe-area-inset-bottom)); background: linear-gradient(rgba(244,243,240,0), rgba(244,243,240,0.94) 38%, #f4f3f0 52%); pointer-events: none; }
-  .cs-nav {
-    left: 0; right: 0; bottom: calc(12px + env(safe-area-inset-bottom));
-    transform: none; max-width: none;
-    gap: 6px; padding: 2px 16px; border: 0; border-radius: 0;
-    background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none;
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 18px, #000 calc(100% - 18px), transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 18px, #000 calc(100% - 18px), transparent);
-    scroll-padding: 0 16px;
-  }
-  .cs-nav button { padding: 9px 15px; font-size: 13px; font-weight: 500; color: var(--g700); background: var(--white); border: 0.7px solid var(--g200); }
-  .cs-nav button.on { background: var(--ink); color: var(--white); border-color: var(--ink); }
-}
+.cs-close-back, .cs-back-label, .cs-pn, .cs-menu, .cs-menu-scrim { display: none; }
 
-.cs-close-back, .cs-back-label { display: none; }
-
-/* phones: a case study is its own page, scrolled by the browser itself */
+/* phones: a case study is its own page, scrolled by the browser itself.
+   Nothing is pinned to the top; one floating pill at the bottom carries Back and the section list. */
 @media (max-width: 768px) {
-  body.cs-page { overflow: visible; }
+  body.cs-page { overflow: visible; background: #f4f3f0; padding: 0; }
   body.cs-page > *:not(.cs.is-open):not(script) { display: none !important; }
-  body.cs-page { background: #f4f3f0; padding: 0; }
   .cs.is-open { position: relative; inset: auto; }
-  .cs.is-open .cs-backdrop { display: none; }
+  .cs.is-open .cs-backdrop, .cs.is-open .cs-nav { display: none; }
   .cs.is-open .cs-sheet { position: relative; inset: auto; border-radius: 0; overflow: visible; transform: none; transition: none; }
-  .cs.is-open .cs-track { animation: csPageIn 0.35s var(--ease) both; }
   .cs.is-open .cs-canvas { position: static; overflow: visible; }
-  .cs.is-open .cs-top { position: sticky; top: 0; margin-bottom: -60px; padding: calc(10px + env(safe-area-inset-top)) 14px 18px 10px; justify-content: flex-start; gap: 10px; }
+  .cs.is-open .cs-track { padding-top: 8px; padding-bottom: calc(110px + env(safe-area-inset-bottom)); animation: csPageIn 0.35s var(--ease) both; }
+  .cs.is-open .cs-lightbox, .cs.is-open .cs-gallery { position: fixed; }
+
+  /* header: part of the page, scrolls away */
+  .cs.is-open .cs-top { position: static; background: none; padding: calc(14px + env(safe-area-inset-top)) 12px 4px; justify-content: flex-start; gap: 10px; }
   .cs.is-open .cs-close { order: -1; padding: 8px 14px 8px 10px; font-size: 13px; }
   .cs.is-open .cs-close-x, .cs.is-open .cs-close-label { display: none; }
   .cs.is-open .cs-close-back { display: block; width: 14px; height: 14px; }
   .cs.is-open .cs-back-label { display: inline; }
   .cs.is-open .cs-top-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .cs.is-open .cs-nav, .cs.is-open .cs-sheet::after, .cs.is-open .cs-lightbox, .cs.is-open .cs-gallery { position: fixed; }
-  .cs.is-open .cs-nav { left: 0; right: 0; }
+
+  /* the floating pill */
+  .cs.is-open .cs-pn {
+    position: fixed; z-index: 6; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom));
+    display: flex; align-items: center; gap: 2px; padding: 4px;
+    max-width: calc(100% - 32px);
+    background: rgba(255,255,255,0.92); -webkit-backdrop-filter: saturate(1.8) blur(20px); backdrop-filter: saturate(1.8) blur(20px);
+    border: 0.7px solid var(--g200); border-radius: 100px;
+    box-shadow: 0 12px 32px rgba(22,21,19,0.12), 0 2px 6px rgba(22,21,19,0.06);
+    transform: translate(-50%, 0); transition: transform 0.5s var(--island), opacity 0.3s var(--ease);
+  }
+  .cs.is-open .cs-pn.away { transform: translate(-50%, calc(100% + 40px)); opacity: 0; }
+  .cs-pn button { display: inline-flex; align-items: center; gap: 8px; height: 40px; border: 0; background: none; font: inherit; color: var(--ink); cursor: pointer; border-radius: 100px; transition: background 0.2s; }
+  .cs-pn button:active { background: var(--g50); }
+  .cs-pn-back { width: 40px; justify-content: center; }
+  .cs-pn-back svg { width: 16px; height: 16px; }
+  .cs-pn-sep { width: 0.7px; height: 20px; background: var(--g200); }
+  .cs-pn-sec { min-width: 0; padding: 0 14px 0 12px; font-size: 14px; font-weight: 500; letter-spacing: -0.01em; }
+  .cs-pn-num { color: var(--g400); font-feature-settings: "tnum"; }
+  .cs-pn-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cs-pn-sec svg { flex: none; width: 12px; height: 12px; color: var(--g500); transition: transform 0.3s var(--ease); }
+  .cs-pn.menu-open .cs-pn-sec svg { transform: rotate(180deg); }
+
+  /* the section list */
+  .cs.is-open .cs-menu-scrim { display: block; position: fixed; inset: -160px 0; z-index: 5; background: rgba(22,21,19,0.18); opacity: 0; pointer-events: none; transition: opacity 0.3s var(--ease); }
+  .cs.is-open .cs-menu {
+    display: block; position: fixed; z-index: 6; left: 12px; right: 12px; bottom: calc(80px + env(safe-area-inset-bottom));
+    max-height: calc(100vh - 160px); overflow-y: auto; overscroll-behavior: contain;
+    padding: 8px; background: var(--white); border: 0.7px solid var(--g200); border-radius: 24px;
+    box-shadow: 0 20px 48px rgba(22,21,19,0.16);
+    opacity: 0; transform: translateY(12px) scale(0.98); transform-origin: 50% 100%; pointer-events: none;
+    transition: opacity 0.25s var(--ease), transform 0.45s var(--island);
+  }
+  .cs.is-open.menu-open .cs-menu-scrim { opacity: 1; pointer-events: auto; }
+  .cs.is-open.menu-open .cs-menu { opacity: 1; transform: none; pointer-events: auto; }
+  .cs-menu button { display: flex; align-items: center; gap: 14px; width: 100%; padding: 13px 14px; border: 0; border-radius: 14px; background: none; font: inherit; font-size: 15px; color: var(--g700); text-align: left; cursor: pointer; }
+  .cs-menu button:active { background: var(--g50); }
+  .cs-menu button span { width: 20px; font-size: 12px; color: var(--g400); font-feature-settings: "tnum"; }
+  .cs-menu button.on { color: var(--ink); font-weight: 600; background: var(--g50); }
 }
 @keyframes csPageIn { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) { .cs.is-open .cs-track { animation: none !important; } }
-
-/* phones: header and footer fade into the page, header flush with the top edge */
-@media (max-width: 768px) {
-  .cs.is-open .cs-top {
-    margin-bottom: -20px; padding: calc(8px + env(safe-area-inset-top)) 12px 26px;
-    background: linear-gradient(#f4f3f0 64%, rgba(244,243,240,0));
-  }
-  .cs.is-open .cs-track { padding-top: 22px; padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
-  .cs.is-open .cs-sheet::after { bottom: 0; }
-  /* Safari draws the page under the status bar and the floating address bar, past top:0 and bottom:0; cover those strips too */
-  .cs.is-open .cs-top::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 160px; background: #f4f3f0; pointer-events: none; }
-  .cs.is-open .cs-sheet::before { content: ""; position: fixed; left: 0; right: 0; top: 100%; height: 160px; z-index: 2; background: #f4f3f0; pointer-events: none; }
-}
+@media (prefers-reduced-motion: reduce) { .cs.is-open .cs-track { animation: none !important; } .cs-pn, .cs-menu { transition: none !important; } }
 </style>
 </head>
 <body>
@@ -3429,6 +3440,7 @@ renderFeatured();
       if (vertical()) {
         // images below load on the way down and push the target; re-aim until it settles
         var tries = 0, cancelled = false, stop = function(){ cancelled = true; };
+        jumpUntil = Date.now() + 2600;
         window.addEventListener('touchstart', stop, { once: true, passive: true });
         window.addEventListener('wheel', stop, { once: true, passive: true });
         var aim = function(){
@@ -3445,6 +3457,42 @@ renderFeatured();
       if (el.offsetWidth > canvas.clientWidth * 0.9) x = el.offsetLeft - 48;
       canvas.scrollTo({ left: Math.max(0, x), behavior: 'smooth' });
     }
+    // phones: one floating pill with Back and the current section; tap it for the full list
+    var pn = document.createElement('div');
+    pn.className = 'cs-pn';
+    pn.innerHTML = '<button class="cs-pn-back" type="button" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>'
+      + '<span class="cs-pn-sep" aria-hidden="true"></span>'
+      + '<button class="cs-pn-sec" type="button" aria-haspopup="true" aria-expanded="false"><span class="cs-pn-num"></span><span class="cs-pn-name"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>';
+    var scrim = document.createElement('div'); scrim.className = 'cs-menu-scrim';
+    var menu = document.createElement('div'); menu.className = 'cs-menu'; menu.setAttribute('role', 'menu');
+    var labels = Array.prototype.map.call(navBtns, function(b){ return b.textContent.trim(); });
+    var pad = function(i){ return (i < 9 ? '0' : '') + (i + 1); };
+    menu.innerHTML = chapters.map(function(n, i){ return '<button type="button" role="menuitem" data-go="' + n + '"><span>' + pad(i) + '</span>' + labels[i] + '</button>'; }).join('');
+    sheet.appendChild(scrim); sheet.appendChild(menu); sheet.appendChild(pn);
+    var secBtn = pn.querySelector('.cs-pn-sec');
+    function setMenu(on){
+      cs.classList.toggle('menu-open', on); pn.classList.toggle('menu-open', on);
+      secBtn.setAttribute('aria-expanded', on ? 'true' : 'false');
+      if (on) pn.classList.remove('away');
+    }
+    secBtn.addEventListener('click', function(){ setMenu(!cs.classList.contains('menu-open')); });
+    scrim.addEventListener('click', function(){ setMenu(false); });
+    pn.querySelector('.cs-pn-back').addEventListener('click', function(){ close(false); });
+    menu.addEventListener('click', function(e){
+      var t = e.target.closest('[data-go]'); if (!t) return;
+      setMenu(false); goTo(t.dataset.go);
+    });
+    // tuck the pill away while reading down, bring it back on any scroll up
+    var lastY = 0, jumpUntil = 0;
+    window.addEventListener('scroll', function(){
+      if (!cs.classList.contains('is-open') || !vertical() || cs.classList.contains('menu-open')) return;
+      if (Date.now() < jumpUntil) { lastY = window.scrollY; pn.classList.remove('away'); return; }
+      var y = window.scrollY, nearEnd = y + window.innerHeight > document.documentElement.scrollHeight - 80;
+      if (y > lastY + 8 && y > 160 && !nearEnd) pn.classList.add('away');
+      else if (y < lastY - 8 || nearEnd || y < 160) pn.classList.remove('away');
+      if (Math.abs(y - lastY) > 8) lastY = y;
+    }, { passive: true });
+
     function syncNav(){
       var v = vertical(), current = chapters[0];
       var mid = v ? window.innerHeight * 0.4 : canvas.scrollLeft + canvas.clientWidth / 2;
@@ -3457,6 +3505,10 @@ renderFeatured();
         }
         b.classList.toggle('on', on);
       });
+      var i = chapters.indexOf(current);
+      pn.querySelector('.cs-pn-num').textContent = pad(i);
+      pn.querySelector('.cs-pn-name').textContent = labels[i];
+      menu.querySelectorAll('[data-go]').forEach(function(b){ b.classList.toggle('on', b.dataset.go === current); });
     }
     canvas.addEventListener('scroll', function(){ requestAnimationFrame(syncNav); }, { passive: true });
     window.addEventListener('scroll', function(){ if (cs.classList.contains('is-open') && vertical()) requestAnimationFrame(syncNav); }, { passive: true });
@@ -3513,7 +3565,8 @@ renderFeatured();
       if (!cs.classList.contains('is-open')) return;
       lightbox.classList.remove('show');
       if (gallery) gallery.classList.remove('show');
-      cs.classList.remove('is-open');
+      cs.classList.remove('is-open', 'menu-open');
+      pn.classList.remove('away', 'menu-open');
       cs.setAttribute('aria-hidden', 'true');
       var wasPage = document.body.classList.contains('cs-page');
       document.body.classList.remove('cs-locked', 'cs-page');
@@ -3539,7 +3592,8 @@ renderFeatured();
     document.addEventListener('keydown', function(e){
       if (!cs.classList.contains('is-open')) return;
       if (e.key === 'Escape') {
-        if (lightbox.classList.contains('show')) lightbox.classList.remove('show');
+        if (cs.classList.contains('menu-open')) setMenu(false);
+        else if (lightbox.classList.contains('show')) lightbox.classList.remove('show');
         else if (gallery && gallery.classList.contains('show')) gallery.classList.remove('show');
         else close(false);
       }
