@@ -1342,7 +1342,11 @@ a.cs-pill { text-decoration: none; }
   .cs-hero-shots { height: 440px; padding-bottom: 0; justify-content: flex-start; align-items: center; }
   .ot-intro .cs-hero-shots { height: 380px; align-items: flex-start; }
   .cs-hero-shots img, .cs-hero-shots .cs-phone { scroll-snap-align: start; }
-  .cs-hero-shots .cs-phone.sq { height: 100%; width: auto; }
+  /* a lone square (or wide) piece fits the card width instead of the row height */
+  .cs-phones:has(> .cs-phone.sq:only-child), .cs-hero-shots:has(> .cs-phone.sq:only-child) { height: auto; justify-content: center; }
+  .cs-phones > .cs-phone.sq:only-child, .cs-hero-shots > .cs-phone.sq:only-child { height: auto; width: 100%; max-width: 420px; }
+  .cs-wide-pic:has(> :only-child) { height: auto; overflow: visible; }
+  .cs-wide-pic > :only-child, .cs-wide-pic > :only-child img { width: 100%; height: auto; }
   .cs-phone img, .cs-phone video, .cs-phone-scroll { border-radius: 18px; }
   .cs-tiles { height: 360px; }
   .cs-ba-col { height: 440px; overflow-x: auto; margin: 0 -20px; padding: 0 20px; scrollbar-width: none; }
@@ -2209,13 +2213,11 @@ renderFeatured();
           <div class="cs-card cs-step">
             <div class="cs-step-text"><span class="cs-num">03 · Trust</span><h3 class="cs-h2">"Is it really fresh?"</h3>
               <p class="cs-p">Tap the trust strip and a sheet answers it: made after you order, chefs who know the drill, clean kitchens, real ratings.</p>
-              <p class="cs-p">I also tried a bolder full-page version <span class="e">✨</span>.</p>
             </div>
             <div class="cs-phones">
               <figure class="cs-phone"><img src="work/zepto-cafe/trust-tap.png" alt="Tapping the trust strip on the cafe home" loading="lazy"><figcaption>Tap the strip</figcaption></figure>
               <figure class="cs-phone"><img src="work/zepto-cafe/trust-open.png" alt="Trust sheet opening over the cafe home" loading="lazy"><figcaption>The sheet</figcaption></figure>
               <figure class="cs-phone cs-phone-scroll"><div class="cs-scroller" tabindex="0" aria-label="The full trust sheet. Scroll to read."><img src="work/zepto-cafe/trust-full.png" alt="The full trust sheet" loading="lazy"></div><figcaption>Scroll the sheet</figcaption></figure>
-              <figure class="cs-phone cs-phone-scroll"><div class="cs-scroller" tabindex="0" aria-label="Full-page trust landing exploration. Scroll to read."><img src="work/zepto-cafe/trust-landing.png" alt="A bold full-page trust landing" loading="lazy"></div><figcaption>Exploration · Landing page</figcaption></figure>
             </div>
           </div>
         </section>
