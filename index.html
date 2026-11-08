@@ -1420,6 +1420,9 @@ a.cs-pill { text-decoration: none; }
   }
   .cs.is-open .cs-track { padding-top: 22px; padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
   .cs.is-open .cs-sheet::after { bottom: 0; }
+  /* Safari draws the page under the status bar and the floating address bar, past top:0 and bottom:0; cover those strips too */
+  .cs.is-open .cs-top::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 160px; background: #f4f3f0; pointer-events: none; }
+  .cs.is-open .cs-sheet::before { content: ""; position: fixed; left: 0; right: 0; top: 100%; height: 160px; z-index: 2; background: #f4f3f0; pointer-events: none; }
 }
 </style>
 </head>
