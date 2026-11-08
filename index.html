@@ -1342,7 +1342,11 @@ a.cs-pill { text-decoration: none; }
   .cs-hero-shots { height: 440px; padding-bottom: 0; justify-content: flex-start; align-items: center; }
   .ot-intro .cs-hero-shots { height: 380px; align-items: flex-start; }
   .cs-hero-shots img, .cs-hero-shots .cs-phone { scroll-snap-align: start; }
-  .cs-hero-shots .cs-phone.sq { height: 100%; width: auto; }
+  /* a lone square (or wide) piece fits the card width instead of the row height */
+  .cs-phones:has(> .cs-phone.sq:only-child), .cs-hero-shots:has(> .cs-phone.sq:only-child) { height: auto; justify-content: center; }
+  .cs-phones > .cs-phone.sq:only-child, .cs-hero-shots > .cs-phone.sq:only-child { height: auto; width: 100%; max-width: 420px; }
+  .cs-wide-pic:has(> :only-child) { height: auto; overflow: visible; }
+  .cs-wide-pic > :only-child, .cs-wide-pic > :only-child img { width: 100%; height: auto; }
   .cs-phone img, .cs-phone video, .cs-phone-scroll { border-radius: 18px; }
   .cs-tiles { height: 360px; }
   .cs-ba-col { height: 440px; overflow-x: auto; margin: 0 -20px; padding: 0 20px; scrollbar-width: none; }
