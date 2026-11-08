@@ -21,13 +21,15 @@
 :root {
   --white: #ffffff;
   --cream: #ffffff;
-  --g50: #f5f4f1;
-  --g100: #ebeae5;
-  --g200: #d8d6d0;
-  --g400: #a8a59e;
-  --g500: #8a877f;
-  --g700: #4a4842;
-  --ink: #161513;
+  --canvas: #ececee;
+  --tile: #f5f5f7;
+  --g50: #f5f5f7;
+  --g100: #ebebed;
+  --g200: #d8d8dc;
+  --g400: #a1a1a6;
+  --g500: #86868b;
+  --g700: #515154;
+  --ink: #1d1d1f;
   --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --island: cubic-bezier(0.32, 0.72, 0, 1);
@@ -36,234 +38,207 @@
 html { overflow-y: scroll; scroll-behavior: smooth; }
 
 body, input, button, select, textarea {
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Helvetica Neue", sans-serif;
 }
 
 .loader-text, .loader-bar { position: relative; z-index: 1; }
 
 body {
-  background: var(--cream);
+  background: var(--canvas);
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
   letter-spacing: -0.01em;
+  padding: 16px;
 }
 
-/* ─── SPLIT LAYOUT ─── */
-.page {
-  display: flex;
-  max-width: 1200px;
+/* ─── SHEET (white canvas floating on grey) ─── */
+.sheet {
+  max-width: 1240px;
   margin: 0 auto;
-  min-height: 100vh;
+  background: var(--white);
+  border-radius: 32px;
+  min-height: calc(100vh - 32px);
   padding: 0 40px;
-  gap: 64px;
 }
 
-/* ─── LEFT PANEL (sticky sidebar) ─── */
-.sidebar {
-  width: 280px;
-  flex-shrink: 0;
-  padding: 72px 0;
-  position: sticky;
-  top: 0;
-  height: 100vh;
+/* ─── TOP BAR ─── */
+.topbar {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: space-between;
-  border-right: 1px solid rgba(0,0,0,0.05);
-  padding-right: 48px;
+  gap: 16px;
+  padding: 24px 0;
 }
 
-.sidebar-top {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.sidebar-name {
-  font-size: 28px;
-  font-weight: 600;
-  letter-spacing: -0.035em;
-  line-height: 1.15;
-  color: var(--ink);
-  margin-bottom: 10px;
-  background: #ffffff;
-  padding: 4px 10px 6px;
-  border-radius: 6px;
-  display: inline-block;
-  width: fit-content;
-}
-
-.sidebar-bio {
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  line-height: 1.55;
-  color: var(--g500);
-  margin-bottom: 32px;
-  background: #ffffff;
-  padding: 12px 14px;
-  border-radius: 8px;
-}
-
-.bio-highlight {
-  background: rgba(0,0,0,0.05);
-  color: var(--g700);
-  padding: 1px 4px;
-  margin: 0 -4px;
-  border-radius: 2px;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
-}
-
-.sidebar-links {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-left: 4px;
-}
-
-.sidebar-link {
+.brand {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  background: #ffffff;
+  gap: 10px;
   color: var(--ink);
   text-decoration: none;
-  border: 1px solid rgba(0,0,0,0.05);
-  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.brand-mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.topbar-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  color: var(--ink);
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: -0.01em;
-  transition: all 0.35s var(--spring);
-  cursor: pointer;
-  width: fit-content;
+  transition: border-color 0.25s var(--ease), background 0.25s var(--ease), transform 0.3s var(--spring);
 }
 
-.sidebar-link:hover {
-  background: var(--ink);
-  color: var(--cream);
-  border-color: var(--ink);
-  transform: translateY(-2px) scale(1.04);
-  box-shadow: 0 4px 16px rgba(22,21,19,0.15);
+.pill:hover { border-color: var(--g200); }
+.pill:active { transform: scale(0.96); }
+.pill.is-outline { border-color: var(--g200); }
+.pill.is-outline:hover { background: var(--ink); border-color: var(--ink); color: var(--white); }
+.pill svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+/* ─── HERO ─── */
+.hero {
+  text-align: center;
+  overflow-x: clip;
+  padding: 96px 0 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.sidebar-link:active {
-  transform: translateY(0) scale(0.97);
-  transition-duration: 0.1s;
-}
-
-.sidebar-link svg {
-  width: 14px; height: 14px;
-  transition: transform 0.35s var(--spring);
-}
-
-.sidebar-link:hover svg {
-  transform: rotate(-8deg) scale(1.15);
-}
-
-.sidebar-bottom {
-  font-size: 11px;
-  color: var(--g400);
-  letter-spacing: -0.01em;
+/* Morphing word: blurred crossfade + alpha threshold = letters melt into each other */
+.morph {
+  display: block;
   position: relative;
-  z-index: 1;
-  background: #ffffff;
-  padding: 5px 10px;
-  border-radius: 4px;
-  display: inline-block;
-  width: fit-content;
+  white-space: nowrap;
 }
 
-.sidebar-name .name-line { display: block; }
+/* Only melt while morphing so the resting word stays crisp */
+.morph.is-melting { filter: url(#melt); }
 
-/* ─── MOBILE FLOATING NAV (hidden on desktop) ─── */
-.m-nav { display: none; }
+.morph-a,
+.morph-b {
+  display: block;
+  text-align: center;
+  user-select: none;
+}
 
-.sidebar-halftone {
+.morph-b {
   position: absolute;
   top: 0;
+  left: 0;
   right: 0;
-  bottom: 0;
-  left: -40px;
-  width: calc(100% + 40px);
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.15;
-  -webkit-mask-image: linear-gradient(to top, #000 0%, #000 var(--fade-start, 30%), transparent 100%);
-  mask-image: linear-gradient(to top, #000 0%, #000 var(--fade-start, 30%), transparent 100%);
+  opacity: 0;
 }
 
-.sidebar > .sidebar-top,
-.sidebar > .sidebar-bottom { position: relative; z-index: 1; }
 
-.sidebar-bottom a {
+.hero-title {
+  font-size: 44px;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  margin-bottom: 14px;
+}
+
+.hero-sub {
+  max-width: 460px;
+  font-size: 17px;
+  line-height: 1.45;
   color: var(--g500);
-  text-decoration: none;
-  transition: color 0.2s;
+  letter-spacing: -0.015em;
 }
 
-.sidebar-bottom a:hover { color: var(--ink); }
-
-/* ── Three.js particle canvas (loader) ── */
-#canvas-container {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-#canvas-container canvas { display: block; width: 100% !important; height: 100% !important; }
-
-/* ─── RIGHT PANEL (content) ─── */
-.content {
-  flex: 1;
-  min-width: 0;
-  padding: 72px 0 64px;
+/* ─── ABOUT (statement) ─── */
+.about {
+  padding: 56px 0 96px;
+  max-width: 880px;
+  margin: 0 auto;
 }
 
-.content-label {
-  font-size: 12px;
-  font-weight: 400;
+.about-statement {
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1.22;
+  letter-spacing: -0.03em;
+  color: var(--g400);
+}
+
+.about-statement b {
+  font-weight: 500;
   color: var(--ink);
-  letter-spacing: -0.01em;
-  line-height: 1.55;
-  margin: 0 0 28px -14px;
-  background: #ffffff;
-  padding: 12px 14px;
-  border-radius: 8px;
-  display: block;
-  width: fit-content;
 }
 
-.content-sub {
-  font-size: 11px;
+
+/* ─── SECTION HEAD ─── */
+.section-head {
+  text-align: center;
+  margin: 0 auto 40px;
+}
+
+.section-title {
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+
+.section-sub {
+  font-size: 15px;
   color: var(--g500);
   letter-spacing: -0.01em;
-  margin: 0 0 28px -14px;
-  background: #ffffff;
-  padding: 4px 14px 10px;
-  border-radius: 8px;
-  display: block;
-  width: fit-content;
 }
 
 /* ─── WORK GRID ─── */
+.content { padding-bottom: 40px; }
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  column-gap: 16px;
-  row-gap: 72px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
 }
 
 .card {
   display: flex;
   flex-direction: column;
+  background: #fafafb; /* half-strength --tile */
+  border-radius: 28px;
+  overflow: hidden;
   animation: cardIn 0.5s var(--ease) both;
   cursor: pointer;
+  transition: transform 0.45s var(--ease);
+}
+
+.card:hover {
+  transform: translateY(-4px);
 }
 
 @keyframes cardIn {
@@ -271,28 +246,39 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+.card-info {
+  padding: 22px 24px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 2px;
+}
+
+.card-year {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--g500);
+  letter-spacing: -0.01em;
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  line-height: 1.2;
+  min-width: 0;
+}
+
 .card-media {
   position: relative;
   aspect-ratio: 9/16;
-  background: transparent;
-  border-radius: 50px;
+  background: var(--white);
   overflow: hidden;
-  transition: transform 0.35s var(--ease);
-  border: none;
-}
-
-.card-media-stroke {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  display: block;
-}
-
-
-.card:hover .card-media {
-  transform: translateY(-3px);
+  margin-top: -8px;
+  /* Composite poster + video on white first, then melt the whole layer into the tile */
+  mix-blend-mode: multiply;
 }
 
 .card-media video {
@@ -302,13 +288,16 @@ body {
 
 .card .card-media video,
 .card .card-media .card-poster {
+  filter: brightness(1.04); /* lift near-white (≈245–254, after colour conversion) to pure white so no box shows */
   transform: scale(0.9);
+  transition: transform 0.6s var(--ease);
 }
 
+.card:hover .card-media video,
+.card:hover .card-media .card-poster { transform: scale(0.92); }
+
 .card[data-idx="2"] .card-media video,
-.card[data-idx="2"] .card-media .card-poster {
-  transform: scale(0.85);
-}
+.card[data-idx="2"] .card-media .card-poster { transform: scale(0.85); }
 
 .card-poster {
   position: absolute;
@@ -318,21 +307,14 @@ body {
   object-fit: cover;
   pointer-events: none;
   transition: opacity 450ms ease;
-  background: var(--g50);
 }
 .card-media.video-ready .card-poster { opacity: 0; }
 
-/* ─── PREMIUM VIDEO CONTROLS ─── */
-
-
-
 /* ─── HOVER CONTROLS (inside video) ─── */
-
 .card-bar {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  padding: 12px 30px 14px;
-  background: transparent;
+  padding: 12px 30px 18px;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -347,7 +329,7 @@ body {
 .card-bar-progress {
   width: 100%;
   height: 2.5px;
-  background: rgba(0,0,0,0.15);
+  background: rgba(0,0,0,0.12);
   border-radius: 100px;
   cursor: pointer;
   position: relative;
@@ -403,14 +385,13 @@ body {
   font-feature-settings: "tnum";
 }
 
-/* Mute indicator */
+/* Sound-on indicator */
 .card-unmuted-dot {
   position: absolute;
-  top: 10px; right: 10px;
+  top: 18px; right: 22px;
   width: 6px; height: 6px;
   border-radius: 50%;
-  background: var(--white);
-  box-shadow: 0 0 6px rgba(255,255,255,0.5);
+  background: var(--ink);
   opacity: 0;
   transition: opacity 0.3s ease;
   z-index: 3;
@@ -419,56 +400,84 @@ body {
 
 .card.is-unmuted .card-unmuted-dot { opacity: 1; }
 
+/* ─── CASE STUDIES (entry points) ─── */
+.cases { margin-top: 24px; }
 
+.cases-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
 
-.card-info {
-  padding: 14px;
+.case {
+  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
-}
-
-.card-title {
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: -0.015em;
+  justify-content: space-between;
+  aspect-ratio: 1 / 1.12;
+  padding: 24px;
+  background: var(--tile);
+  border-radius: 28px;
   color: var(--ink);
-  line-height: 1.3;
-  min-width: 0;
+  text-decoration: none;
+  transition: transform 0.45s var(--ease);
 }
 
-.card-year {
-  font-size: 11px;
-  font-weight: 400;
+.case:hover {
+  transform: translateY(-4px);
+}
+
+.case:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+.case-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 24%;
+  display: block;
+  transition: transform 0.5s var(--spring);
+}
+
+.case:hover .case-icon { transform: scale(1.06) rotate(-3deg); }
+
+.case-arrow {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s var(--ease), color 0.3s var(--ease), transform 0.45s var(--spring);
+}
+
+.case-arrow svg { width: 12px; height: 12px; }
+
+.case:hover .case-arrow {
+  background: var(--ink);
+  color: var(--white);
+  transform: rotate(-45deg);
+}
+
+.case-company {
+  font-size: 12px;
+  font-weight: 500;
   color: var(--g500);
-  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+
+.case-title {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
 }
 
 /* ─── FEATURED SECTION ─── */
 .featured-section {
-  margin-top: 96px;
-  padding: 0;
-  background: transparent;
-}
-
-.featured-head {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
-  margin: 0 0 20px 0;
-}
-
-.featured-head .content-label {
-  background: transparent;
-  padding: 0;
-  margin: 0;
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--g500);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  margin-top: 120px;
 }
 
 .featured-scroll {
@@ -478,7 +487,7 @@ body {
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   cursor: grab;
-  padding: 16px 0 28px;
+  padding: 8px 0 28px;
   user-select: none;
   -webkit-user-select: none;
   scroll-behavior: auto;
@@ -486,219 +495,96 @@ body {
 }
 .featured-scroll.dragging { cursor: grabbing; }
 .featured-scroll::-webkit-scrollbar { display: none; }
-.feat-card-img img {
+
+.feat-card {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  cursor: pointer;
+  transition: transform 0.45s var(--ease);
+}
+
+.feat-card:hover { transform: translateY(-4px); }
+
+.feat-clip {
+  display: block;
+  height: 230px;
+  width: auto;
+  border-radius: 14px;
+  border: 0.7px solid #e5e5ea;
   pointer-events: none;
   -webkit-user-drag: none;
   user-select: none;
 }
 
-.feat-card {
-  flex-shrink: 0;
-  width: 220px;
-  cursor: pointer;
-  transition: transform 0.4s var(--ease);
+.feat-src {
+  display: flex;
+  align-items: center;
+  height: 22px;
+  padding-left: 2px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--g500, #6e6e73);
 }
+.feat-src img { height: 100%; width: auto; mix-blend-mode: multiply; pointer-events: none; -webkit-user-drag: none; }
 
-.feat-card:hover { transform: translateY(-4px); }
-
-.feat-card-img {
-  width: 220px;
-  aspect-ratio: 1 / 1;
-  border-radius: 18px;
-  overflow: hidden;
-  background: var(--white);
-  border: 1px solid rgba(0,0,0,0.05);
-  padding: 6px 14px 14px;
-  transition: border-color 0.4s var(--ease);
+/* ─── FOOTER ─── */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 28px 0 32px;
+  margin-top: 64px;
+  border-top: 1px solid var(--g100);
+  font-size: 12px;
+  color: var(--g400);
 }
-
-.feat-card:hover .feat-card-img {
-  border-color: rgba(0,0,0,0.09);
-}
-
-.feat-card-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-  display: block;
-}
-
-
 
 /* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .cases-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
 @media (max-width: 768px) {
-  /* Desktop sidebar is hidden; the floating m-nav takes over on mobile */
-  .sidebar { display: none; }
-
-  .page {
-    flex-direction: column;
-    padding: 0 20px;
-    gap: 0;
-  }
-
-  .content {
-    padding: calc(78px + env(safe-area-inset-top)) 0 48px;
-    transition: padding-top 0.45s var(--island);
-  }
-
-  .grid { column-gap: 12px; row-gap: 56px; }
-
-  /* ── Floating header: flush to top, absorbs safe-area so nothing shows behind the status bar ── */
-  .m-nav {
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    background: var(--cream);
-    border-bottom: 1px solid rgba(0,0,0,0.06);
-    border-radius: 0 0 22px 22px;
-    padding-top: env(safe-area-inset-top);
-    box-shadow: 0 10px 28px rgba(0,0,0,0.06);
-    overflow: hidden;
-    will-change: transform;
-  }
-
-  .m-nav-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 13px 13px 13px 20px;
-  }
-
-  .m-nav-name {
-    font-size: 17px;
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1.2;
-    color: var(--ink);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-width: 0;
-  }
-
-  .m-nav-toggle {
-    flex-shrink: 0;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--white);
-    border: 1px solid rgba(0,0,0,0.06);
-    border-radius: 100px;
-    color: var(--ink);
-    padding: 0;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .m-nav-toggle svg {
-    width: 15px;
-    height: 15px;
-    transition: transform 0.42s var(--island);
-  }
-  .m-nav[data-state="expanded"] .m-nav-toggle svg {
-    transform: rotate(180deg);
-  }
-
-  /* Panel uses grid-template-rows 0fr→1fr to animate to the real content height
-     without touching `height: auto` and without scroll listeners. */
-  .m-nav-panel {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.45s var(--island);
-  }
-  .m-nav[data-state="expanded"] .m-nav-panel {
-    grid-template-rows: 1fr;
-  }
-
-  .m-nav-panel-inner {
-    min-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(-4px);
-    transition:
-      opacity 0.32s var(--island),
-      transform 0.42s var(--island);
-  }
-  .m-nav[data-state="expanded"] .m-nav-panel-inner {
-    opacity: 1;
-    transform: translateY(0);
-    transition-delay: 0.06s;
-  }
-
-  .m-nav-panel-scroll {
-    max-height: calc(100vh - 110px - env(safe-area-inset-top));
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .m-nav-bio {
-    padding: 0 20px 14px;
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: -0.01em;
-    line-height: 1.55;
-    color: var(--g500);
-  }
-  .m-nav-bio .bio-highlight {
-    background: rgba(0,0,0,0.05);
-    color: var(--g700);
-    padding: 1px 4px;
-    margin: 0 -4px;
-    border-radius: 2px;
-    box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
-  }
-
-  .m-nav-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    padding: 0 18px 14px;
-  }
-  .m-nav-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding: 7px 12px;
-    background: var(--white);
-    color: var(--ink);
-    text-decoration: none;
-    border: 1px solid rgba(0,0,0,0.06);
-    border-radius: 100px;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: -0.01em;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .m-nav-link svg { width: 12px; height: 12px; }
-
-  .m-nav-footer {
-    border-top: 1px solid rgba(0,0,0,0.05);
-    margin: 0 20px;
-    padding: 12px 0 14px;
-    font-size: 11px;
-    color: var(--g400);
-    letter-spacing: -0.01em;
-  }
+  body { padding: 8px; }
+  .sheet { border-radius: 24px; padding: 0 16px; min-height: calc(100vh - 16px); }
+  .topbar { padding: 16px 0; }
+  .pill-label { display: none; }
+  .pill { padding: 8px; }
+  .pill.is-outline { padding: 6px 12px; }
+  .pill.is-outline .pill-label { display: inline; }
+  .hero { padding: 48px 0 16px; }
+  .hero-title { font-size: 34px; }
+  .hero-sub { font-size: 15px; }
+  .about { padding: 40px 4px 64px; }
+  .about-statement { font-size: 24px; }
+  .section-title { font-size: 26px; }
+  .grid { gap: 10px; }
+  .card { border-radius: 22px; }
+  .card-info { padding: 16px 16px 0; }
+  .card-title { font-size: 13px; }
+  .card-year { font-size: 11px; }
+  .featured-section { margin-top: 80px; }
+  .cases-grid { gap: 10px; }
+  .case { padding: 18px; border-radius: 22px; }
+  .case-icon { width: 48px; height: 48px; }
+  .case-arrow { top: 16px; right: 16px; width: 28px; height: 28px; }
+  .case-title { font-size: 15px; }
+  .case-company { font-size: 11px; }
+  .feat-clip { height: 190px; }
+  .feat-src { height: 18px; }
+  .footer { flex-direction: column; align-items: flex-start; gap: 4px; margin-top: 40px; }
 }
 
 @media (max-width: 480px) {
-  .grid { grid-template-columns: 1fr; row-gap: 48px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .m-nav-panel,
-  .m-nav-panel-inner,
-  .m-nav-toggle svg {
-    transition: none !important;
-  }
+  .grid { grid-template-columns: 1fr; gap: 12px; }
+  .card-title { font-size: 14px; }
+  .card-info { padding: 20px 20px 0; }
 }
 
 /* ---- Loader ---- */
@@ -713,7 +599,6 @@ body {
 .loader.hide { opacity: 0; pointer-events: none; }
 
 .loader-text {
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 22px;
   font-weight: 500;
   letter-spacing: -0.02em;
@@ -738,10 +623,7 @@ body {
   height: 100%;
   width: 0%;
   border-radius: inherit;
-  background: linear-gradient(90deg,
-    #161513 0%,
-    #4a4842 55%,
-    #8a877f 100%);
+  background: linear-gradient(90deg, #1d1d1f 0%, #515154 55%, #86868b 100%);
   animation: loaderFill 3s cubic-bezier(0.4, 0, 0.2, 1) 380ms forwards;
   overflow: visible;
 }
@@ -771,6 +653,718 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .loader-bar-fill { animation: none; width: 100%; }
   .loader-bar-fill::before { animation: none; opacity: 0; }
+  .card, .card-media video, .card-media .card-poster { transition: none; }
+}
+
+/* ── Three.js particle canvas (loader) ── */
+#canvas-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+#canvas-container canvas { display: block; width: 100% !important; height: 100% !important; }
+
+/* ─── CASE STUDY (horizontal canvas) ─── */
+.cs {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.cs.is-open { visibility: visible; pointer-events: auto; }
+
+.cs-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(22,21,19,0.28);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+}
+
+.cs.is-open .cs-backdrop { opacity: 1; }
+
+.cs-sheet {
+  position: absolute;
+  inset: 12px 12px 0;
+  border-radius: 24px 24px 0 0;
+  overflow: hidden;
+  background: #f4f3f0;
+  transform: translateY(100%);
+  transition: transform 0.6s var(--island);
+}
+
+.cs.is-open .cs-sheet { transform: translateY(0); }
+.cs-sheet:focus { outline: none; }
+
+.cs-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 16px 0 24px;
+  pointer-events: none;
+}
+
+.cs-top > * { pointer-events: auto; }
+.cs-top-title { font-size: 13px; font-weight: 500; color: var(--g700); }
+.cs-top-title span { color: var(--g400); font-weight: 400; }
+
+.cs-close {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: var(--white);
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.35s var(--spring);
+}
+
+.cs-close svg { width: 11px; height: 11px; }
+.cs-close:hover { background: var(--ink); color: var(--white); border-color: var(--ink); }
+.cs-close:active { transform: scale(0.96); transition-duration: 0.1s; }
+
+/* the canvas */
+.cs-canvas {
+  position: absolute;
+  inset: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  background-color: #f4f3f0;
+  background-image: radial-gradient(rgba(22,21,19,0.09) 1px, transparent 1px);
+  background-size: 22px 22px;
+  cursor: grab;
+}
+
+.cs-canvas::-webkit-scrollbar { display: none; }
+.cs-canvas.dragging { cursor: grabbing; }
+.cs-canvas.dragging * { user-select: none; }
+
+.cs-track {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 max(48px, 6vw);
+  width: max-content;
+}
+
+.cs-frame {
+  position: relative;
+  flex: none;
+  height: min(660px, calc(100% - 150px));
+}
+
+.cs-frame-name {
+  position: absolute;
+  top: -24px;
+  left: 2px;
+  font-size: 11px;
+  color: var(--g500);
+  white-space: nowrap;
+}
+
+.cs-card {
+  height: 100%;
+  background: var(--white);
+  border-radius: 28px;
+  border: 1px solid rgba(0,0,0,0.05);
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cs-link {
+  flex: none;
+  width: 96px;
+  height: 24px;
+  color: #0d99ff;
+}
+
+.cs-link svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+.cs-gap { flex: none; width: 72px; }
+
+/* type */
+.cs-eyebrow { font-size: 12px; color: var(--g500); margin-bottom: 10px; }
+.cs-h1 { font-size: 44px; font-weight: 600; letter-spacing: -0.04em; line-height: 1.02; }
+.cs-h2 { font-size: 26px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.12; }
+.cs-p { font-size: 15px; line-height: 1.55; color: var(--g700); letter-spacing: -0.01em; }
+.cs-p + .cs-p { margin-top: 10px; }
+.cs-num { font-size: 12px; font-weight: 500; color: var(--g400); font-feature-settings: "tnum"; margin-bottom: 8px; display: block; }
+
+/* intro */
+.cs-intro { flex-direction: row; gap: 48px; width: auto; }
+.cs-intro-text { flex: none; width: 340px; display: flex; flex-direction: column; justify-content: space-between; padding: 8px 0; }
+.cs-intro-text .cs-p { margin-top: 16px; max-width: 360px; font-size: 16px; }
+.cs-meta { display: grid; grid-template-columns: auto 1fr; gap: 8px 20px; font-size: 12px; max-width: 360px; }
+.cs-meta dt { color: var(--g400); }
+.cs-meta dd { color: var(--g700); }
+.cs-hero-shots { flex: none; display: flex; align-items: center; gap: 14px; height: 100%; }
+.cs-hero-shots img {
+  height: 78%;
+  aspect-ratio: 9 / 20;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 22px;
+  border: 1px solid rgba(0,0,0,0.07);
+  background: var(--g50);
+}
+.cs-hero-shots img:nth-child(2) { height: 100%; }
+
+/* problem */
+.cs-problem { width: min(760px, 84vw); justify-content: space-between; }
+.cs-say { font-size: 32px; font-weight: 500; letter-spacing: -0.03em; line-height: 1.28; color: var(--ink); }
+.cs-say .dim { color: var(--g400); }
+.cs-say img { display: inline-block; height: 1.15em; width: auto; vertical-align: -0.22em; margin: 0 2px; }
+.cs-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.cs-stat { background: var(--g50); border-radius: 18px; padding: 16px; }
+.cs-stat b { display: block; font-size: 22px; font-weight: 600; letter-spacing: -0.03em; font-feature-settings: "tnum"; }
+.cs-stat span { display: block; font-size: 12px; color: var(--g500); margin-top: 4px; line-height: 1.4; }
+
+/* ideas */
+.cs-ideas { width: min(900px, 84vw); }
+.cs-ideas-row { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 24px; min-height: 0; }
+.cs-idea { position: relative; background: var(--g50); border-radius: 22px; padding: 20px; overflow: hidden; }
+.cs-idea small { font-size: 12px; color: var(--g500); }
+.cs-idea b { display: block; font-size: 22px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; margin-top: 2px; }
+.cs-idea img { position: absolute; width: 62%; transition: transform 0.6s var(--island); }
+.cs-idea:hover img { transform: translateY(-6px) rotate(-3deg); }
+.cs-idea img.a { right: -6%; bottom: 4%; }
+.cs-idea img.b { left: 6%; bottom: -6%; width: 48%; }
+
+/* flow steps */
+.cs-step { flex-direction: row; gap: 40px; }
+.cs-step-text { flex: none; width: 260px; padding-top: 4px; }
+.cs-step-text .cs-p { margin-top: 8px; }
+.cs-phones { flex: 1; min-height: 0; display: flex; gap: 20px; align-items: stretch; padding-bottom: 22px; }
+.cs-phone { position: relative; height: 100%; aspect-ratio: 9 / 20; flex: none; }
+.cs-phone img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 22px;
+  border: 1px solid rgba(0,0,0,0.07);
+  background: var(--g50);
+  display: block;
+}
+.cs-phone figcaption { position: absolute; left: 4px; bottom: -22px; font-size: 11px; color: var(--g500); white-space: nowrap; }
+
+
+/* inline emoji, Apple style */
+.cs-card .e { font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; font-size: 1.12em; line-height: 1; vertical-align: -0.06em; margin: 0 0.04em; }
+
+/* lighter stat containers + Fluent illustrations */
+.cs-stat, .cs-impact-grid > div, .cs-mini { background: rgba(245,244,241,0.5) !important; }
+.cs-stat, .cs-impact-grid > div { position: relative; }
+.cs-ill { position: absolute; top: 14px; right: 14px; width: 44px; height: 44px; object-fit: contain; pointer-events: none; transition: transform 0.5s var(--island); }
+.cs-impact-grid .cs-ill { top: 18px; right: 18px; width: 64px; height: 64px; }
+.cs-stat:hover .cs-ill, .cs-impact-grid > div:hover .cs-ill { transform: translateY(-3px) rotate(-6deg) scale(1.05); }
+.cs-impact-grid span { padding-right: 76px; }
+.cs-stat { padding-right: 64px; }
+
+/* problem cards */
+.cs-problems { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 28px; }
+.cs-prob { padding: 18px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.06); }
+.cs-prob b { display: block; font-size: 17px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; }
+.cs-prob p { margin-top: 8px; font-size: 13px; line-height: 1.55; color: var(--g700); }
+
+/* small pieces inside flow frames */
+.cs-ghost { margin-top: 18px; background: var(--white); color: var(--ink); border: 1px solid rgba(0,0,0,0.1); }
+.cs-ghost:hover { background: var(--ink); color: var(--white); }
+.cs-step-wide { width: 340px; }
+.cs-step-wide .cs-p { font-size: 14px; line-height: 1.6; }
+.cs-scroll-hint { margin-top: 14px; font-size: 12px; color: var(--g400); }
+.cs-phone-scroll { border-radius: 22px; overflow: hidden; border: 1px solid rgba(0,0,0,0.07); }
+.cs-scroller { width: 100%; height: 100%; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
+.cs-scroller::-webkit-scrollbar { display: none; }
+.cs-scroller img { width: 100%; height: auto !important; aspect-ratio: auto !important; border: 0 !important; border-radius: 0 !important; display: block; }
+.cs-side-impact { flex: none; width: 200px; display: flex; flex-direction: column; gap: 10px; }
+.cs-mini { padding: 12px 14px; border-radius: 14px; background: var(--g50); }
+.cs-mini b { display: block; font-size: 22px; font-weight: 600; letter-spacing: -0.03em; font-feature-settings: "tnum"; }
+.cs-mini span { display: block; margin-top: 2px; font-size: 11px; line-height: 1.4; color: var(--g700); }
+.cs-mini-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 18px; }
+.cs-mini-row .cs-mini b { font-size: 18px; }
+.cs-proof { display: flex; gap: 6px; margin-top: 2px; }
+.cs-proof-img, .cs-chart { padding: 0; border: 0; background: none; cursor: zoom-in; }
+.cs-proof-img { flex: 1; height: 86px; }
+.cs-proof-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 8px; border: 1px solid rgba(0,0,0,0.08); display: block; }
+.cs-chart { display: block; width: 100%; margin-top: 10px; }
+.cs-chart img { width: 100%; border-radius: 12px; display: block; }
+.cs-impact-6 { grid-template-columns: repeat(3, 1fr); }
+.cs-impact-6 b { font-size: 32px; }
+
+/* customisation impact slide */
+.cs-cimpact { flex-direction: row; gap: 48px; width: auto; }
+.cs-cimpact-text { flex: none; width: 320px; }
+.cs-cimpact-text .cs-p { margin-top: 8px; }
+.cs-cimpact-stats { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+.cs-cimpact-stats .cs-mini b { font-size: 30px; }
+.cs-cimpact-proof { display: flex; gap: 14px; align-items: flex-start; height: 100%; }
+.cs-cimpact-proof .cs-proof-img { flex: none; height: auto; width: 220px; }
+.cs-cimpact-proof .cs-proof-img img { height: auto; max-height: 100%; object-fit: contain; border-radius: 14px; }
+
+.cs-chart-lg { width: 520px; margin: 0; align-self: center; }
+.cs-chart-lg img { border-radius: 18px; }
+
+/* explorations overlay */
+.cs-gallery { position: absolute; inset: 0; z-index: 4; display: grid; place-items: center; padding: 24px; background: rgba(244,243,240,0.9); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); opacity: 0; pointer-events: none; transition: opacity 0.35s var(--ease); }
+.cs-gallery.show { opacity: 1; pointer-events: auto; }
+.cs-gallery-inner { width: min(1100px, 100%); max-height: 100%; overflow: auto; background: var(--white); border-radius: 28px; padding: 28px; transform: translateY(12px); transition: transform 0.5s var(--island); }
+.cs-gallery.show .cs-gallery-inner { transform: none; }
+.cs-gallery-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
+.cs-gallery-head h4 { font-size: 22px; font-weight: 600; letter-spacing: -0.03em; }
+.cs-gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; }
+.cs-gallery-grid .cs-thumb { aspect-ratio: 9 / 20; }
+
+/* explorations */
+.cs-explore { width: auto; }
+.cs-explore-head { max-width: 420px; margin-bottom: 24px; }
+.cs-explore-head .cs-p { margin-top: 8px; }
+.cs-groups { flex: 1; min-height: 0; display: flex; gap: 40px; }
+.cs-group { display: flex; flex-direction: column; min-height: 0; }
+.cs-group-name { font-size: 12px; font-weight: 500; color: var(--g700); margin-bottom: 10px; }
+.cs-group-name span { color: var(--g400); font-weight: 400; margin-left: 4px; }
+.cs-grid { display: grid; grid-auto-flow: column; grid-template-rows: repeat(2, var(--th, 200px)); grid-auto-columns: calc(var(--th, 200px) * 0.45); gap: 12px; }
+.cs-thumb { width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
+.cs-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 12px; border: 1px solid rgba(0,0,0,0.06); display: block; background: var(--g50); transition: transform 0.35s var(--ease); }
+.cs-thumb:hover img { transform: translateY(-3px); }
+
+/* impact */
+.cs-impact { width: min(760px, 84vw); justify-content: space-between; }
+.cs-impact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+.cs-impact-grid div { background: var(--g50); border-radius: 20px; padding: 22px 20px 20px; }
+.cs-impact-grid b { display: block; font-size: 40px; font-weight: 600; letter-spacing: -0.045em; line-height: 1; font-feature-settings: "tnum"; }
+.cs-impact-grid span { display: block; margin-top: 10px; font-size: 13px; line-height: 1.45; color: var(--g700); }
+.cs-foot { font-size: 12px; line-height: 1.5; color: var(--g500); margin-top: 16px; }
+
+/* end */
+.cs-end { width: 560px; justify-content: flex-start; align-items: stretch; padding: 44px; }
+.cs-end .cs-h2 { margin-top: 2px; }
+.cs-notes { display: flex; flex-direction: column; margin-top: 28px; }
+.cs-note { display: grid; grid-template-columns: 34px 1fr; column-gap: 8px; padding: 18px 0; border-top: 1px solid rgba(0,0,0,0.07); }
+.cs-note:last-child { border-bottom: 1px solid rgba(0,0,0,0.07); }
+.cs-note .cs-num { grid-row: span 2; margin: 2px 0 0; }
+.cs-note b { font-size: 15px; font-weight: 600; letter-spacing: -0.015em; }
+.cs-note p { margin-top: 4px; font-size: 14px; line-height: 1.55; color: var(--g700); }
+.cs-end-foot { margin-top: auto; padding-top: 28px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.cs-end .cs-thanks { margin: 0; font-size: 14px; }
+.cs-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 16px; border-radius: 100px;
+  background: var(--ink); color: var(--white);
+  border: 0; font: inherit; font-size: 13px; font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.35s var(--spring);
+}
+.cs-pill:hover { transform: translateY(-2px) scale(1.03); }
+
+/* bottom navigator */
+.cs-nav {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  z-index: 3;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  background: rgba(255,255,255,0.9);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 100px;
+  max-width: calc(100% - 32px);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.cs-nav::-webkit-scrollbar { display: none; }
+.cs-nav button {
+  flex: none;
+  padding: 7px 12px;
+  border: 0;
+  border-radius: 100px;
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+  color: var(--g500);
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s;
+}
+.cs-nav button:hover { color: var(--ink); }
+.cs-nav button.on { background: var(--ink); color: var(--white); }
+
+/* lightbox */
+.cs-lightbox {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  background: rgba(244,243,240,0.92);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease);
+  cursor: zoom-out;
+}
+.cs-lightbox.show { opacity: 1; pointer-events: auto; }
+.cs-lightbox img { height: min(86%, 760px); width: auto; border-radius: 26px; border: 1px solid rgba(0,0,0,0.06); transform: scale(0.96); transition: transform 0.4s var(--island); }
+.cs-lightbox.show img { transform: none; }
+
+body.cs-locked { overflow: hidden; }
+
+@media (max-width: 768px) {
+  .cs-sheet { inset: calc(8px + env(safe-area-inset-top)) 0 0; border-radius: 20px 20px 0 0; }
+  .cs-top { padding: 12px 12px 0 18px; }
+  .cs-track { padding: 0 20px; }
+  .cs-frame { height: calc(100% - 140px); }
+  .cs-card { padding: 22px; border-radius: 24px; }
+  .cs-link { width: 48px; }
+  .cs-gap { width: 40px; }
+  .cs-h1 { font-size: 34px; }
+  .cs-h2 { font-size: 22px; }
+  .cs-p { font-size: 14px; }
+  .cs-intro { flex-direction: column; gap: 18px; width: 86vw; }
+  .cs-intro-text { flex: none; width: auto; padding: 0; }
+  .cs-intro-text .cs-p { font-size: 14px; margin-top: 10px; }
+  .cs-meta { display: none; }
+  .cs-hero-shots { flex: 1; min-height: 0; height: auto; gap: 10px; }
+  .cs-hero-shots img { border-radius: 16px; }
+  .cs-problem, .cs-ideas, .cs-impact { width: 86vw; }
+  .cs-say { font-size: 22px; }
+  .cs-stats { grid-template-columns: 1fr; gap: 8px; }
+  .cs-stat { padding: 12px 14px; display: flex; align-items: baseline; gap: 10px; }
+  .cs-stat b { font-size: 18px; }
+  .cs-stat span { margin: 0; }
+  .cs-ideas-row { grid-template-columns: 1fr; gap: 10px; }
+  .cs-idea { padding: 16px; }
+  .cs-idea b { font-size: 18px; }
+  .cs-idea img { width: 34%; }
+  .cs-idea img.b { width: 28%; left: auto; right: 34%; bottom: -10%; }
+  .cs-step { flex-direction: column; gap: 16px; }
+  .cs-step-text { width: auto; max-width: 76vw; padding: 0; }
+  .cs-phones { flex: none; height: calc(100vh - 400px); min-height: 280px; gap: 14px; padding-bottom: 0; }
+  .cs-explore-head { max-width: 76vw; }
+  .cs-problems { grid-template-columns: 1fr; }
+  .cs-cimpact { flex-direction: column; gap: 20px; }
+  .cs-cimpact-text { width: auto; }
+  .cs-cimpact-proof { height: auto; overflow-x: auto; }
+  .cs-cimpact-proof .cs-proof-img { width: 150px; }
+  .cs-step-wide { width: auto; }
+  .cs-impact-6 { grid-template-columns: 1fr 1fr; }
+  .cs-gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .cs-groups { gap: 28px; }
+  .cs-impact-grid b { font-size: 30px; }
+  .cs-impact-grid div { padding: 16px; }
+  .cs-end { width: 82vw; }
+  .cs-end { padding: 24px; }
+  .cs-notes { margin-top: 16px; }
+  .cs-end-foot { flex-direction: column; align-items: flex-start; }
+  .cs-nav { bottom: calc(12px + env(safe-area-inset-bottom)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-sheet, .cs-backdrop, .work-banner-media, .work-banner-phones img, .cs-idea img { transition: none !important; }
+}
+
+/* ─── CASE STUDY: wide entry tile ─── */
+.case-wide { grid-column: 1 / -1; aspect-ratio: auto; flex-direction: row; align-items: stretch; gap: 24px; padding: 0 0 0 32px; overflow: hidden; cursor: pointer; border: 0; font: inherit; text-align: left; min-height: 340px; }
+.case-wide-text { display: flex; flex-direction: column; justify-content: space-between; padding: 32px 0; flex: none; width: 260px; }
+.case-wide .case-title { font-size: 24px; }
+.case-wide-sub { display: block; margin-top: 8px; font-size: 14px; line-height: 1.5; color: var(--g700); max-width: 240px; }
+.case-wide-shots { position: relative; flex: 1; display: flex; justify-content: center; align-items: flex-end; gap: 16px; padding-top: 36px; min-width: 0; }
+.case-wide-shots img { width: 26%; max-width: 190px; aspect-ratio: 9 / 18; object-fit: cover; object-position: top; border-radius: 22px 22px 0 0; transition: transform 0.6s var(--island); }
+.case-wide-shots img:nth-child(2) { width: 30%; max-width: 220px; }
+.case-wide:hover .case-wide-shots img { transform: translateY(-8px); }
+.case-wide:hover .case-wide-shots img:nth-child(2) { transition-delay: 0.04s; }
+.case-wide:hover .case-wide-shots img:nth-child(3) { transition-delay: 0.08s; }
+@media (max-width: 768px) {
+  .case-wide { flex-direction: column; padding: 0; min-height: 0; }
+  .case-wide-text { width: auto; padding: 18px 18px 0; gap: 18px; }
+  .case-wide .case-title { font-size: 18px; }
+  .case-wide-shots { padding: 8px 12px 0; gap: 8px; }
+  .case-wide-shots img { border-radius: 14px 14px 0 0; }
+}
+
+/* ─── CASE STUDIES: shared media (videos, Lotties, GIF overlays) ─── */
+.cs-phone video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 22px;
+  border: 1px solid rgba(0,0,0,0.07);
+  background: var(--g50);
+  display: block;
+}
+.cs-phone.sq { aspect-ratio: 1 / 1; }
+.cs-phone.r916 { aspect-ratio: 9 / 16; }
+.cs-phone.r37 { aspect-ratio: 720 / 1480; }
+.cs-phone.r36 { aspect-ratio: 720 / 1456; }
+.cs-phone.r9195 { aspect-ratio: 720 / 1558; }
+/* Genie recordings: trim the black line at the top and bottom edges */
+.cs-phone.rgenie { aspect-ratio: 1848 / 3700; }
+.cs-phone.rgenie video { object-fit: cover; object-position: center; background: #fff; }
+.cs-phone.r9208 { aspect-ratio: 1081 / 2341; }
+.cs-phone.dark video { background: #000; }
+.cs-hero-shots .cs-phone { height: 78%; }
+.cs-hero-shots .cs-phone:nth-child(2) { height: 100%; }
+.cs-hero-shots .cs-phone.sq { height: 86%; }
+
+/* an animation laid over a static screen, placed in % of the screen */
+.cs-over { position: absolute; pointer-events: none; }
+.cs-phone .cs-over > img, .cs-phone .cs-over > video { width: 100%; height: 100%; object-fit: contain; border: 0; border-radius: 10px; background: none; }
+/* Zepto ETA card illustration slot */
+.cs-over.ot { left: 6.8%; top: 15%; width: 74.4%; aspect-ratio: 268 / 188; }
+.cs-lottie { width: 100%; height: 100%; }
+.cs-lottie svg { display: block; }
+
+/* Order Tracking intro: one big screen running off the bottom of the card */
+.ot-intro { overflow: hidden; }
+.ot-intro .cs-hero-shots { align-items: flex-start; }
+.cs-hero-shots .cs-phone.ot-hero { height: 132%; }
+.cs-hero-shots .cs-phone.ot-hero img { border-radius: 30px; }
+
+/* problem grid with three columns */
+.cs-problems-3 { grid-template-columns: repeat(3, 1fr); }
+
+/* an animation cut out of its black video frame */
+.cs-phone.cs-anim { display: grid; place-items: center; background: none; }
+.cs-anim-clip { position: relative; width: 80%; aspect-ratio: 1 / 1; border-radius: 22%; overflow: hidden; }
+.cs-phone .cs-anim-clip video { position: absolute; width: 176%; height: 176%; left: -38%; top: -38%; max-width: none; border: 0; border-radius: 0; background: none; object-fit: cover; }
+
+/* square art tiles: one big, two stacked */
+.cs-tiles { flex: none; height: 100%; display: flex; gap: 16px; padding-bottom: 22px; }
+.cs-tiles-col { height: 100%; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+.cs-tile { position: relative; flex: none; margin: 0; aspect-ratio: 1 / 1; height: calc(50% - 8px); border-radius: 24px; overflow: hidden; background: var(--g50); }
+.cs-tile.big { height: 100%; }
+.cs-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cs-tile figcaption { position: absolute; left: 12px; bottom: 12px; padding: 8px 12px; border-radius: 14px; background: rgba(255,255,255,0.92); font-size: 13px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.3; }
+.cs-tile figcaption span { display: block; font-size: 11px; font-weight: 400; color: var(--g500); }
+
+/* a wide picture that fills the frame height */
+.cs-wide-pic { flex: 1; min-height: 0; display: flex; align-items: center; padding-bottom: 22px; }
+.cs-wide-pic img, .cs-wide-pic .cs-proof-img { height: 100%; width: auto; max-width: none; }
+.cs-wide-pic img { border-radius: 18px; border: 1px solid rgba(0,0,0,0.06); display: block; }
+.cs-wide-pic .cs-proof-img img { height: 100%; width: auto; object-fit: contain; }
+
+/* before / after */
+.cs-ba { flex: 1; min-height: 0; display: flex; gap: 28px; padding-bottom: 22px; }
+.cs-ba-col { display: flex; gap: 18px; height: 100%; }
+.cs-ba-col .cs-phone { height: 100%; }
+.cs-ba-list { width: 220px; display: flex; flex-direction: column; justify-content: center; gap: 14px; }
+.cs-ba-list h4 { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; letter-spacing: -0.02em; }
+.cs-ba-list h4 img { width: 28px; height: 28px; }
+.cs-ba-list p { font-size: 13px; line-height: 1.5; color: var(--g700); }
+.cs-ba-list b { color: var(--ink); font-weight: 600; }
+
+/* exploration cards with their own shape (not phone screens): equal cells */
+.cs-cards { flex: none; height: 100%; display: grid; grid-template-columns: repeat(3, 290px); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 14px; padding-bottom: 22px; }
+.cs-cards .cs-thumb { position: relative; width: 100%; height: 100%; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 40px 18px 18px; border-radius: 20px; background: var(--g50); }
+.cs-cards .cs-thumb img { width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 14px; border: 1px solid rgba(0,0,0,0.06); background: var(--white); }
+.cs-tag { position: absolute; top: 14px; left: 16px; font-size: 11px; font-weight: 500; color: var(--g500); letter-spacing: 0; }
+
+/* reactions */
+.cs-reacts { flex: none; display: flex; gap: 12px; align-items: flex-start; align-self: center; padding-bottom: 22px; }
+.cs-reacts-col { width: 300px; display: flex; flex-direction: column; gap: 10px; }
+.cs-reacts .cs-thumb { height: auto; }
+.cs-reacts .cs-thumb img { height: auto; border-radius: 12px; background: #000; }
+.cs-end-foot .cs-pill { flex: none; white-space: nowrap; }
+
+/* Swiggy home made from the real banner Lotties */
+.cs-swhome { flex: none; align-self: center; width: 440px; margin-bottom: 22px; padding: 18px 16px; border-radius: 26px; background: var(--white); border: 1px solid rgba(0,0,0,0.07); display: flex; flex-direction: column; gap: 12px; overflow: hidden; }
+.cs-swhome .l { width: 100%; }
+.cs-swhome-row { display: grid; gap: 10px; align-items: center; }
+.cs-swhome-row.two { grid-template-columns: 1fr 1fr; }
+.cs-swhome-row.tiles { grid-template-columns: 98fr 80fr 120fr 156fr; align-items: stretch; }
+.cs-swhome-stack { display: flex; flex-direction: column; justify-content: space-between; gap: 8px; }
+
+/* a wall of Lotties */
+.cs-wall { flex: 1; min-height: 0; display: grid; grid-template-rows: repeat(3, minmax(0, 1fr)); grid-auto-flow: column; grid-auto-columns: 170px; gap: 12px; padding-bottom: 22px; }
+.cs-wall figure { margin: 0; display: flex; flex-direction: column; min-height: 0; min-width: 0; background: var(--white); border: 0.7px solid var(--g200); border-radius: 18px; padding: 10px 10px 8px; }
+.cs-wall figure.w2 { grid-column: span 2; }
+.cs-wall .cs-lottie, .cs-wall .pic { flex: 1; min-height: 0; }
+.cs-wall .pic { flex: 1 1 0; min-height: 0; width: auto; max-width: 100%; align-self: center; object-fit: contain; border-radius: 22px; }
+.cs-wall figcaption { flex: none; margin-top: 6px; font-size: 11px; color: var(--g500); white-space: nowrap; text-align: center; }
+
+/* the impact slide for a single strong number */
+.cs-big { flex: none; width: 300px; align-self: stretch; display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: 28px; border-radius: 22px; background: rgba(245,244,241,0.5); }
+.cs-big img { width: 120px; height: 120px; object-fit: contain; margin-bottom: 16px; }
+.cs-big b { font-size: 64px; font-weight: 600; letter-spacing: -0.05em; line-height: 1; font-feature-settings: "tnum"; }
+.cs-big span { font-size: 14px; line-height: 1.45; color: var(--g700); }
+
+.cs-pill-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+a.cs-pill { text-decoration: none; }
+
+@media (max-width: 768px) {
+  .cs-problems-3 { grid-template-columns: 1fr; }
+  .cs-tiles { height: calc(100vh - 440px); min-height: 260px; gap: 10px; }
+  .cs-tiles-col { gap: 10px; }
+  .cs-tile { height: calc(50% - 5px); border-radius: 16px; }
+  .cs-tile.big { height: 100%; }
+  .cs-ba { flex-direction: column; height: auto; flex: none; }
+  .cs-ba-col { height: calc(100vh - 420px); min-height: 260px; }
+  .cs-ba-list { width: auto; }
+  .cs-reacts { overflow-x: auto; max-width: 86vw; }
+  .cs-reacts-col { width: 220px; flex: none; }
+  .cs-cards { grid-template-columns: repeat(3, 200px); }
+  .cs-cards, .cs-wall, .cs-wide-pic { flex: none; height: calc(100vh - 400px); min-height: 280px; }
+  .cs-cards, .cs-wall, .cs-wide-pic { max-width: 100%; overflow-x: auto; }
+  .cs-swhome { width: 78vw; }
+  .cs-hero-shots .cs-phone.ot-hero { height: 118%; }
+  .cs-hero-shots .cs-phone.sq { height: auto; width: 100%; align-self: center; }
+  .cs-big { padding: 20px; }
+  .cs-big img { width: 72px; height: 72px; margin-bottom: 8px; }
+  .cs-big { width: auto; }
+  .cs-big b { font-size: 44px; }
+}
+
+/* Dunzo: where each mascot GIF sits on its screen */
+.cs-over.dz-onb { left: 19%; top: 10%; width: 62%; aspect-ratio: 1 / 1; }
+.cs-over.dz-onb3 { left: 22%; top: 16%; width: 56%; aspect-ratio: 1 / 1; }
+.cs-over.dz-peak { left: 9%; top: 12%; width: 82%; aspect-ratio: 1 / 1; }
+
+/* Swiggy: the scooter rides above the landmark sheet */
+.cs-over.sw-land { left: 10%; top: 45.4%; width: 80%; aspect-ratio: 360 / 156; }
+
+/* about statement, centred under the hero */
+.about { padding: 8px 0 72px; text-align: center; }
+@media (max-width: 768px) { .about { padding: 4px 4px 48px; } }
+
+/* selected work: small tiles with a peek of the work */
+.case-sm { aspect-ratio: 1 / 1.08; justify-content: flex-start; gap: 14px; overflow: hidden; }
+.case-sm .case-icon { width: 44px; height: 44px; border-radius: 26%; }
+.case-sm .case-title { font-size: 17px; }
+.case-hero { position: absolute; left: 22px; right: 22px; bottom: 0; top: 50%; display: flex; justify-content: center; align-items: flex-end; gap: 8px; pointer-events: none; }
+.case-hero img { display: block; transition: transform 0.6s var(--island); }
+.ch-tiles { align-items: center; padding-bottom: 22px; }
+.ch-tiles img { position: relative; width: 40%; margin: 0 -3%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 18px; border: 3px solid var(--tile); }
+.ch-tiles img:nth-child(1) { transform: rotate(-8deg) translateY(6px); }
+.ch-tiles img:nth-child(2) { z-index: 1; transform: translateY(-8px); }
+.ch-tiles img:nth-child(3) { transform: rotate(8deg) translateY(6px); }
+.ch-phones img { width: 40%; height: 100%; object-fit: cover; object-position: top; border-radius: 16px 16px 0 0; border: 1px solid rgba(0,0,0,0.06); border-bottom: 0; }
+.ch-pic img { width: 100%; height: calc(100% - 22px); margin-bottom: 22px; object-fit: cover; border-radius: 16px; }
+.case-sm:hover .case-hero img { transform: translateY(-6px); }
+.ch-icon { align-items: center; padding-bottom: 22px; }
+.case-lottie { display: block; height: 100%; max-height: 190px; max-width: 100%; aspect-ratio: 1 / 1; transition: transform 0.6s var(--island); }
+.case-lottie svg { display: block; }
+.case-sm:hover .case-lottie { transform: translateY(-6px) rotate(-4deg); }
+.case-sm:hover .ch-tiles img:nth-child(1) { transform: rotate(-12deg) translate(-6px, 2px); }
+.case-sm:hover .ch-tiles img:nth-child(2) { transform: translateY(-14px); }
+.case-sm:hover .ch-tiles img:nth-child(3) { transform: rotate(12deg) translate(6px, 2px); }
+@media (max-width: 1024px) {
+  .case-sm { aspect-ratio: 3 / 2; }
+  .case-hero { left: 42%; top: 70px; right: 22px; }
+  .ch-tiles { padding-bottom: 0; }
+  .ch-pic img { height: calc(100% - 22px); }
+}
+@media (max-width: 768px) {
+  .case-sm { aspect-ratio: 1 / 1.25; gap: 10px; }
+  .case-sm .case-icon { width: 36px; height: 36px; }
+  .case-hero { left: 14px; right: 14px; top: 56%; }
+  .ch-tiles, .ch-icon { padding-bottom: 14px; }
+  .ch-pic img { height: calc(100% - 14px); margin-bottom: 14px; border-radius: 12px; }
+  .ch-tiles img { border-radius: 10px; }
+  .ch-phones img { border-radius: 10px 10px 0 0; }
+}
+
+/* a fully black card, for slides built around dark screenshots */
+.cs-card.cs-dark { background: #000; border-color: #000; }
+.cs-dark .cs-h2 { color: #fff; }
+.cs-dark .cs-p { color: #a1a1a6; }
+.cs-dark .cs-num { color: #6e6e73; }
+.cs-dark .cs-wide-pic img { border: 0; }
+
+/* Order Tracking tile: just the delivered card, cut from the full screen */
+.ch-crop { position: relative; display: block; height: 100%; max-height: 230px; aspect-ratio: 584 / 728; border-radius: 16px; overflow: hidden; background: #fff; transition: transform 0.6s var(--island); }
+.ch-crop img, .ch-crop video { position: absolute; left: -4.11%; top: -30.49%; width: 123.3%; height: auto; max-width: none; }
+.case-sm:hover .case-hero .ch-crop img { transform: none; }
+.ch-crop .case-lottie { position: absolute; left: 4.28%; top: 2.47%; width: 91.7%; height: auto; max-height: none; aspect-ratio: 268 / 188; }
+.case-sm:hover .ch-crop .case-lottie { transform: none; }
+.case-sm:hover .ch-crop { transform: translateY(-6px); }
+
+/* Dunzo tile: the logo and the waving shopkeeper from the onboarding screen */
+.ch-crop.dz { aspect-ratio: 1 / 1; }
+.ch-crop.dz img { left: -19.23%; top: -10.58%; width: 138.46%; }
+.ch-crop.dz .ch-gif { left: 7.12%; top: 14.04%; width: 85.87%; }
+
+/* ─── CASE STUDY on phones: one vertical read instead of a sideways canvas ─── */
+@media (max-width: 768px) {
+  .cs-sheet { inset: calc(10px + env(safe-area-inset-top)) 0 0; }
+  .cs-top { padding: 10px 10px 18px 20px; background: linear-gradient(#f4f3f0 62%, rgba(244,243,240,0)); }
+  .cs-top-title { font-size: 14px; }
+  .cs-canvas { overflow-x: hidden; overflow-y: auto; cursor: auto; -webkit-overflow-scrolling: touch; }
+  .cs-track { flex-direction: column; align-items: stretch; width: auto; height: auto; padding: 68px 10px calc(96px + env(safe-area-inset-bottom)); }
+  .cs-frame { height: auto; scroll-margin-top: 64px; }
+  .cs-frame-name { position: static; display: block; margin: 0 0 8px 12px; font-size: 12px; white-space: normal; }
+  .cs-link { display: none; }
+  .cs-gap { width: auto; height: 28px; }
+  .cs-frame + .cs-link + .cs-frame, .cs-link + .cs-frame { margin-top: 28px; }
+
+  /* every card takes the full width and grows with its content */
+  .cs-card, .cs-intro, .cs-problem, .cs-ideas, .cs-impact, .cs-end, .cs-cimpact, .cs-explore { width: auto; height: auto; }
+  .cs-card { padding: 22px 20px; border-radius: 22px; gap: 20px; }
+  .cs-h1 { font-size: 36px; }
+  .cs-h2 { font-size: 24px; }
+  .cs-p { font-size: 15px; line-height: 1.55; }
+  .cs-step-text, .cs-step-wide, .cs-explore-head { width: auto; max-width: none; }
+  .cs-intro-text .cs-p { font-size: 15px; }
+  .cs-meta { display: grid; margin-top: 18px; }
+
+  /* media rows: a fixed height, swipe sideways when they don't fit, bleed to the card edge */
+  .cs-hero-shots, .cs-phones, .cs-tiles, .cs-cards, .cs-wall, .cs-wide-pic, .cs-reacts, .cs-cimpact-proof, .cs-groups {
+    flex: none; max-width: none; min-height: 0;
+    margin: 0 -20px; padding: 0 20px 26px;
+    overflow-x: auto; overflow-y: hidden;
+    scroll-snap-type: x mandatory; scroll-padding: 0 20px;
+    scrollbar-width: none; overscroll-behavior-x: contain;
+  }
+  .cs-hero-shots::-webkit-scrollbar, .cs-phones::-webkit-scrollbar, .cs-tiles::-webkit-scrollbar, .cs-cards::-webkit-scrollbar, .cs-wall::-webkit-scrollbar, .cs-wide-pic::-webkit-scrollbar, .cs-reacts::-webkit-scrollbar, .cs-cimpact-proof::-webkit-scrollbar, .cs-groups::-webkit-scrollbar { display: none; }
+  .cs-phones > *, .cs-hero-shots > *, .cs-tiles > *, .cs-reacts > *, .cs-cimpact-proof > *, .cs-groups > * { scroll-snap-align: start; }
+  .cs-phones { height: 470px; gap: 12px; }
+  .cs-hero-shots { height: 440px; padding-bottom: 0; justify-content: flex-start; align-items: center; }
+  .ot-intro .cs-hero-shots { height: 380px; align-items: flex-start; }
+  .cs-hero-shots img, .cs-hero-shots .cs-phone { scroll-snap-align: start; }
+  .cs-hero-shots .cs-phone.sq { height: 100%; width: auto; }
+  .cs-phone img, .cs-phone video, .cs-phone-scroll { border-radius: 18px; }
+  .cs-tiles { height: 360px; }
+  .cs-ba-col { height: 440px; overflow-x: auto; margin: 0 -20px; padding: 0 20px; scrollbar-width: none; }
+  .cs-cards { height: 440px; grid-template-columns: repeat(3, 220px); }
+  .cs-wall { height: 460px; grid-auto-columns: 150px; }
+  .cs-wide-pic { height: 380px; }
+  .cs-reacts { align-self: stretch; }
+  .cs-reacts-col { width: 240px; }
+  .cs-cimpact-proof .cs-proof-img { width: 180px; }
+  .cs-chart-lg { width: 100%; }
+  .cs-swhome { width: auto; align-self: stretch; margin-bottom: 0; }
+  .cs-big { align-self: stretch; }
+  .cs-dark .cs-wide-pic img { border-radius: 14px; }
+  .cs-end-foot { padding-top: 22px; }
+
+  .cs-impact-grid, .cs-impact-6 { grid-template-columns: 1fr; gap: 10px; }
+  .cs-impact-grid div { padding: 18px 18px 16px; min-width: 0; }
+  .cs-impact-grid b, .cs-impact-6 b { font-size: 34px; padding-right: 64px; }
+  .cs-impact-grid .cs-ill { width: 52px; height: 52px; top: 16px; right: 16px; }
+  .cs-impact-grid span { padding-right: 64px; }
+  .cs-nav { bottom: calc(14px + env(safe-area-inset-bottom)); box-shadow: 0 8px 24px rgba(22,21,19,0.10); }
+  .cs-nav button { padding: 9px 14px; font-size: 13px; }
 }
 </style>
 </head>
@@ -979,82 +1573,108 @@ function init() {
 init();
 </script>
 
-<div class="page">
-  <!-- LEFT SIDEBAR (desktop only; hidden on mobile) -->
-  <aside class="sidebar">
-    <canvas class="sidebar-halftone" id="sidebarHalftone" aria-hidden="true"></canvas>
-    <div class="sidebar-top">
-      <h1 class="sidebar-name"><span class="name-line">Interactions</span><span class="name-line">by Harin</span></h1>
-      <p class="sidebar-bio"><span class="bio-highlight">6 years</span> into design, currently at <span class="bio-highlight">CRED</span>. Previously at <span class="bio-highlight">Zepto</span>, <span class="bio-highlight">Swiggy</span>, <span class="bio-highlight">Dunzo</span>, and <span class="bio-highlight">Meesho</span>.<br><br>My journey started with posters, then moved through illustrations, animations, UI, product thinking, and interactions, slowly shaping me into a <span class="bio-highlight">generalist designer</span>.<br><br>I share weekly explorations here, so come by whenever you need a little inspiration.<br><br>GitHub link coming soon.</p>
-      <div class="sidebar-links">
-        <a class="sidebar-link" href="https://instagram.com/harin.design" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-          Instagram
-        </a>
-        <a class="sidebar-link" href="https://x.com/HNitisvaar" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          Twitter
-        </a>
-        <a class="sidebar-link" href="https://www.linkedin.com/in/harinnitisvaar/" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          LinkedIn
-        </a>
-      </div>
-    </div>
-    <div class="sidebar-bottom">
-      © 2026 Harin Nitisvaar
-    </div>
-  </aside>
-
-  <!-- MOBILE FLOATING NAV (hidden on desktop; controlled by JS) -->
-  <header class="m-nav" id="mNav" data-state="collapsed" aria-label="Site">
-    <div class="m-nav-bar">
-      <h1 class="m-nav-name">Interactions by Harin</h1>
-      <button class="m-nav-toggle" id="mNavToggle" type="button"
-              aria-expanded="false"
-              aria-controls="mNavPanel"
-              aria-label="Show bio and links">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-      </button>
-    </div>
-    <div class="m-nav-panel" id="mNavPanel">
-      <div class="m-nav-panel-inner">
-        <div class="m-nav-panel-scroll">
-          <p class="m-nav-bio"><span class="bio-highlight">6 years</span> into design, currently at <span class="bio-highlight">CRED</span>. Previously at <span class="bio-highlight">Zepto</span>, <span class="bio-highlight">Swiggy</span>, <span class="bio-highlight">Dunzo</span>, and <span class="bio-highlight">Meesho</span>.<br><br>My journey started with posters, then moved through illustrations, animations, UI, product thinking, and interactions, slowly shaping me into a <span class="bio-highlight">generalist designer</span>.<br><br>I share weekly explorations here, so come by whenever you need a little inspiration.<br><br>GitHub link coming soon.</p>
-          <div class="m-nav-links">
-            <a class="m-nav-link" href="https://instagram.com/harin.design" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-              Instagram
-            </a>
-            <a class="m-nav-link" href="https://x.com/HNitisvaar" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-              Twitter
-            </a>
-            <a class="m-nav-link" href="https://www.linkedin.com/in/harinnitisvaar/" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-              LinkedIn
-            </a>
-          </div>
-          <div class="m-nav-footer">© 2026 Harin Nitisvaar</div>
-        </div>
-      </div>
-    </div>
+<div class="sheet">
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Interactions by Harin, home">
+      <span class="brand-mark" aria-hidden="true">H</span>
+      <span>Harin</span>
+    </a>
+    <nav class="topbar-links" aria-label="Social">
+      <a class="pill" href="https://instagram.com/harin.design" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        <span class="pill-label">Instagram</span>
+      </a>
+      <a class="pill" href="https://x.com/HNitisvaar" target="_blank" rel="noopener" aria-label="Twitter">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        <span class="pill-label">Twitter</span>
+      </a>
+      <a class="pill is-outline" href="https://www.linkedin.com/in/harinnitisvaar/" target="_blank" rel="noopener">
+        <span class="pill-label">LinkedIn</span>
+      </a>
+    </nav>
   </header>
 
-  <!-- RIGHT CONTENT -->
+  <section class="hero">
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <filter id="melt" x="-20%" y="-50%" width="140%" height="200%" color-interpolation-filters="sRGB">
+        <!-- Paint solid ink (#1d1d1f) and threshold the alpha so blurred letters fuse like liquid.
+             The threshold strength is animated so the effect fades in and out instead of snapping. -->
+        <feColorMatrix id="meltMatrix" in="SourceGraphic" type="matrix" values="0 0 0 0 0.114  0 0 0 0 0.114  0 0 0 0 0.122  0 0 0 1 0" result="goo"/>
+      </filter>
+    </svg>
+    <h1 class="hero-title" aria-label="Interactions, product design, motion, illustrations and visual design">
+      <span class="morph" id="morph" aria-hidden="true"><span class="morph-a">Interactions</span><span class="morph-b"></span></span>
+    </h1>
+    <p class="hero-sub">Weekly explorations in motion and interaction—made with SwiftUI, Figma &amp; a lot of coffee.</p>
+  </section>
+
   <main class="content">
-    <div class="content-label">Made with SwiftUI, Figma & a lot of coffee</div>
+    <section class="about" aria-label="About">
+      <p class="about-statement"><b>6 years</b> into design, currently at <b>CRED</b>. Previously at <b>Zepto</b>, <b>Swiggy</b>, <b>Dunzo</b>, and <b>Meesho</b>. It started with posters, then illustrations, animations, UI, product thinking and interactions—slowly shaping me into a <b>generalist designer</b>.</p>
+    </section>
+
     <div class="grid" id="grid"></div>
 
+    <!-- CASE STUDIES -->
+    <section class="cases" aria-label="Case studies">
+      <div class="section-head">
+        <h2 class="section-title">Selected Work</h2>
+        <p class="section-sub">Work I'm proud of, crafted with care.</p>
+      </div>
+      <div class="cases-grid">
+        <button class="case case-wide" type="button" id="csOpen" data-cs-open="cs" aria-haspopup="dialog" aria-controls="cs">
+          <span class="case-wide-text">
+            <img class="case-icon" src="logos/zepto.png" alt="Zepto logo">
+            <span><span class="case-title">Zepto Cafe</span><span class="case-wide-sub">Taking a grocery app into 10-minute food. From 40 stores to 650+.</span></span>
+          </span>
+          <span class="case-wide-shots" aria-hidden="true">
+            <img src="work/zepto-cafe/01-store-picker.png" alt="" loading="lazy">
+            <img src="work/zepto-cafe/02-cafe-home.png" alt="" loading="lazy">
+            <img src="work/zepto-cafe/09-addons.png" alt="" loading="lazy">
+          </span>
+          <span class="case-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </button>
+        <a class="case case-sm" href="#tipping-widget">
+          <span class="case-hero ch-tiles" aria-hidden="true"><img src="work/tipping-widget/ill-building.png" alt="" loading="lazy"><img src="work/tipping-widget/ill-stairs.png" alt="" loading="lazy"><img src="work/tipping-widget/ill-rain.png" alt="" loading="lazy"></span>
+          <img class="case-icon" src="logos/swiggy.png" alt="Swiggy logo">
+          <span class="case-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <span><span class="case-title">Tipping Widget</span></span>
+        </a>
+        <a class="case case-sm" href="#dunzo-visuals">
+          <span class="case-hero ch-icon" aria-hidden="true"><span class="ch-crop dz"><img src="work/dunzo/onb-01.png" alt="" loading="lazy"><video class="ch-gif" src="work/dunzo/onb-01.mp4" autoplay muted loop playsinline preload="metadata"></video></span></span>
+          <img class="case-icon" src="logos/dunzo.png" alt="Dunzo logo">
+          <span class="case-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <span><span class="case-title">Dunzo Visuals</span></span>
+        </a>
+        <a class="case case-sm" href="#order-tracking-page">
+          <span class="case-hero ch-icon" aria-hidden="true"><span class="ch-crop"><img src="work/order-tracking/state-delivered.png" alt="" loading="lazy"><span class="case-lottie" data-lottie="work/order-tracking/l-delivered.json"></span></span></span>
+          <img class="case-icon" src="logos/zepto.png" alt="Zepto logo">
+          <span class="case-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <span><span class="case-title">Order Tracking Page</span></span>
+        </a>
+        <a class="case case-sm" href="#everything-visuals">
+          <span class="case-hero ch-icon" aria-hidden="true"><span class="case-lottie" data-lottie="work/swiggy-visuals/l/genie-searching.json"></span></span>
+          <img class="case-icon" src="logos/swiggy.png" alt="Swiggy logo">
+          <span class="case-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <span><span class="case-title">Everything Visuals</span></span>
+        </a>
+      </div>
+    </section>
+
     <!-- FEATURED -->
-    <div class="featured-section">
-      <div class="featured-head">
-        <span class="content-label" style="margin:0;">Featured</span>
-        <span class="content-sub" style="margin:0;padding:0;background:transparent;font-size:12px;color:var(--g500);letter-spacing:-0.01em;text-transform:none;font-weight:400;">a few kind mentions I'm grateful for</span>
+    <section class="featured-section">
+      <div class="section-head">
+        <h2 class="section-title">Featured</h2>
+        <p class="section-sub">A few kind mentions I'm grateful for.</p>
       </div>
       <div class="featured-scroll" id="featured-scroll"></div>
-    </div>
+    </section>
   </main>
+
+  <footer class="footer">
+    <span>© 2026 Harin Nitisvaar</span>
+    <span>GitHub link coming soon.</span>
+  </footer>
 </div>
 
 <script>
@@ -1078,11 +1698,14 @@ const works = [
 function render() {
   document.getElementById('grid').innerHTML = works.map((w, i) => `
     <div class="card" style="animation-delay:${i * 0.06}s" data-idx="${i}">
+      <div class="card-info">
+        <div class="card-year">${w.context}</div>
+        <div class="card-title">${w.title}</div>
+      </div>
       <div class="card-media" onclick="handleCardClick(${i})">
         ${w.video ? `<video
           playsinline muted loop
           preload="${i === 0 ? 'metadata' : 'none'}"
-          poster="${w.poster}"
           data-idx="${i}"
           data-src="${w.video}"
         >
@@ -1102,10 +1725,6 @@ function render() {
             <span class="card-bar-time" data-idx="${i}">0:00</span>
           </div>
         </div>` : ''}
-      </div>
-      <div class="card-info">
-        <div class="card-title">${w.title}</div>
-        <div class="card-year">${w.context}</div>
       </div>
     </div>
   `).join('');
@@ -1296,12 +1915,12 @@ render();
 
 // Featured horizontal scroll
 const featured = [
-  { img: 'press/hindustan-times-3.png', url: 'https://www.newindianexpress.com/cities/bengaluru/2025/Sep/23/game-of-chaos-bengaluru-traffic-reimagined-to-a-quirky-game' },
-  { img: 'press/hindustan-times-1.png', url: 'https://www.ndtv.com/offbeat/grand-theft-auto-grand-theft-autorickshaw-bengaluru-techie-traffic-ai-game-9245578' },
-  { img: 'press/hindustan-times.png', url: 'https://www.hindustantimes.com/trending/bengaluru-techie-turns-potholes-into-ai-racing-game-grand-theft-autorickshaw-101757419518214-amp.html' },
-  { img: 'press/hindustan-times-2.png', url: 'https://analyticsindiamag.com/ai-news-updates/bengaluru-developer-builds-mission-office-iphone-game-with-potholes-and-cows-using-chatgpt/' },
-  { img: 'press/60fps.png', url: 'https://www.instagram.com/p/DOdA95_CDWR/' },
-  { img: 'press/60fps-1.png', url: 'https://www.instagram.com/p/DObZigwDBmg/' },
+  { img: 'press/clip-nie.jpg', logo: 'press/logo-nie.png', name: 'The New Indian Express', url: 'https://www.newindianexpress.com/cities/bengaluru/2025/Sep/23/game-of-chaos-bengaluru-traffic-reimagined-to-a-quirky-game' },
+  { img: 'press/clip-ndtv.jpg', logo: 'press/logo-ndtv.png', name: 'NDTV', url: 'https://www.ndtv.com/offbeat/grand-theft-auto-grand-theft-autorickshaw-bengaluru-techie-traffic-ai-game-9245578' },
+  { img: 'press/clip-ht.jpg', logo: 'press/logo-ht.png', name: 'Hindustan Times', url: 'https://www.hindustantimes.com/trending/bengaluru-techie-turns-potholes-into-ai-racing-game-grand-theft-autorickshaw-101757419518214-amp.html' },
+  { img: 'press/clip-aim.jpg', logo: 'press/logo-aim.png', name: 'Analytics India Magazine', url: 'https://analyticsindiamag.com/ai-news-updates/bengaluru-developer-builds-mission-office-iphone-game-with-potholes-and-cows-using-chatgpt/' },
+  { img: 'press/clip-60fps.jpg', name: '60fps', url: 'https://www.instagram.com/p/DOdA95_CDWR/' },
+  { img: 'press/clip-spline.jpg', name: 'Spline', url: 'https://www.instagram.com/p/DObZigwDBmg/' },
 ];
 
 function renderFeatured() {
@@ -1309,7 +1928,8 @@ function renderFeatured() {
   if (!wrap) return;
   wrap.innerHTML = featured.map((f, i) =>
     `<div class="feat-card" onclick="window.open('${f.url}','_blank','noopener')">
-      <div class="feat-card-img"><img src="${f.img}" alt="" onerror="this.style.display='none'"></div>
+      <img class="feat-clip" src="${f.img}" alt="${f.name}" loading="lazy">
+      <span class="feat-src">${f.logo ? `<img src="${f.logo}" alt="">` : f.name}</span>
     </div>`
   ).join('');
 
@@ -1407,285 +2027,1480 @@ renderFeatured();
 </script>
 
 <script>
+/* ── Hero word morph: Interactions → Product design → Motion → … ── */
 (function(){
-  function squirclePath(w, h, R, S){
-    var maxR = Math.min(w, h) / 2;
-    R = Math.min(R, maxR);
-    var p = Math.min((1 + S) * R, maxR);
-    var arcMeasure = 90 * (1 - S);
-    var arcLen = Math.sin((arcMeasure / 2) * Math.PI / 180) * R * Math.SQRT2;
-    var alpha = (90 - arcMeasure) / 2;
-    var p3p4 = R * Math.tan((alpha / 2) * Math.PI / 180);
-    var beta = 45 * S;
-    var c = p3p4 * Math.cos(beta * Math.PI / 180);
-    var d = c * Math.tan(beta * Math.PI / 180);
-    var b = (p - arcLen - c - d) / 3;
-    var a = 2 * b;
-    var TR = 'c ' + a + ' 0 ' + (a+b) + ' 0 ' + (a+b+c) + ' ' + d +
-             ' a ' + R + ' ' + R + ' 0 0 1 ' + arcLen + ' ' + arcLen +
-             ' c ' + d + ' ' + c + ' ' + d + ' ' + (b+c) + ' ' + d + ' ' + (a+b+c);
-    var BR = 'c 0 ' + a + ' 0 ' + (a+b) + ' ' + (-d) + ' ' + (a+b+c) +
-             ' a ' + R + ' ' + R + ' 0 0 1 ' + (-arcLen) + ' ' + arcLen +
-             ' c ' + (-c) + ' ' + d + ' ' + (-(b+c)) + ' ' + d + ' ' + (-(a+b+c)) + ' ' + d;
-    var BL = 'c ' + (-a) + ' 0 ' + (-(a+b)) + ' 0 ' + (-(a+b+c)) + ' ' + (-d) +
-             ' a ' + R + ' ' + R + ' 0 0 1 ' + (-arcLen) + ' ' + (-arcLen) +
-             ' c ' + (-d) + ' ' + (-c) + ' ' + (-d) + ' ' + (-(b+c)) + ' ' + (-d) + ' ' + (-(a+b+c));
-    var TL = 'c 0 ' + (-a) + ' 0 ' + (-(a+b)) + ' ' + d + ' ' + (-(a+b+c)) +
-             ' a ' + R + ' ' + R + ' 0 0 1 ' + arcLen + ' ' + (-arcLen) +
-             ' c ' + c + ' ' + (-d) + ' ' + (b+c) + ' ' + (-d) + ' ' + (a+b+c) + ' ' + (-d);
-    return 'M ' + p + ' 0 L ' + (w - p) + ' 0 ' + TR +
-           ' L ' + w + ' ' + (h - p) + ' ' + BR +
-           ' L ' + p + ' ' + h + ' ' + BL +
-           ' L 0 ' + p + ' ' + TL + ' Z';
+  var el = document.getElementById('morph');
+  if (!el) return;
+  var a = el.querySelector('.morph-a');
+  var b = el.querySelector('.morph-b');
+  var words = ['Interactions', 'Product design', 'Motion', 'Illustrations', 'Visual design'];
+  var MORPH = 1.3, HOLD = 2.2; // seconds
+
+  var idx = 0;
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var matrix = document.getElementById('meltMatrix');
+  // the box is as wide as the widest word, so a landing word never shifts the layout
+  var probe = document.createElement('span');
+  probe.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;left:0;top:0';
+  el.appendChild(probe);
+  function fit(){
+    var w = 0;
+    words.forEach(function(x){ probe.textContent = x; w = Math.max(w, probe.getBoundingClientRect().width); });
+    el.style.width = Math.ceil(w) + 'px';
+  }
+  fit();
+  window.addEventListener('resize', fit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+
+  function blur(f){ return 'blur(' + Math.min(4 / f - 4, 40) + 'px)'; }
+  function ease(x){ return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
+  function setMorph(f){
+    b.style.filter = blur(f);
+    b.style.opacity = Math.pow(f, 0.4);
+    a.style.filter = blur(1 - f);
+    a.style.opacity = Math.pow(1 - f, 0.4);
+    // fade the liquid threshold in at the start and out at the end, so the word lands without a snap
+    var w = Math.min(1, Math.min(f, 1 - f) / 0.18);
+    w = w * w * (3 - 2 * w);
+    matrix.setAttribute('values', '0 0 0 0 0.114  0 0 0 0 0.114  0 0 0 0 0.122  0 0 0 ' + (1 + 11 * w).toFixed(3) + ' ' + (-4.5 * w).toFixed(3));
+  }
+  function settle(){
+    a.textContent = b.textContent;
+    a.style.filter = ''; a.style.opacity = '';
+    b.style.filter = ''; b.style.opacity = 0;
+    el.classList.remove('is-melting');
   }
 
-  var SVG_NS = 'http://www.w3.org/2000/svg';
-
-  function apply(el){
-    var r = el.getBoundingClientRect();
-    if (r.width < 4 || r.height < 4) return;
-    var d = squirclePath(r.width, r.height, 50, 1);
-    el.style.clipPath = 'path("' + d + '")';
-    el.style.webkitClipPath = el.style.clipPath;
-
-    var svg = el.querySelector(':scope > .card-media-stroke');
-    if (!svg) {
-      svg = document.createElementNS(SVG_NS, 'svg');
-      svg.setAttribute('class', 'card-media-stroke');
-      svg.setAttribute('aria-hidden', 'true');
-      svg.setAttribute('preserveAspectRatio', 'none');
-      var path = document.createElementNS(SVG_NS, 'path');
-      path.setAttribute('fill', 'none');
-      path.setAttribute('stroke', 'rgba(0,0,0,0.05)');
-      path.setAttribute('stroke-width', '2');
-      path.setAttribute('vector-effect', 'non-scaling-stroke');
-      svg.appendChild(path);
-      el.appendChild(svg);
+  var phase = 'hold', t = 0, last = performance.now();
+  function tick(now){
+    var dt = Math.min((now - last) / 1000, 0.1); // clamp so a background tab doesn't jump
+    last = now;
+    t += dt;
+    if (phase === 'hold' && t >= HOLD) {
+      idx = (idx + 1) % words.length;
+      b.textContent = words[idx];
+      el.classList.add('is-melting');
+      phase = 'morph'; t = 0;
     }
-    svg.setAttribute('viewBox', '0 0 ' + r.width + ' ' + r.height);
-    svg.firstChild.setAttribute('d', d);
+    if (phase === 'morph') {
+      if (t >= MORPH) { setMorph(1); settle(); phase = 'hold'; t = 0; }
+      else setMorph(ease(t / MORPH));
+    }
+    requestAnimationFrame(tick);
   }
-
-  var ro = window.ResizeObserver ? new ResizeObserver(function(entries){
-    for (var i = 0; i < entries.length; i++) apply(entries[i].target);
-  }) : null;
-
-  function scan(){
-    document.querySelectorAll('.card-media').forEach(function(el){
-      if (el.dataset.sqInit) return;
-      el.dataset.sqInit = '1';
-      apply(el);
-      if (ro) ro.observe(el);
-    });
-  }
-
-  scan();
-  setTimeout(scan, 300);
-  setTimeout(scan, 1200);
-
-  var mo = new MutationObserver(scan);
-  mo.observe(document.body, { childList: true, subtree: true });
+  requestAnimationFrame(tick);
 })();
 </script>
+<!-- CASE STUDY: ZEPTO CAFE (horizontal canvas) -->
+<div class="cs" id="cs" data-hash="zepto-cafe" role="dialog" aria-modal="true" aria-labelledby="csTitle" aria-hidden="true">
+  <div class="cs-backdrop" data-cs-close></div>
+  <article class="cs-sheet" tabindex="-1">
+    <div class="cs-top">
+      <span class="cs-top-title">Zepto Cafe <span>· case study</span></span>
+      <button class="cs-close" type="button" data-cs-close>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        Close
+      </button>
+    </div>
+
+    <div class="cs-canvas">
+      <div class="cs-track">
+
+        <!-- INTRO -->
+        <section class="cs-frame" data-chapter="intro">
+          <span class="cs-frame-name">Intro</span>
+          <div class="cs-card cs-intro">
+            <div class="cs-intro-text">
+              <div>
+                <span class="cs-eyebrow">Zepto · V1 · Shipped</span>
+                <h2 class="cs-h1" id="csTitle">Zepto Cafe</h2>
+                <p class="cs-p">Zepto was the grocery app. The plan was to make it the food app too, and to own one idea: hot food in 10 minutes <span class="e">⏱️</span>.</p>
+                <p class="cs-p">This is V1. We started with zero Cafe kitchens, launched with 40, and grew past 650 across India.</p>
+              </div>
+              <dl class="cs-meta">
+                <dt>Role</dt><dd>Product designer</dd>
+                <dt>Team</dt><dd>3 PMs, a design manager, a visual designer, me</dd>
+                <dt>Timeline</dt><dd>No fixed end. Shipped in small pieces.</dd>
+              </dl>
+            </div>
+            <div class="cs-hero-shots" aria-hidden="true">
+              <img src="work/zepto-cafe/01-store-picker.png" alt="">
+              <img src="work/zepto-cafe/02-cafe-home.png" alt="">
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- PROBLEM -->
+        <section class="cs-frame" data-chapter="problem">
+          <span class="cs-frame-name">The problem</span>
+          <div class="cs-card cs-problem">
+            <div>
+              <p class="cs-say">Groceries <span class="e">🥦</span> in 10 minutes made sense to people. Food <span class="e">🍕</span> in 10 minutes <span class="dim">made them a little suspicious.</span></p>
+              <div class="cs-problems">
+                <div class="cs-prob"><span class="cs-num">01 · Trust</span><b>Is it fresh, or ready-made <span class="e">🧊</span>?</b><p>If food shows up in 10 minutes, people picture it sitting in a box somewhere. Every screen had to quietly show who cooks it, when, and how.</p></div>
+                <div class="cs-prob"><span class="cs-num">02 · Discoverability</span><b>Who looks for food next to shampoo?</b><p>Quick commerce apps rarely sell groceries and hot food side by side. People had to find Cafe without it getting in the way of their grocery run.</p></div>
+              </div>
+            </div>
+            <div class="cs-stats">
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/seedling.png" alt="" loading="lazy"><b>0 → 40</b><span>stores at launch</span></div>
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/pin.png" alt="" loading="lazy"><b>650+</b><span>stores across India</span></div>
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/stopwatch.png" alt="" loading="lazy"><b>10 min</b><span>the promise we had to keep</span></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- DISCOVERABILITY: CROSS-SELL -->
+        <section class="cs-frame" data-chapter="discover">
+          <span class="cs-frame-name">Discoverability / Cross-sell awareness</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">01</span><h3 class="cs-h2">Getting found</h3><p class="cs-p">We started where grocery users already were. A tooltip on the Cafe tab, a sheet that said hello when Cafe reached your area, and a small "hungry? your food is here" card in the home feed.</p><p class="cs-p">Present everywhere, never in the way of the grocery run.</p></div>
+            <div class="cs-phones">
+              <figure class="cs-phone"><img src="work/zepto-cafe/s-crosssell-01.png" alt="Tooltip introducing Cafe on the Cafe tab" loading="lazy"></figure>
+              <figure class="cs-phone"><img src="work/zepto-cafe/s-crosssell-02.png" alt="Sheet introducing Zepto Cafe" loading="lazy"></figure>
+              <figure class="cs-phone"><img src="work/zepto-cafe/s-crosssell-03.png" alt="Hungry? your food is here card on the grocery home" loading="lazy"></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- STORE SELECTION -->
+        <section class="cs-frame">
+          <span class="cs-frame-name">Discoverability / Store selection</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">02</span><h3 class="cs-h2">A front door</h3><p class="cs-p">Zepto now had three stores in one app. Cafe got its own front-door card on the store picker, with real dishes and real prices on it. A ₹49 chai <span class="e">☕</span> says food before you even tap.</p>
+              <button class="cs-pill cs-ghost" type="button" data-gallery="discover">See explorations
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone"><img src="work/zepto-cafe/01-store-picker.png" alt="Store picker with a dedicated Cafe card" loading="lazy"></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- HOME -->
+        <section class="cs-frame" data-chapter="home">
+          <span class="cs-frame-name">Cafe home</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text cs-step-wide"><span class="cs-num">03</span><h3 class="cs-h2">A home that answers two questions</h3>
+              <p class="cs-p">Every section answers "what should I eat?" or "can I trust it?". The top leads with proof: 1 crore+ orders, a 4.6 rating, top chefs. Bestsellers help people who can't decide, and Reorder <span class="e">🔁</span> is for people who order the same thing again and again. Explore by mood lets you pick a feeling instead of a category. What's on your mind and Explore categories are quick jumps for people who already know. Best picks shows what's good today, Know your food explains how and where it's made, and Snacks and drinks makes one more thing easy.</p>
+              <p class="cs-scroll-hint">Scroll the phone to see the whole page</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone cs-phone-scroll"><div class="cs-scroller" tabindex="0" aria-label="Cafe home, full page. Scroll to read."><img src="work/zepto-cafe/s-home-long.png" alt="The full Cafe home page" loading="lazy"></div></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- TRUST SHEET -->
+        <section class="cs-frame" data-chapter="trust">
+          <span class="cs-frame-name">Cafe home / Trust sheet</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">03 · Trust</span><h3 class="cs-h2">"Is it really fresh?"</h3>
+              <p class="cs-p">Tap the trust strip and a sheet answers it: made after you order, chefs who know the drill, clean kitchens, real ratings.</p>
+              <p class="cs-p">I also tried a bolder full-page version <span class="e">✨</span>.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone"><img src="work/zepto-cafe/trust-tap.png" alt="Tapping the trust strip on the cafe home" loading="lazy"><figcaption>Tap the strip</figcaption></figure>
+              <figure class="cs-phone"><img src="work/zepto-cafe/trust-open.png" alt="Trust sheet opening over the cafe home" loading="lazy"><figcaption>The sheet</figcaption></figure>
+              <figure class="cs-phone cs-phone-scroll"><div class="cs-scroller" tabindex="0" aria-label="The full trust sheet. Scroll to read."><img src="work/zepto-cafe/trust-full.png" alt="The full trust sheet" loading="lazy"></div><figcaption>Scroll the sheet</figcaption></figure>
+              <figure class="cs-phone cs-phone-scroll"><div class="cs-scroller" tabindex="0" aria-label="Full-page trust landing exploration. Scroll to read."><img src="work/zepto-cafe/trust-landing.png" alt="A bold full-page trust landing" loading="lazy"></div><figcaption>Exploration · Landing page</figcaption></figure>
+            </div>
+          </div>
+        </section>
+
+<div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- MENU -->
+        <section class="cs-frame" data-chapter="menu">
+          <span class="cs-frame-name">Menu on multitab and PIP</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">04</span><h3 class="cs-h2">The menu, upfront</h3><p class="cs-p">Inside the multitab app, Cafe sits next to groceries, electronics and beauty. A long scroll there feels like a supermarket aisle, not a cafe.</p><p class="cs-p">So the menu is one tap away. The floating button <span class="e">🍴</span> opens every section, breakfast, snacks, coffee, pizza, and people jump straight to what they came for, like at a cafe counter.</p></div>
+            <div class="cs-phones">
+              <figure class="cs-phone"><img src="work/zepto-cafe/02-cafe-home.png" alt="Cafe home with the floating menu button" loading="lazy"></figure>
+              <figure class="cs-phone"><img src="work/zepto-cafe/03-menu.png" alt="Menu open with all sections" loading="lazy"></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- CUSTOMISATION -->
+        <section class="cs-frame" data-chapter="custom">
+          <span class="cs-frame-name">Customisation</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">05</span><h3 class="cs-h2">One more thing in every order</h3>
+              <p class="cs-p"><strong>The goal:</strong> one more cookie <span class="e">🍪</span> in every order, without it feeling like a sales pitch.</p>
+              <p class="cs-p">We tried more than a dozen sheets: sizes and sugar, "complete your dish", add-on lists, price-drop banners, out-of-stock states. What shipped puts discounted add-ons right where you pick your Maggi, with a "price drop unlocked" <span class="e">🔓</span> moment and a tooltip that explains the deal once.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone"><img src="work/zepto-cafe/09-addons.png" alt="Customisation sheet with discounted add-ons" loading="lazy"></figure>
+              <figure class="cs-phone"><img src="work/zepto-cafe/10-addons-tooltip.png" alt="Tooltip explaining exclusive add-on prices" loading="lazy"></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- CUSTOMISATION IMPACT -->
+        <section class="cs-frame">
+          <span class="cs-frame-name">Customisation / Impact</span>
+          <div class="cs-card cs-cimpact">
+            <div class="cs-cimpact-text">
+              <span class="cs-num">05 · Impact</span>
+              <h3 class="cs-h2">It worked, and fast</h3>
+              <p class="cs-p">We tested the new sheet against the old one. More people picked add-ons, and more of them went on to order.</p>
+              <div class="cs-cimpact-stats">
+                <div class="cs-mini"><b>+20%</b><span>add-ons clicked</span></div>
+                <div class="cs-mini"><b>+13%</b><span>customisation viewed → order placed</span></div>
+                <div class="cs-mini"><b>189</b><span>combo orders in 12 hours, at a 20% rollout</span></div>
+              </div>
+            </div>
+            <div class="cs-cimpact-proof">
+              <button class="cs-proof-img" type="button" data-full="work/zepto-cafe/impact-slack-1.png" aria-label="Slack update on add-to-cart rate"><img src="work/zepto-cafe/impact-slack-1.png" alt="" loading="lazy"></button>
+              <button class="cs-proof-img" type="button" data-full="work/zepto-cafe/impact-slack-2.png" aria-label="Slack update on early results"><img src="work/zepto-cafe/impact-slack-2.png" alt="" loading="lazy"></button>
+              <button class="cs-proof-img" type="button" data-full="work/zepto-cafe/impact-slack-3.png" aria-label="Slack update on combo orders"><img src="work/zepto-cafe/impact-slack-3.png" alt="" loading="lazy"></button>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- EVENTS -->
+        <section class="cs-frame" data-chapter="events">
+          <span class="cs-frame-name">Events</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">06</span><h3 class="cs-h2">Make it feel alive</h3><p class="cs-p">A cafe changes with the season. Festive takeovers turned the home into an event: Cafe Carnival <span class="e">🎪</span>, Christmas, New Year. Launch moments like a free Vietnamese cold coffee gave people a reason to try Cafe for the first time.</p></div>
+            <div class="cs-phones">
+              <figure class="cs-phone"><img src="work/zepto-cafe/e-moment-04.png" alt="Free Vietnamese cold coffee launch" loading="lazy"></figure>
+              <figure class="cs-phone"><img src="work/zepto-cafe/e-moment-01.png" alt="Cafe Carnival takeover" loading="lazy"></figure>
+              <figure class="cs-phone"><img src="work/zepto-cafe/e-moment-02.png" alt="Christmas takeover" loading="lazy"></figure>
+              <figure class="cs-phone"><img src="work/zepto-cafe/e-home-03.png" alt="New Year takeover" loading="lazy"></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- MOODS -->
+        <section class="cs-frame" data-chapter="moods">
+          <span class="cs-frame-name">Explore by mood</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">07</span><h3 class="cs-h2">Shop by mood</h3><p class="cs-p">Nobody searches for "beverages". They want something crispy <span class="e">🍿</span> at 1 AM. So the menu is grouped by moments, late night, gourmet, healthy, each with its own look, plans like Bold Brews and Sassy Sweets, and its own deals.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone"><img src="work/zepto-cafe/04-mood-entry.png" alt="Explore by mood tiles" loading="lazy"></figure>
+              <figure class="cs-phone"><img src="work/zepto-cafe/s-cat-01.png" alt="Late night munchies" loading="lazy"></figure>
+              <figure class="cs-phone"><img src="work/zepto-cafe/s-cat-02.png" alt="Gourmet" loading="lazy"></figure>
+              <figure class="cs-phone"><img src="work/zepto-cafe/s-cat-03.png" alt="Healthy" loading="lazy"></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- MOODS IMPACT -->
+        <section class="cs-frame">
+          <span class="cs-frame-name">Explore by mood / Impact</span>
+          <div class="cs-card cs-cimpact">
+            <div class="cs-cimpact-text">
+              <span class="cs-num">07 · Impact</span>
+              <h3 class="cs-h2">Moods turned taps into orders</h3>
+              <p class="cs-p">In the first two months, a mood tap was one of the most reliable ways into an order.</p>
+              <div class="cs-cimpact-stats">
+                <div class="cs-mini"><b>676K</b><span>taps on a mood</span></div>
+                <div class="cs-mini"><b>1 in 3</b><span>added something to cart</span></div>
+                <div class="cs-mini"><b>60K</b><span>orders delivered</span></div>
+              </div>
+            </div>
+            <div class="cs-cimpact-proof">
+              <button class="cs-chart cs-chart-lg" type="button" data-full="work/zepto-cafe/impact-mood-overall.png" aria-label="Mood collections funnel, April to June 2025"><img src="work/zepto-cafe/impact-mood-overall.png" alt="" loading="lazy"></button>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- IMPACT -->
+        <section class="cs-frame" data-chapter="impact">
+          <span class="cs-frame-name">Impact</span>
+          <div class="cs-card cs-impact">
+            <div>
+              <h3 class="cs-h2">What changed</h3>
+              <div class="cs-impact-grid cs-impact-6">
+                <div><img class="cs-ill" src="work/zepto-cafe/fluent/store.png" alt="" loading="lazy"><b>40 → 650</b><span>Cafe stores, from launch to today</span></div>
+                <div><img class="cs-ill" src="work/zepto-cafe/fluent/moon.png" alt="" loading="lazy"><b>60K</b><span>orders straight from mood collections in their first two months</span></div>
+                <div><img class="cs-ill" src="work/zepto-cafe/fluent/cart.png" alt="" loading="lazy"><b>1 in 3</b><span>people who tapped a mood added something to their cart</span></div>
+                <div><img class="cs-ill" src="work/zepto-cafe/fluent/drink.png" alt="" loading="lazy"><b>+20%</b><span>more add-ons picked with the new customisation sheet</span></div>
+                <div><img class="cs-ill" src="work/zepto-cafe/fluent/chart.png" alt="" loading="lazy"><b>+13%</b><span>more people went from customising to ordering</span></div>
+                <div><img class="cs-ill" src="work/zepto-cafe/fluent/plate.png" alt="" loading="lazy"><b>189</b><span>combo orders in the first 12 hours, with only a fifth of users seeing it</span></div>
+              </div>
+            </div>
+            <p class="cs-foot">Mood numbers from April 12 to June 11, 2025. Customisation numbers from an A/B test against the old design.</p>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <section class="cs-frame">
+          <span class="cs-frame-name">End</span>
+          <div class="cs-card cs-end">
+            <span class="cs-num">Behind the scenes</span>
+            <h3 class="cs-h2">What it took</h3>
+            <div class="cs-notes">
+              <div class="cs-note"><span class="cs-num">01</span><b>A visual designer, end to end</b><p>I came in as a visual designer. Owning a product end to end, from research to rollout, was new for me, and hard.</p></div>
+              <div class="cs-note"><span class="cs-num">02</span><b>Shameless about feedback</b><p>I asked for it constantly. Rahul, Ayush, Chirag, Akhil and the whole Zepto team gave it generously, and it shaped every screen.</p></div>
+              <div class="cs-note"><span class="cs-num">03</span><b>Research at street speed</b><p>A fast pod meant no time for formal studies. I went to NIFT campuses, tea shops, cafes and sidewalks, and asked people what they thought of Zepto Cafe <span class="e">☕</span>.</p></div>
+            </div>
+            <div class="cs-end-foot">
+            <p class="cs-p cs-thanks">Thanks for scrolling this far. Hungry yet? <span class="e">😋</span></p>
+            <button class="cs-pill" type="button" data-cs-go="intro">Back to the start
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+            </button>
+            </div>
+          </div>
+        </section>
+
+
+      </div>
+    </div>
+
+    <nav class="cs-nav" aria-label="Case study sections">
+      <button type="button" data-cs-go="intro" class="on">Intro</button>
+      <button type="button" data-cs-go="problem">Problem</button>
+      <button type="button" data-cs-go="discover">Discover</button>
+      <button type="button" data-cs-go="home">Home</button>
+      <button type="button" data-cs-go="trust">Trust</button>
+      <button type="button" data-cs-go="menu">Menu</button>
+      <button type="button" data-cs-go="custom">Customise</button>
+      <button type="button" data-cs-go="events">Events</button>
+      <button type="button" data-cs-go="moods">Moods</button>
+      <button type="button" data-cs-go="impact">Impact</button>
+    </nav>
+
+    <div class="cs-gallery" role="dialog" aria-label="Explorations">
+      <div class="cs-gallery-inner">
+        <div class="cs-gallery-head"><div><span class="cs-num cs-gallery-kicker">Explorations</span><h4 class="cs-gallery-title"></h4></div><button class="cs-close cs-gallery-close" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Close</button></div>
+        <div class="cs-gallery-grid"></div>
+      </div>
+    </div>
+
+    <div class="cs-lightbox"><img alt=""></div>
+  </article>
+</div>
+
+<div class="cs" id="csTip" data-hash="tipping-widget" role="dialog" aria-modal="true" aria-labelledby="csTipTitle" aria-hidden="true">
+  <div class="cs-backdrop" data-cs-close></div>
+  <article class="cs-sheet" tabindex="-1">
+    <div class="cs-top">
+      <span class="cs-top-title">Tipping Widget <span>· case study</span></span>
+      <button class="cs-close" type="button" data-cs-close>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        Close
+      </button>
+    </div>
+
+    <div class="cs-canvas">
+      <div class="cs-track">
+
+        <!-- INTRO -->
+        <section class="cs-frame" data-chapter="intro">
+          <span class="cs-frame-name">Intro</span>
+          <div class="cs-card cs-intro">
+            <div class="cs-intro-text">
+              <div>
+                <span class="cs-eyebrow">Swiggy · Checkout · Shipped</span>
+                <h2 class="cs-h1" id="csTipTitle">Tipping Widget</h2>
+                <p class="cs-p">Tipping is a tiny moment in checkout. Most people scroll right past it.</p>
+                <p class="cs-p">I wanted it to feel like it's about a person, not a button. A few tiny illustrations later, tips went up by 3%.</p>
+              </div>
+              <dl class="cs-meta">
+                <dt>Role</dt><dd>Visual designer</dd>
+                <dt>Team</dt><dd>1 PM, 1 senior product designer, me</dd>
+                <dt>Timeline</dt><dd>4 days</dd>
+              </dl>
+            </div>
+            <div class="cs-hero-shots" aria-hidden="true">
+              <figure class="cs-phone sq"><video src="work/tipping-widget/hero.mp4#t=0.1" muted loop playsinline preload="metadata"></video></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- PROBLEM -->
+        <section class="cs-frame" data-chapter="problem">
+          <span class="cs-frame-name">The problem</span>
+          <div class="cs-card cs-problem">
+            <div>
+              <p class="cs-say">Delivery partners climb stairs, ride through the rain and carry heavy bags. <span class="dim">The tip screen didn't show any of that.</span></p>
+              <div class="cs-problems">
+                <div class="cs-prob"><span class="cs-num">01 · It felt cold</span><b>Just a row of ₹ buttons</b><p>It sat in the middle of a fast checkout. Easy to skip, and kind of transactional.</p></div>
+                <div class="cs-prob"><span class="cs-num">02 · No one behind it</span><b>Where's the person?</b><p>Nothing reminded you that a real human is carrying your order to your door.</p></div>
+              </div>
+            </div>
+            <div class="cs-stats">
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/stopwatch.png" alt="" loading="lazy"><b>4 days</b><span>from idea to handoff</span></div>
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/palette.png" alt="" loading="lazy"><b>64 px</b><span>to tell each story</span></div>
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/eyes.png" alt="" loading="lazy"><b>3–10 s</b><span>people spend on this widget</span></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- RESEARCH -->
+        <section class="cs-frame" data-chapter="research">
+          <span class="cs-frame-name">Why do people tip?</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">01</span><h3 class="cs-h2">So, why do people tip?</h3>
+              <p class="cs-p">I wrote down the small things delivery partners go through every day. Then I asked a few people, users and partners, when they actually tip.</p>
+              <p class="cs-p">The answers were very similar. Rain, festivals, long distances, no lift. People tip when they can <em>see</em> the effort.</p>
+            </div>
+            <div class="cs-wide-pic">
+              <button class="cs-proof-img" type="button" data-full="work/tipping-widget/why-people-tip.png" aria-label="What people told me about tipping"><img src="work/tipping-widget/why-people-tip.png" alt="" loading="lazy"></button>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- DAILY HARDSHIPS -->
+        <section class="cs-frame">
+          <span class="cs-frame-name">What partners deal with</span>
+          <div class="cs-card cs-ideas">
+            <span class="cs-num">02</span>
+            <h3 class="cs-h2">A few things partners deal with daily</h3>
+            <div class="cs-ideas-row">
+              <div class="cs-idea"><small>No lift, fourth floor</small><b>Climbing tall buildings</b><img class="a" src="work/tipping-widget/e-building.png" alt="" loading="lazy"></div>
+              <div class="cs-idea"><small>Wet roads, still on time</small><b>Braving the rain</b><img class="a" src="work/tipping-widget/e-rain.png" alt="" loading="lazy"></div>
+              <div class="cs-idea"><small>Water cans, big grocery runs</small><b>Carrying heavy loads</b><img class="a" src="work/tipping-widget/e-tired.png" alt="" loading="lazy"></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- ILLUSTRATE -->
+        <section class="cs-frame" data-chapter="illustrate">
+          <span class="cs-frame-name">Illustration</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">03</span><h3 class="cs-h2">A whole story in 64 × 64 px</h3>
+              <p class="cs-p">That's all the space I had. So every line had to earn its place.</p>
+              <p class="cs-p">Simple shapes, clean forms, and just enough detail to say "this isn't easy", without making anyone feel guilty.</p>
+            </div>
+            <div class="cs-tiles">
+              <figure class="cs-tile big"><img src="work/tipping-widget/ill-building.png" alt="Partner looking up at a tall building" loading="lazy"><figcaption>The tall building<span>No lift, fourth floor</span></figcaption></figure>
+              <div class="cs-tiles-col">
+                <figure class="cs-tile"><img src="work/tipping-widget/ill-stairs.png" alt="Partner climbing stairs" loading="lazy"><figcaption>The stairs<span>One step at a time</span></figcaption></figure>
+                <figure class="cs-tile"><img src="work/tipping-widget/ill-rain.png" alt="Partner riding a scooter in the rain" loading="lazy"><figcaption>The rain<span>Still on time</span></figcaption></figure>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- ANIMATE -->
+        <section class="cs-frame" data-chapter="animate">
+          <span class="cs-frame-name">Micro-animation</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">04</span><h3 class="cs-h2">Then I made them move</h3>
+              <p class="cs-p">People spend about 3 to 10 seconds on this widget. So each loop is short, and the whole story plays out inside that window.</p>
+              <p class="cs-p">A tired leg, one more step, and the quiet message: "this isn't always easy."</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone sq cs-anim"><div class="cs-anim-clip"><video src="work/tipping-widget/micro-animation.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Animated illustrations of a partner's day"></video></div></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- IN THE APP -->
+        <section class="cs-frame" data-chapter="ui">
+          <span class="cs-frame-name">In the checkout</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">05</span><h3 class="cs-h2">Right where you tip</h3>
+              <p class="cs-p">The animation sits right next to the tip buttons, with one simple line: "Delivery partner feels nice when their daily hard work is appreciated."</p>
+              <p class="cs-p">No guilt trip, no big banner. Just a small, kind nudge at the right moment.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone sq"><video src="work/tipping-widget/in-checkout.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="The tipping widget inside the checkout"></video></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- IMPACT -->
+        <section class="cs-frame" data-chapter="impact">
+          <span class="cs-frame-name">Impact</span>
+          <div class="cs-card cs-impact">
+            <div>
+              <h3 class="cs-h2">What changed</h3>
+              <div class="cs-impact-grid">
+                <div><img class="cs-ill" src="work/tipping-widget/e-happy.png" alt="" loading="lazy"><b>+3%</b><span>more people tipped, taking the tip rate to 5.2%</span></div>
+                <div><img class="cs-ill" src="work/tipping-widget/e-money.png" alt="" loading="lazy"><b>~₹820</b><span>extra a week for delivery partners</span></div>
+                <div style="grid-column: 1 / -1"><img class="cs-ill" src="work/tipping-widget/e-handshake.png" alt="" loading="lazy"><b>Closer</b><span>People said they felt more connected to the person bringing their order. Some started tipping more than they used to.</span></div>
+              </div>
+            </div>
+            <p class="cs-foot">Tip numbers compared with the old widget.</p>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- REACTIONS -->
+        <section class="cs-frame" data-chapter="reactions">
+          <span class="cs-frame-name">Real reactions</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">06</span><h3 class="cs-h2">People noticed</h3>
+              <p class="cs-p">My favourite one: "Was just about to Instamart things and saw this, actually made me tip 50, instead of the regular 30."</p>
+              <p class="cs-p">People shared it, LottieFiles loved it, and folks reminded each other to tip on rainy days <span class="e">🌧️</span>.</p>
+            </div>
+            <div class="cs-reacts">
+              <div class="cs-reacts-col"><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-04.png" aria-label="A post sharing the widget"><img src="work/tipping-widget/reaction-04.png" alt="" loading="lazy"></button><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-03.png" aria-label="It made me tip 50 instead of 30"><img src="work/tipping-widget/reaction-03.png" alt="" loading="lazy"></button></div>
+              <div class="cs-reacts-col"><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-05.png" aria-label="A LinkedIn post about the widget"><img src="work/tipping-widget/reaction-05.png" alt="" loading="lazy"></button><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-01.png" aria-label="Always tip on a rainy day"><img src="work/tipping-widget/reaction-01.png" alt="" loading="lazy"></button><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-02.png" aria-label="LottieFiles reacted"><img src="work/tipping-widget/reaction-02.png" alt="" loading="lazy"></button><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-06.png" aria-label="I could stare at this all day"><img src="work/tipping-widget/reaction-06.png" alt="" loading="lazy"></button><button class="cs-thumb" type="button" data-full="work/tipping-widget/reaction-07.png" aria-label="Beautiful storytelling"><img src="work/tipping-widget/reaction-07.png" alt="" loading="lazy"></button></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- END -->
+        <section class="cs-frame">
+          <span class="cs-frame-name">End</span>
+          <div class="cs-card cs-end" style="position:relative">
+            <img class="cs-ill" src="work/tipping-widget/partner-sticker.png" alt="" loading="lazy" style="top:32px;right:32px;width:88px;height:88px">
+            <span class="cs-num">Behind the scenes</span>
+            <h3 class="cs-h2">What I learned</h3>
+            <div class="cs-notes">
+              <div class="cs-note"><span class="cs-num">01</span><b>Small canvas, big feelings</b><p>64 pixels forced me to cut everything that wasn't the story. It's the best constraint I've had.</p></div>
+              <div class="cs-note"><span class="cs-num">02</span><b>Talk to the people in it</b><p>A few chats with partners and users told me more than any dashboard. Their words became the illustrations.</p></div>
+              <div class="cs-note"><span class="cs-num">03</span><b>Kind beats loud</b><p>We never asked anyone to tip more. We just showed what the job looks like, and people did the rest.</p></div>
+            </div>
+            <div class="cs-end-foot">
+              <p class="cs-p cs-thanks">Thanks for reading. Tip your delivery partner today <span class="e">🧡</span></p>
+              <button class="cs-pill" type="button" data-cs-go="intro">Back to the start
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <nav class="cs-nav" aria-label="Case study sections">
+      <button type="button" data-cs-go="intro" class="on">Intro</button>
+      <button type="button" data-cs-go="problem">Problem</button>
+      <button type="button" data-cs-go="research">Research</button>
+      <button type="button" data-cs-go="illustrate">Illustrate</button>
+      <button type="button" data-cs-go="animate">Animate</button>
+      <button type="button" data-cs-go="ui">In the app</button>
+      <button type="button" data-cs-go="impact">Impact</button>
+      <button type="button" data-cs-go="reactions">Reactions</button>
+    </nav>
+
+    <div class="cs-lightbox"><img alt=""></div>
+  </article>
+</div>
+
+<div class="cs" id="csTrack" data-hash="order-tracking-page" role="dialog" aria-modal="true" aria-labelledby="csTrackTitle" aria-hidden="true">
+  <div class="cs-backdrop" data-cs-close></div>
+  <article class="cs-sheet" tabindex="-1">
+    <div class="cs-top">
+      <span class="cs-top-title">Order Tracking Page <span>· case study</span></span>
+      <button class="cs-close" type="button" data-cs-close>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        Close
+      </button>
+    </div>
+
+    <div class="cs-canvas">
+      <div class="cs-track">
+
+        <!-- INTRO -->
+        <section class="cs-frame" data-chapter="intro">
+          <span class="cs-frame-name">Intro</span>
+          <div class="cs-card cs-intro ot-intro">
+            <div class="cs-intro-text">
+              <div>
+                <span class="cs-eyebrow">Zepto · Order tracking · Shipped</span>
+                <h2 class="cs-h1" id="csTrackTitle">Order Tracking Page</h2>
+                <p class="cs-p">The tracking page was made for one order and one delivery. Then Zepto started sending one order in many boxes, and the old page couldn't keep up.</p>
+                <p class="cs-p">I cleaned it up, made room for many shipments, and added a little joy while you wait.</p>
+              </div>
+              <dl class="cs-meta">
+                <dt>Role</dt><dd>Product visual designer</dd>
+                <dt>Team</dt><dd>1 PM, 1 senior product designer, me</dd>
+                <dt>Timeline</dt><dd>4 days</dd>
+              </dl>
+            </div>
+            <div class="cs-hero-shots" aria-hidden="true">
+              <figure class="cs-phone ot-hero"><img src="work/order-tracking/state-way.png" alt=""><div class="cs-over ot"><div class="cs-lottie" data-lottie="work/order-tracking/l-way.json"></div></div></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- PROBLEM -->
+        <section class="cs-frame" data-chapter="problem">
+          <span class="cs-frame-name">The problem</span>
+          <div class="cs-card cs-problem">
+            <div>
+              <p class="cs-say">You open this page for one thing: when will it get here? <span class="dim">The old page made you hunt for it.</span></p>
+              <div class="cs-problems">
+                <div class="cs-prob"><span class="cs-num">01 · Everything shouts</span><b>No clear first thing to read</b><p>The timer, the avatar and the promo banners were all equally loud. Your order status got lost in the noise.</p></div>
+                <div class="cs-prob"><span class="cs-num">02 · Built for one</span><b>No room for more boxes</b><p>It couldn't show multiple shipments in one order, and it was hard to reuse for scheduled deliveries or returns.</p></div>
+              </div>
+            </div>
+            <div class="cs-stats">
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/package.png" alt="" loading="lazy"><b>1 → many</b><span>shipments in a single order</span></div>
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/stopwatch.png" alt="" loading="lazy"><b>4 days</b><span>from first sketch to handoff</span></div>
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/eyes.png" alt="" loading="lazy"><b>1 question</b><span>"when will it get here?"</span></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- CRITIQUE -->
+        <section class="cs-frame" data-chapter="critique">
+          <span class="cs-frame-name">An honest look at the old page</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">01</span><h3 class="cs-h2">An honest look at the old page</h3>
+              <p class="cs-p">Before drawing anything new, I wrote down what wasn't working. It was a short, slightly painful list.</p>
+            </div>
+            <div class="cs-ba">
+              <div class="cs-ba-col">
+                <figure class="cs-phone"><img src="work/order-tracking/old.png" alt="The old dark order tracking page" loading="lazy"><figcaption>Before</figcaption></figure>
+                <div class="cs-ba-list">
+                  <h4><img src="work/order-tracking/e-cross.png" alt="">What hurt</h4>
+                  <p><b>Hierarchy.</b> Timer, avatar and banners all feel equally loud.</p>
+                  <p><b>Clutter.</b> Lots of noise makes it hard to focus on the status.</p>
+                  <p><b>Multiple shipments</b> would be overwhelming here.</p>
+                  <p><b>Dark UI</b> with bright accents is harder to scan.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- ETA EXPLORATIONS -->
+        <section class="cs-frame" data-chapter="explore">
+          <span class="cs-frame-name">Explorations / ETA card</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">02</span><h3 class="cs-h2">ETA first, then everything else</h3>
+              <p class="cs-p">I started with a few mindless explorations <span class="e">✍️</span>, playing with hierarchy, font weights and alignment.</p>
+              <p class="cs-p">The rule I landed on: the time and the status go on top, big and bold. Everything else supports them.</p>
+            </div>
+            <div class="cs-cards">
+              <button class="cs-thumb" type="button" data-full="work/order-tracking/eta-01.png" aria-label="ETA card with delivery partner"><span class="cs-tag">Exploration 01</span><img src="work/order-tracking/eta-01.png" alt="" loading="lazy"></button>
+              <button class="cs-thumb" type="button" data-full="work/order-tracking/eta-02.png" aria-label="ETA card with packing status"><span class="cs-tag">Exploration 02</span><img src="work/order-tracking/eta-02.png" alt="" loading="lazy"></button>
+              <button class="cs-thumb" type="button" data-full="work/order-tracking/eta-04.png" aria-label="ETA card with an illustration"><span class="cs-tag">Exploration 03</span><img src="work/order-tracking/eta-04.png" alt="" loading="lazy"></button>
+              <button class="cs-thumb" type="button" data-full="work/order-tracking/eta-05.png" aria-label="ETA card with an early badge"><span class="cs-tag">Exploration 04</span><img src="work/order-tracking/eta-05.png" alt="" loading="lazy"></button>
+              <button class="cs-thumb" type="button" data-full="work/order-tracking/eta-03.png" aria-label="Dark ETA card"><span class="cs-tag">Exploration 05</span><img src="work/order-tracking/eta-03.png" alt="" loading="lazy"></button>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- SHIPMENTS -->
+        <section class="cs-frame" data-chapter="shipments">
+          <span class="cs-frame-name">Explorations / Multiple shipments</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">03</span><h3 class="cs-h2">One order, many boxes</h3>
+              <p class="cs-p">An order could now arrive in two or three shipments. I tried tabs, pills, and dark cards that peek from the side.</p>
+              <p class="cs-p">Cards won. Each shipment gets its own card, and the next one peeks in, so you know there's more without being told.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone"><img src="work/order-tracking/ship-01.png" alt="Shipments as tabs" loading="lazy"><figcaption>Exploration 01 · Tabs</figcaption></figure>
+              <figure class="cs-phone"><img src="work/order-tracking/ship-02.png" alt="Shipments as pills" loading="lazy"><figcaption>Exploration 02 · Pills</figcaption></figure>
+              <figure class="cs-phone"><img src="work/order-tracking/ship-03.png" alt="Shipments as dark peeking cards" loading="lazy"><figcaption>Exploration 03 · Peeking cards</figcaption></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- FINAL -->
+        <section class="cs-frame" data-chapter="final">
+          <span class="cs-frame-name">Final UI</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">04</span><h3 class="cs-h2">Calm, clear, and ready for more</h3>
+              <p class="cs-p">The final page reads top to bottom like a sentence: when, what's happening, who's bringing it, what's inside.</p>
+            </div>
+            <div class="cs-ba">
+              <div class="cs-ba-col">
+                <figure class="cs-phone"><img src="work/order-tracking/new.png" alt="The new order tracking page" loading="lazy"><figcaption>After</figcaption></figure>
+                <div class="cs-ba-list">
+                  <h4><img src="work/order-tracking/e-check.png" alt="">What changed</h4>
+                  <p><b>Clear hierarchy.</b> Time and status are bold and separated cleanly.</p>
+                  <p><b>A message from your partner</b> shows up only when it matters, and makes it feel human.</p>
+                  <p><b>A calmer tone.</b> Flatter illustrations and more white space.</p>
+                  <p><b>Built for shipments.</b> Each box gets its own card.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- JOY -->
+        <section class="cs-frame" data-chapter="joy">
+          <span class="cs-frame-name">Making order tracking a little more joyful</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">05</span><h3 class="cs-h2">A little joy while you wait</h3>
+              <p class="cs-p">Waiting is boring. So every state got its own tiny scene with the Zepto veggie gang <span class="e">🍅</span>.</p>
+              <p class="cs-p">They pack your bag, hold a leaf over their heads in the rain, spot your building, and do a little dance at your door.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone"><img src="work/order-tracking/state-packed.png" alt="Order getting packed" loading="lazy"><div class="cs-over ot"><div class="cs-lottie" data-lottie="work/order-tracking/l-packed.json"></div></div><figcaption>Packing</figcaption></figure>
+              <figure class="cs-phone"><img src="work/order-tracking/state-rain.png" alt="Slight delay due to rain" loading="lazy"><div class="cs-over ot"><div class="cs-lottie" data-lottie="work/order-tracking/l-rain.json"></div></div><figcaption>Rain delay</figcaption></figure>
+              <figure class="cs-phone"><img src="work/order-tracking/state-way.png" alt="Order on the way" loading="lazy"><div class="cs-over ot"><div class="cs-lottie" data-lottie="work/order-tracking/l-way.json"></div></div><figcaption>On the way</figcaption></figure>
+              <figure class="cs-phone"><img src="work/order-tracking/state-arrived.png" alt="Partner arrived" loading="lazy"><div class="cs-over ot"><div class="cs-lottie" data-lottie="work/order-tracking/l-arrived.json"></div></div><figcaption>Arrived</figcaption></figure>
+              <figure class="cs-phone"><img src="work/order-tracking/state-delivered.png" alt="Order delivered" loading="lazy"><div class="cs-over ot"><div class="cs-lottie" data-lottie="work/order-tracking/l-delivered.json"></div></div><figcaption>Delivered</figcaption></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- EDGE CASES -->
+        <section class="cs-frame" data-chapter="edge">
+          <span class="cs-frame-name">Edge cases</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">06</span><h3 class="cs-h2">When things go wrong</h3>
+              <p class="cs-p">Not every order goes to plan. Cancellations got the same care as the happy states.</p>
+              <p class="cs-p">The gang still shows up, a little sad, with a clear line on what happened. Bad news, said calmly.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone"><img src="work/order-tracking/state-cancelled.png" alt="Shipment cancelled" loading="lazy"><figcaption>Cancelled</figcaption></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- REACTIONS -->
+        <section class="cs-frame" data-chapter="reactions">
+          <span class="cs-frame-name">Real reactions</span>
+          <div class="cs-card cs-step cs-dark">
+            <div class="cs-step-text"><span class="cs-num">Impact</span><h3 class="cs-h2">People saw it, shared it, felt it</h3>
+              <p class="cs-p">It's a tracking page. People still posted about it. "This is the coolest thing I've seen today." "So cute."</p>
+              <p class="cs-p">One person said it reminded them of the OG Dunzo tracking page. Fun fact: I worked on that one too <span class="e">😄</span>.</p>
+            </div>
+            <div class="cs-wide-pic">
+              <button class="cs-proof-img" type="button" data-full="work/order-tracking/reactions-dark.png" aria-label="Posts reacting to the new tracking page"><img src="work/order-tracking/reactions-dark.png" alt="" loading="lazy"></button>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- END -->
+        <section class="cs-frame">
+          <span class="cs-frame-name">End</span>
+          <div class="cs-card cs-end">
+            <span class="cs-num">Behind the scenes</span>
+            <h3 class="cs-h2">What I learned</h3>
+            <div class="cs-notes">
+              <div class="cs-note"><span class="cs-num">01</span><b>Critique first, pixels later</b><p>Writing down what was broken made every later decision easy to explain.</p></div>
+              <div class="cs-note"><span class="cs-num">02</span><b>Design the system, not the screen</b><p>I worked with devs on flexible components, so the same card works for shipments, scheduled orders and returns.</p></div>
+              <div class="cs-note"><span class="cs-num">03</span><b>Joy is a feature</b><p>A few seconds of animation turned a page people check nervously into one they share.</p></div>
+            </div>
+            <div class="cs-end-foot">
+              <p class="cs-p cs-thanks">Thanks for reading. Your order is on the way <span class="e">🛵</span></p>
+              <button class="cs-pill" type="button" data-cs-go="intro">Back to the start
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <nav class="cs-nav" aria-label="Case study sections">
+      <button type="button" data-cs-go="intro" class="on">Intro</button>
+      <button type="button" data-cs-go="problem">Problem</button>
+      <button type="button" data-cs-go="critique">Critique</button>
+      <button type="button" data-cs-go="explore">Explore</button>
+      <button type="button" data-cs-go="shipments">Shipments</button>
+      <button type="button" data-cs-go="final">Final</button>
+      <button type="button" data-cs-go="joy">Joy</button>
+      <button type="button" data-cs-go="edge">Edge cases</button>
+      <button type="button" data-cs-go="reactions">Reactions</button>
+    </nav>
+
+    <div class="cs-lightbox"><img alt=""></div>
+  </article>
+</div>
+
+<div class="cs" id="csDunzo" data-hash="dunzo-visuals" role="dialog" aria-modal="true" aria-labelledby="csDunzoTitle" aria-hidden="true">
+  <div class="cs-backdrop" data-cs-close></div>
+  <article class="cs-sheet" tabindex="-1">
+    <div class="cs-top">
+      <span class="cs-top-title">Dunzo Visuals <span>· case study</span></span>
+      <button class="cs-close" type="button" data-cs-close>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        Close
+      </button>
+    </div>
+
+    <div class="cs-canvas">
+      <div class="cs-track">
+
+        <!-- INTRO -->
+        <section class="cs-frame" data-chapter="intro">
+          <span class="cs-frame-name">Intro</span>
+          <div class="cs-card cs-intro">
+            <div class="cs-intro-text">
+              <div>
+                <span class="cs-eyebrow">Dunzo · Illustration and animation</span>
+                <h2 class="cs-h1" id="csDunzoTitle">Dunzo Visuals</h2>
+                <p class="cs-p">At Dunzo, I was the person who drew things and made them move.</p>
+                <p class="cs-p">Here are three small problems where a friendly illustration did most of the work, and one sticker pack, just for fun.</p>
+              </div>
+              <dl class="cs-meta">
+                <dt>Role</dt><dd>Brand and visual designer</dd>
+                <dt>Team</dt><dd>1 PM, 1 senior visual designer, me</dd>
+                <dt>When</dt><dd>2020 – 2022</dd>
+              </dl>
+            </div>
+            <div class="cs-hero-shots" aria-hidden="true">
+              <figure class="cs-phone r37"><img src="work/dunzo/address.png" alt=""><div class="cs-over" style="left:4%;top:51%;width:92%;aspect-ratio:857/378"><video src="work/dunzo/address.mp4#t=0.1" muted loop playsinline preload="metadata"></video></div></figure>
+              <figure class="cs-phone r916"><img src="work/dunzo/onb-01.png" alt=""><div class="cs-over dz-onb"><video src="work/dunzo/onb-01.mp4#t=0.1" muted loop playsinline preload="metadata"></video></div></figure>
+              <figure class="cs-phone r36"><img src="work/dunzo/peak.png" alt=""><div class="cs-over dz-peak"><video src="work/dunzo/peak.mp4#t=0.1" muted loop playsinline preload="metadata"></video></div></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- PROBLEM -->
+        <section class="cs-frame" data-chapter="problem">
+          <span class="cs-frame-name">The problem</span>
+          <div class="cs-card cs-problem">
+            <div>
+              <p class="cs-say">Three moments where people felt a little lost. <span class="dim">Signing up, finding the address, and waiting during the rush.</span></p>
+              <div class="cs-problems cs-problems-3">
+                <div class="cs-prob"><span class="cs-num">01 · Onboarding</span><b>It felt like a form</b><p>New store partners met cold, empty screens. Nothing like the warm, chatty shops they run offline.</p></div>
+                <div class="cs-prob"><span class="cs-num">02 · Wrong address</span><b>Partners got lost</b><p>Failed and late deliveries meant re-attempts, and real money lost every single day.</p></div>
+                <div class="cs-prob"><span class="cs-num">03 · Peak hours</span><b>Waiting in the dark</b><p>Stores were slow to accept orders at rush hour, and people had no idea why. So they called support.</p></div>
+              </div>
+            </div>
+            <div class="cs-stats">
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/palette.png" alt="" loading="lazy"><b>3 flows</b><span>one illustration style</span></div>
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/film.png" alt="" loading="lazy"><b>Animated</b><span>every state, not just the hero</span></div>
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/heart.png" alt="" loading="lazy"><b>1 mascot</b><span>to guide people through it</span></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- ONBOARDING -->
+        <section class="cs-frame" data-chapter="onboarding">
+          <span class="cs-frame-name">Onboarding for the merchant app</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">01</span><h3 class="cs-h2">A warm hello</h3>
+              <p class="cs-p">Most drop-offs happened at the OTP and confirmation steps. So that's where I put a friend.</p>
+              <p class="cs-p">Our shopkeeper character holds up her phone while you type your number, waves while you wait for the OTP, and welcomes you in like a regular <span class="e">👋</span>. The animations are subtle, so they guide you without getting in the way.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone r916"><img src="work/dunzo/onb-01.png" alt="Verify your phone number" loading="lazy"><div class="cs-over dz-onb"><video src="work/dunzo/onb-01.mp4#t=0.1" muted loop playsinline preload="metadata"></video></div><figcaption>Your number</figcaption></figure>
+              <figure class="cs-phone r916"><img src="work/dunzo/onb-02.png" alt="Enter the OTP" loading="lazy"><div class="cs-over dz-onb"><video src="work/dunzo/onb-02.mp4#t=0.1" muted loop playsinline preload="metadata"></video></div><figcaption>The OTP</figcaption></figure>
+              <figure class="cs-phone r916"><img src="work/dunzo/onb-03.png" alt="Welcome to the store" loading="lazy"><div class="cs-over dz-onb3"><video src="work/dunzo/onb-03.mp4#t=0.1" muted loop playsinline preload="metadata"></video></div><figcaption>You're in</figcaption></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- ADDRESS -->
+        <section class="cs-frame" data-chapter="address">
+          <span class="cs-frame-name">Wrong address correction</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">02</span><h3 class="cs-h2">"Is this really your address?"</h3>
+              <p class="cs-p">Partners kept getting lost, and every failed delivery cost us money.</p>
+              <p class="cs-p">So, right before you confirm, a small banner says our partners have struggled to find your address, and asks you to check it. A partner on a scooter, looking a bit confused <span class="e">🛵</span>, says it better than a warning icon ever could.</p>
+              <p class="cs-p">Not scary, just hard to ignore.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone r37"><img src="work/dunzo/address.png" alt="Confirm order with an address check banner" loading="lazy"><div class="cs-over" style="left:4%;top:51%;width:92%;aspect-ratio:857/378"><video src="work/dunzo/address.mp4#t=0.1" muted loop playsinline preload="metadata"></video></div></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- PEAK -->
+        <section class="cs-frame" data-chapter="peak">
+          <span class="cs-frame-name">Peak hour rush</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">03</span><h3 class="cs-h2">Peak hour rush!</h3>
+              <p class="cs-p">At rush hour, stores took longer to accept orders. People saw a spinner, assumed the worst, and called support, even when everything was fine.</p>
+              <p class="cs-p">So I gave the wait a face. The shopkeeper is busy packing orders, one by one. You know what's happening, you know you're next, and somehow the wait feels shorter.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone r36"><img src="work/dunzo/peak.png" alt="Waiting for the store to accept" loading="lazy"><div class="cs-over dz-peak"><video src="work/dunzo/peak.mp4#t=0.1" muted loop playsinline preload="metadata"></video></div></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- STICKERS -->
+        <section class="cs-frame" data-chapter="stickers">
+          <span class="cs-frame-name">Fun stickers with the Dunzo mascot</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">04</span><h3 class="cs-h2">And some stickers, for fun</h3>
+              <p class="cs-p">Our characters deserved a life outside the app. So they got an animated sticker pack for WhatsApp and Instagram.</p>
+              <p class="cs-p">"Better saaf than sorry", "Come on yaar", "Adi poli!". Little things people actually say <span class="e">🎉</span>.</p>
+              <div class="cs-pill-row">
+                <a class="cs-pill cs-ghost" href="https://www.behance.net/gallery/129978385/Dunzo-Animated-Sticker-Pack" target="_blank" rel="noopener">See the full pack on Behance
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+                </a>
+              </div>
+            </div>
+            <div class="cs-wide-pic">
+              <button class="cs-proof-img" type="button" data-full="work/dunzo/stickers.png" aria-label="Dunzo sticker pack"><img src="work/dunzo/stickers.png" alt="" loading="lazy"></button>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- END -->
+        <section class="cs-frame">
+          <span class="cs-frame-name">End</span>
+          <div class="cs-card cs-end">
+            <span class="cs-num">Behind the scenes</span>
+            <h3 class="cs-h2">What I learned</h3>
+            <div class="cs-notes">
+              <div class="cs-note"><span class="cs-num">01</span><b>Illustration can do UX work</b><p>A picture of a busy shopkeeper explained a delay better than any status text I could write.</p></div>
+              <div class="cs-note"><span class="cs-num">02</span><b>Find where it hurts first</b><p>I mapped each flow before drawing. The characters only went where people were dropping off or getting confused.</p></div>
+              <div class="cs-note"><span class="cs-num">03</span><b>Subtle is enough</b><p>Small loops that never block the button. Motion should guide, not perform.</p></div>
+            </div>
+            <div class="cs-end-foot">
+              <p class="cs-p cs-thanks">Thanks for reading. Dunzo it <span class="e">💚</span></p>
+              <button class="cs-pill" type="button" data-cs-go="intro">Back to the start
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <nav class="cs-nav" aria-label="Case study sections">
+      <button type="button" data-cs-go="intro" class="on">Intro</button>
+      <button type="button" data-cs-go="problem">Problem</button>
+      <button type="button" data-cs-go="onboarding">Onboarding</button>
+      <button type="button" data-cs-go="address">Address</button>
+      <button type="button" data-cs-go="peak">Peak hours</button>
+      <button type="button" data-cs-go="stickers">Stickers</button>
+    </nav>
+
+    <div class="cs-lightbox"><img alt=""></div>
+  </article>
+</div>
+
+<div class="cs" id="csSwiggy" data-hash="everything-visuals" role="dialog" aria-modal="true" aria-labelledby="csSwiggyTitle" aria-hidden="true">
+  <div class="cs-backdrop" data-cs-close></div>
+  <article class="cs-sheet" tabindex="-1">
+    <div class="cs-top">
+      <span class="cs-top-title">Everything Visuals <span>· case study</span></span>
+      <button class="cs-close" type="button" data-cs-close>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        Close
+      </button>
+    </div>
+
+    <div class="cs-canvas">
+      <div class="cs-track">
+
+        <!-- INTRO -->
+        <section class="cs-frame" data-chapter="intro">
+          <span class="cs-frame-name">Intro</span>
+          <div class="cs-card cs-intro">
+            <div class="cs-intro-text">
+              <div>
+                <span class="cs-eyebrow">Swiggy · 2022 – 2024 · Visual design</span>
+                <h2 class="cs-h1" id="csSwiggyTitle">Everything Visuals</h2>
+                <p class="cs-p">Two years of "can you make this a bit more fun?".</p>
+                <p class="cs-p">Banners, nav tiles, tracking states, splash screens, tiny toggles. None of them is a big project on its own, but together they're what makes an app feel alive.</p>
+              </div>
+              <dl class="cs-meta">
+                <dt>Role</dt><dd>Visual designer</dd>
+                <dt>Made with</dt><dd>Figma, After Effects, Lottie</dd>
+                <dt>When</dt><dd>2022 – 2024</dd>
+              </dl>
+            </div>
+            <div class="cs-hero-shots" aria-hidden="true">
+              <figure class="cs-phone rgenie"><video src="work/swiggy-visuals/genie-01.mp4#t=0.1" muted loop playsinline preload="metadata"></video></figure>
+              <figure class="cs-phone r9208"><img src="work/swiggy-visuals/landmark.png" alt=""><div class="cs-over sw-land"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/landmark-scooter.json"></div></div></figure>
+              <figure class="cs-phone r9195"><video src="work/swiggy-visuals/toggle-02.mp4#t=0.1" muted loop playsinline preload="metadata"></video></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- BANNERS -->
+        <section class="cs-frame" data-chapter="banners">
+          <span class="cs-frame-name">Animated banners and nav tiles</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">01</span><h3 class="cs-h2">PM: "Can we increase CTR somehow?"</h3>
+              <p class="cs-p">Me: yes.....</p>
+              <p class="cs-p">I brought the homepage to life with animated banners and nav tiles. Each one is playful, easy to spot, and says one thing clearly: free delivery, an offer, something new.</p>
+              <p class="cs-p">The motion is light. Just enough to catch your eye, never enough to get annoying.</p>
+            </div>
+            <div class="cs-wall">
+              <figure class="w2"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/superfast.json"></div><figcaption>Delivery time strip</figcaption></figure>
+              <figure class="w2"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/greetings.json"></div><figcaption>Greeting banner</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/value-meals.json"></div><figcaption>Value Meals tile</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/pocket-hero-new.json"></div><figcaption>Pocket Hero tile</figcaption></figure>
+              <figure class="w2"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/pocket-hero-banner.json"></div><figcaption>Pocket Hero banner</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/pocket-hero.json"></div><figcaption>Pocket Hero icon</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/offer-zone-tile.json"></div><figcaption>Offer Zone tile</figcaption></figure>
+              <figure class="w2"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/offer-zone-banner.json"></div><figcaption>Offer Zone banner</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/gourmet-tile.json"></div><figcaption>Gourmet tile</figcaption></figure>
+              <figure class="w2"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/get-it-quickly.json"></div><figcaption>Section header</figcaption></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- CTR IMPACT -->
+        <section class="cs-frame">
+          <span class="cs-frame-name">Banners / Impact</span>
+          <div class="cs-card cs-cimpact">
+            <div class="cs-cimpact-text">
+              <span class="cs-num">01 · Impact</span>
+              <h3 class="cs-h2">A little motion, a lot more taps</h3>
+              <p class="cs-p">Same offers, same spots on the page. The only change was that they moved.</p>
+            </div>
+            <div class="cs-big">
+              <img src="work/zepto-cafe/fluent/chart-up.png" alt="" loading="lazy">
+              <b>+4–7%</b>
+              <span>higher click-through on animated banners and tiles</span>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- GENIE -->
+        <section class="cs-frame" data-chapter="genie">
+          <span class="cs-frame-name">Genie order tracking visuals</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">02</span><h3 class="cs-h2">"Can you make this tracking page a bit interesting?"</h3>
+              <p class="cs-p">Genie picks up and drops anything across the city. The wait can feel long, so I illustrated and animated every tracking state.</p>
+              <p class="cs-p">Clear about what's happening, honest about the wait, and a bit warm <span class="e">📦</span>.</p>
+              <div class="cs-swhome-row" style="grid-template-columns:repeat(3,56px);gap:12px;margin-top:20px">
+                <div style="aspect-ratio:1"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/genie-searching.json"></div></div>
+                <div style="aspect-ratio:1"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/genie-pickup.json"></div></div>
+                <div style="aspect-ratio:1"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/genie-doorstep.json"></div></div>
+              </div>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone rgenie"><video src="work/swiggy-visuals/genie-01.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Looking for a delivery partner"></video><figcaption>Looking for a partner</figcaption></figure>
+              <figure class="cs-phone rgenie"><video src="work/swiggy-visuals/genie-03.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Partner arrived at the pickup location"></video><figcaption>At pickup</figcaption></figure>
+              <figure class="cs-phone rgenie"><video src="work/swiggy-visuals/genie-02.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Partner is almost at the doorstep"></video><figcaption>Almost at your door</figcaption></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- SPLASH -->
+        <section class="cs-frame" data-chapter="splash">
+          <span class="cs-frame-name">Splash screen animation</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">03</span><h3 class="cs-h2">Hiding a wait you can't skip</h3>
+              <p class="cs-p">Web apps have a loading moment you just can't avoid. So instead of a blank screen, I made a shared splash animation that covers it.</p>
+              <p class="cs-p">Simple, on brand, tiny in file size. Nothing flashy, it just quietly does its job.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone"><video src="work/swiggy-visuals/splash-01.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Splash animation, version 1"></video></figure>
+              <figure class="cs-phone"><video src="work/swiggy-visuals/splash-02.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Splash animation, version 2"></video></figure>
+              <figure class="cs-phone"><video src="work/swiggy-visuals/splash-03.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Splash animation, version 3"></video></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- LANDMARK -->
+        <section class="cs-frame" data-chapter="landmark">
+          <span class="cs-frame-name">Requesting users to add a landmark</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">04</span><h3 class="cs-h2">"Near the blue gate"</h3>
+              <p class="cs-p">Every "where exactly is your house?" call costs time and money in the last mile.</p>
+              <p class="cs-p">So right at delivery time, we ask for a landmark, with a partner riding around the block looking for you <span class="e">🛵</span>. Fewer calls, faster drops.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone r9208"><img src="work/swiggy-visuals/landmark.png" alt="Add a nearby landmark sheet" loading="lazy"><div class="cs-over sw-land"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/landmark-scooter.json"></div></div></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- TOGGLE -->
+        <section class="cs-frame" data-chapter="toggle">
+          <span class="cs-frame-name">Delivery type toggle</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">05</span><h3 class="cs-h2">A tiny toggle, done right</h3>
+              <p class="cs-p">Picking between delivery types in the cart. It's a two-second decision, but it should still feel nice under your thumb.</p>
+              <p class="cs-p">A small micro-interaction makes the switch obvious, and a little satisfying.</p>
+            </div>
+            <div class="cs-phones">
+              <figure class="cs-phone r9195"><video src="work/swiggy-visuals/toggle-01.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Delivery type toggle, version 1"></video></figure>
+              <figure class="cs-phone r9195"><video src="work/swiggy-visuals/toggle-02.mp4#t=0.1" muted loop playsinline preload="metadata" aria-label="Delivery type toggle, version 2"></video></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- MORE -->
+        <section class="cs-frame" data-chapter="more">
+          <span class="cs-frame-name">More more morrreeeee :)</span>
+          <div class="cs-card cs-step">
+            <div class="cs-step-text"><span class="cs-num">06</span><h3 class="cs-h2">More more morrreeeee :)</h3>
+              <p class="cs-p">Empty states, cart nudges, Instamart banners, restaurant awards, live activities, and a partner taking a water break.</p>
+              <p class="cs-p">A few more favourites from those two years. Most of them move.</p>
+            </div>
+            <div class="cs-wall">
+              <figure><img class="pic" src="work/swiggy-visuals/live-01.png" alt="Live activity: restaurant is preparing your order" loading="lazy"><figcaption>Live activity · preparing</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/not-serviceable.json"></div><figcaption>Not serviceable</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/partner-water.json"></div><figcaption>Water break</figcaption></figure>
+              <figure><img class="pic" src="work/swiggy-visuals/live-02.png" alt="Live activity: order received" loading="lazy"><figcaption>Live activity · received</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/restaurant-awards.json"></div><figcaption>Restaurant awards</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/call-partner.json"></div><figcaption>Call your partner</figcaption></figure>
+              <figure><img class="pic" src="work/swiggy-visuals/food-ready.png" alt="Food will be ready by 12:40 pm" loading="lazy"><figcaption>Takeaway timer</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/instamart-lite.json"></div><figcaption>Instamart Lite</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/take-bag.json"></div><figcaption>Bag handover</figcaption></figure>
+              <figure class="w2"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/sweetest-fruits.json"></div><figcaption>Instamart · fresh fruits</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/fruit-basket.json"></div><figcaption>Fruit basket</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/coin-card.json"></div><figcaption>Cashback</figcaption></figure>
+              <figure class="w2"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/instamart-search.json"></div><figcaption>Instamart search</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/pocket-hero-tile.json"></div><figcaption>Pocket Hero</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/bread.json"></div><figcaption>Category icon</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/cooker.json"></div><figcaption>Cooking</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/pan.json"></div><figcaption>Tossing</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/bag-timer.json"></div><figcaption>Packed</figcaption></figure>
+              <figure class="w2"><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/have-you-explored.json"></div><figcaption>Section header</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/eight-mins.json"></div><figcaption>8 min delivery</figcaption></figure>
+              <figure><div class="cs-lottie" data-lottie="work/swiggy-visuals/l/customer-request.json"></div><figcaption>Customer request</figcaption></figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
+        <!-- END -->
+        <section class="cs-frame">
+          <span class="cs-frame-name">End</span>
+          <div class="cs-card cs-end">
+            <span class="cs-num">Behind the scenes</span>
+            <h3 class="cs-h2">What I learned</h3>
+            <div class="cs-notes">
+              <div class="cs-note"><span class="cs-num">01</span><b>Small asks add up</b><p>No single banner here is a big deal. Together, they're the personality of the app.</p></div>
+              <div class="cs-note"><span class="cs-num">02</span><b>Motion needs a job</b><p>Every animation here does one thing: catches your eye, explains a wait, or hides a load.</p></div>
+              <div class="cs-note"><span class="cs-num">03</span><b>Know when to stop</b><p>The best ones here are the ones you barely notice. Light motion, short loops, then out of the way.</p></div>
+            </div>
+            <div class="cs-end-foot">
+              <p class="cs-p cs-thanks">Thanks for scrolling. Now go order something <span class="e">🍔</span></p>
+              <button class="cs-pill" type="button" data-cs-go="intro">Back to the start
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <nav class="cs-nav" aria-label="Case study sections">
+      <button type="button" data-cs-go="intro" class="on">Intro</button>
+      <button type="button" data-cs-go="banners">Banners</button>
+      <button type="button" data-cs-go="genie">Genie</button>
+      <button type="button" data-cs-go="splash">Splash</button>
+      <button type="button" data-cs-go="landmark">Landmark</button>
+      <button type="button" data-cs-go="toggle">Toggle</button>
+      <button type="button" data-cs-go="more">More</button>
+    </nav>
+
+    <div class="cs-lightbox"><img alt=""></div>
+  </article>
+</div>
 
 <script>
 (function(){
-  var cvs = document.getElementById('sidebarHalftone');
-  if (!cvs || !cvs.getContext) return;
-  var ctx = cvs.getContext('2d');
-  var dpr = Math.min(window.devicePixelRatio || 1, 2);
-  var W = 0, H = 0;
-  var mx = -9999, my = -9999;
-  var targetMx = -9999, targetMy = -9999;
-  var step = 7;
-  var cols = 0, rows = 0;
-  var originX = 0, originY = 0;
+  var page = document.querySelector('.sheet');
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var sidebar = cvs.closest('.sidebar');
-
-  function updateFadeStart(){
-    if (!sidebar) return;
-    var links = sidebar.querySelectorAll('.sidebar-link');
-    var last = links[links.length - 1];
-    if (!last) return;
-    var sRect = sidebar.getBoundingClientRect();
-    var lRect = last.getBoundingClientRect();
-    var gap = 14;
-    var below = lRect.bottom - sRect.top + gap;
-    var pct = Math.max(0, Math.min(95, (1 - below / sRect.height) * 100));
-    sidebar.style.setProperty('--fade-start', pct.toFixed(1) + '%');
-  }
-
-  function build(){
-    var rect = cvs.getBoundingClientRect();
-    W = Math.max(1, rect.width);
-    H = Math.max(1, rect.height);
-    cvs.width = Math.floor(W * dpr);
-    cvs.height = Math.floor(H * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    cols = Math.floor(W / step);
-    rows = Math.floor(H / step);
-    originX = (W - (cols - 1) * step) * 0.5;
-    originY = (H - (rows - 1) * step) * 0.5;
-    updateFadeStart();
-  }
-
-  var resizeTimer;
-  window.addEventListener('resize', function(){
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(build, 160);
-  });
-
-  window.addEventListener('mousemove', function(e){
-    var rect = cvs.getBoundingClientRect();
-    targetMx = e.clientX - rect.left;
-    targetMy = e.clientY - rect.top;
-  });
-  window.addEventListener('mouseleave', function(){ targetMx = -9999; targetMy = -9999; });
-
-  build();
-
-  var MR = 110;
-  var MR2 = MR * MR;
-  var baseR = 0.55;
-
-  function draw(){
-    mx += (targetMx - mx) * 0.14;
-    my += (targetMy - my) * 0.14;
-
-    ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = '#141210';
-
-    for (var j = 0; j < rows; j++) {
-      var y = originY + j * step;
-      for (var i = 0; i < cols; i++) {
-        var x = originX + i * step;
-        var dx = x - mx, dy = y - my;
-        var d2 = dx*dx + dy*dy;
-        var r = baseR;
-        if (d2 < MR2) {
-          var u = 1 - Math.sqrt(d2) / MR;
-          r += u * u * 1.7;
-        }
-        ctx.beginPath();
-        ctx.arc(x, y, r, 0, Math.PI * 2);
-        ctx.fill();
-      }
+  // explorations open in an overlay from the frame they belong to
+  var galleries = {
+    cs: {
+      discover: { title: 'Discoverability', base: 'work/zepto-cafe/', files: ['e-home-04','e-home-05','e-home-06','e-home-07','e-home-08','e-home-09','e-offer-04','e-offer-05','e-home-01','e-home-12'] },
+      custom: { title: 'Customisation', base: 'work/zepto-cafe/', files: ['e-custom-01','e-custom-04','e-custom-05','e-custom-06','e-custom-07','e-custom-09','e-custom-10','e-custom-11','e-custom-12','e-custom-13','e-custom-14','e-custom-15'] }
     }
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
-
-/* ── Mobile floating nav ──
-   Auto-expands when scrolled to the top, auto-collapses once scrolled away.
-   Manual tap always wins and temporarily suspends auto-mode until the user
-   has clearly left the top region again (hysteresis gap prevents flicker).
-   Height animates via CSS `grid-template-rows` 0fr → 1fr — never touches
-   `height: auto`. The m-nav is `position: fixed`, so state changes never
-   reflow the page, which kills the old feedback-loop flicker at its root. */
-(function(){
-  var nav = document.getElementById('mNav');
-  var toggle = document.getElementById('mNavToggle');
-  var panel = document.getElementById('mNavPanel');
-  var panelInner = panel && panel.querySelector('.m-nav-panel-inner');
-  var content = document.querySelector('.content');
-  if (!nav || !toggle || !panel || !panelInner) return;
-
-  var mql = window.matchMedia('(max-width: 768px)');
-  var EXPAND_BELOW = 24;    // scrollY under this → auto-expand
-  var COLLAPSE_ABOVE = 80;  // scrollY over this → auto-collapse
-  var autoMode = true;      // disabled on manual action, restored when user scrolls well away from top
-  var rafPending = false;
-
-  function isExpanded(){ return nav.dataset.state === 'expanded'; }
-
-  // Intrinsic panel height — scrollHeight works even when the grid row is 0fr
-  function panelHeight(){ return panelInner.scrollHeight; }
-
-  function applyContentPush(expanded){
-    if (!content) return;
-    if (!mql.matches) { content.style.paddingTop = ''; return; }
-    // Only push content when the nav expands at the top of the page.
-    // Mid-page taps float the panel over the content.
-    if (expanded && window.scrollY < EXPAND_BELOW) {
-      content.style.paddingTop = 'calc(78px + env(safe-area-inset-top) + ' + panelHeight() + 'px)';
-    } else {
-      content.style.paddingTop = '';
-    }
-  }
-
-  function setExpanded(expanded){
-    if (isExpanded() === expanded) return;
-    nav.dataset.state = expanded ? 'expanded' : 'collapsed';
-    toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-    toggle.setAttribute('aria-label', expanded ? 'Hide bio and links' : 'Show bio and links');
-    applyContentPush(expanded);
-  }
-
-  function manualSet(expanded){
-    autoMode = false;
-    setExpanded(expanded);
-  }
-
-  function checkScroll(){
-    if (!mql.matches) return;
-    var y = window.scrollY;
-    // Re-arm auto-mode once the user has clearly scrolled past the top
-    if (!autoMode && y > COLLAPSE_ABOVE) autoMode = true;
-    if (!autoMode) return;
-    if (y < EXPAND_BELOW) setExpanded(true);
-    else if (y > COLLAPSE_ABOVE) setExpanded(false);
-  }
-
-  function onScroll(){
-    if (rafPending) return;
-    rafPending = true;
-    requestAnimationFrame(function(){
-      rafPending = false;
-      checkScroll();
-    });
-  }
-
-  toggle.addEventListener('click', function(e){
-    e.stopPropagation();
-    manualSet(!isExpanded());
-  });
-
-  // Tap outside to close (manual — won't auto-reopen at the top)
-  document.addEventListener('click', function(e){
-    if (!mql.matches) return;
-    if (!isExpanded()) return;
-    if (nav.contains(e.target)) return;
-    manualSet(false);
-  });
-
-  // Escape to close
-  document.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' && isExpanded()) manualSet(false);
-  });
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  // Re-sync content push after viewport resize (panel height can change with width / vh)
-  var resizeRaf = false;
-  window.addEventListener('resize', function(){
-    if (resizeRaf) return;
-    resizeRaf = true;
-    requestAnimationFrame(function(){
-      resizeRaf = false;
-      applyContentPush(isExpanded());
-    });
-  }, { passive: true });
-
-  var onMql = function(){
-    if (mql.matches) { autoMode = true; checkScroll(); applyContentPush(isExpanded()); }
-    else { setExpanded(false); applyContentPush(false); }
   };
-  mql.addEventListener ? mql.addEventListener('change', onMql) : mql.addListener(onMql);
 
-  // Initial state derived from scroll position (handles hard-refresh-while-scrolled)
-  if (mql.matches) checkScroll();
+  // lottie-web loads once, the first time a case study with animations opens
+  var lottieLib = null;
+  function loadLottie(){
+    if (window.lottie) return Promise.resolve(window.lottie);
+    if (!lottieLib) lottieLib = new Promise(function(resolve, reject){
+      var s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js';
+      s.onload = function(){ resolve(window.lottie); };
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+    return lottieLib;
+  }
+
+  // phones read the case study top to bottom; wider screens pan a sideways canvas
+  var mqVertical = window.matchMedia('(max-width: 768px)');
+  function vertical(){ return mqVertical.matches; }
+
+  function setup(cs){
+    var HASH = '#' + cs.dataset.hash;
+    var sheet = cs.querySelector('.cs-sheet');
+    var canvas = cs.querySelector('.cs-canvas');
+    var lightbox = cs.querySelector('.cs-lightbox');
+    var gallery = cs.querySelector('.cs-gallery');
+    var navBtns = cs.querySelectorAll('.cs-nav button');
+    var chapters = Array.prototype.map.call(navBtns, function(b){ return b.dataset.csGo; });
+    var openers = document.querySelectorAll('[data-cs-open="' + cs.id + '"], a[href="' + HASH + '"]');
+    var lastFocus = null;
+
+    function showFull(src){ lightbox.querySelector('img').src = src; lightbox.classList.add('show'); }
+
+    if (gallery) {
+      var openGallery = function(key){
+        var g = (galleries[cs.id] || {})[key]; if (!g) return;
+        gallery.querySelector('.cs-gallery-title').textContent = g.title;
+        gallery.querySelector('.cs-gallery-kicker').textContent = g.files.length + ' explorations';
+        gallery.querySelector('.cs-gallery-grid').innerHTML = g.files.map(function(f){
+          var src = g.base + f + '.png';
+          return '<button class="cs-thumb" type="button" data-full="' + src + '"><img src="' + src + '" alt="" loading="lazy"></button>';
+        }).join('');
+        gallery.classList.add('show');
+      };
+      var closeGallery = function(){ gallery.classList.remove('show'); };
+      cs.querySelectorAll('[data-gallery]').forEach(function(b){ b.addEventListener('click', function(){ openGallery(b.dataset.gallery); }); });
+      gallery.querySelector('.cs-gallery-close').addEventListener('click', closeGallery);
+      gallery.addEventListener('click', function(e){
+        var t = e.target.closest('[data-full]');
+        if (t) { showFull(t.dataset.full); return; }
+        if (e.target === gallery) closeGallery();
+      });
+    }
+
+    // videos and Lotties only run while they are on screen
+    var io = null;
+    var anims = new Map();
+    function playMedia(el, on){
+      if (el.tagName === 'VIDEO') {
+        if (on && !reduceMotion) { var p = el.play(); if (p && p.catch) p.catch(function(){}); }
+        else el.pause();
+        return;
+      }
+      var a = anims.get(el);
+      if (a) { if (on && !reduceMotion) a.play(); else a.pause(); return; }
+      if (!on) return;
+      anims.set(el, null);
+      loadLottie().then(function(lottie){
+        var anim = lottie.loadAnimation({ container: el, renderer: 'svg', loop: true, autoplay: false, path: el.dataset.lottie, rendererSettings: { preserveAspectRatio: 'xMidYMid meet' } });
+        anims.set(el, anim);
+        anim.addEventListener('DOMLoaded', function(){
+          if (reduceMotion) anim.goToAndStop(Math.floor(anim.totalFrames * 0.6), true);
+          else if (el.dataset.visible === '1') anim.play();
+        });
+      }).catch(function(){ anims.delete(el); });
+    }
+    function startMedia(){
+      if (io || !('IntersectionObserver' in window)) return;
+      io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          en.target.dataset.visible = en.isIntersecting ? '1' : '0';
+          playMedia(en.target, en.isIntersecting);
+        });
+      }, { root: canvas, rootMargin: vertical() ? '400px 0px' : '0px 400px' });
+      cs.querySelectorAll('video, [data-lottie]').forEach(function(el){ io.observe(el); });
+    }
+    function stopMedia(){
+      if (io) { io.disconnect(); io = null; }
+      cs.querySelectorAll('video').forEach(function(v){ v.pause(); });
+      anims.forEach(function(a){ if (a) a.pause(); });
+    }
+
+    function chapterEl(name){ return canvas.querySelector('[data-chapter="' + name + '"]'); }
+    function goTo(name){
+      var el = chapterEl(name); if (!el) return;
+      if (vertical()) { canvas.scrollTo({ top: Math.max(0, el.offsetTop - 64), behavior: reduceMotion ? 'auto' : 'smooth' }); return; }
+      var x = el.offsetLeft - (canvas.clientWidth - el.offsetWidth) / 2;
+      if (el.offsetWidth > canvas.clientWidth * 0.9) x = el.offsetLeft - 48;
+      canvas.scrollTo({ left: Math.max(0, x), behavior: 'smooth' });
+    }
+    function syncNav(){
+      var v = vertical(), current = chapters[0];
+      var mid = v ? canvas.scrollTop + canvas.clientHeight * 0.4 : canvas.scrollLeft + canvas.clientWidth / 2;
+      chapters.forEach(function(n){ var el = chapterEl(n); if (el && (v ? el.offsetTop : el.offsetLeft) <= mid) current = n; });
+      navBtns.forEach(function(b){
+        var on = b.dataset.csGo === current;
+        if (on && v && !b.classList.contains('on')) {
+          var nav = b.parentNode;
+          nav.scrollTo({ left: b.offsetLeft - (nav.clientWidth - b.offsetWidth) / 2, behavior: 'smooth' });
+        }
+        b.classList.toggle('on', on);
+      });
+    }
+    canvas.addEventListener('scroll', function(){ requestAnimationFrame(syncNav); }, { passive: true });
+    cs.querySelectorAll('[data-cs-go]').forEach(function(b){ b.addEventListener('click', function(){ goTo(b.dataset.csGo); }); });
+
+    // vertical wheel reads as horizontal travel, like panning a canvas
+    canvas.addEventListener('wheel', function(e){
+      if (vertical() || Math.abs(e.deltaY) <= Math.abs(e.deltaX) || e.target.closest('.cs-scroller')) return;
+      e.preventDefault();
+      canvas.scrollLeft += e.deltaY;
+    }, { passive: false });
+
+    // drag to pan
+    var down = false, moved = false, sx = 0, sl = 0;
+    canvas.addEventListener('pointerdown', function(e){
+      if (vertical() || e.pointerType !== 'mouse' || e.button !== 0 || e.target.closest('.cs-pill, .cs-nav, .cs-scroller, [data-full]')) return;
+      down = true; moved = false; sx = e.clientX; sl = canvas.scrollLeft;
+    });
+    window.addEventListener('pointermove', function(e){
+      if (!down) return;
+      var dx = e.clientX - sx;
+      if (Math.abs(dx) > 4) { moved = true; canvas.classList.add('dragging'); }
+      if (moved) canvas.scrollLeft = sl - dx;
+    });
+    window.addEventListener('pointerup', function(){ down = false; canvas.classList.remove('dragging'); });
+    canvas.addEventListener('click', function(e){ if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+
+    // lightbox for anything marked data-full
+    canvas.addEventListener('click', function(e){
+      var t = e.target.closest('[data-full]'); if (!t) return;
+      showFull(t.dataset.full);
+    });
+    lightbox.addEventListener('click', function(){ lightbox.classList.remove('show'); });
+
+    function open(push){
+      if (cs.classList.contains('is-open')) return;
+      lastFocus = document.activeElement;
+      cs.setAttribute('aria-hidden', 'false');
+      cs.classList.add('is-open');
+      document.body.classList.add('cs-locked');
+      if (page) page.inert = true;
+      canvas.scrollLeft = 0;
+      canvas.scrollTop = 0;
+      syncNav();
+      startMedia();
+      if (push && location.hash !== HASH) history.pushState({ cs: 1 }, '', HASH);
+      setTimeout(function(){ sheet.focus({ preventScroll: true }); }, 60);
+    }
+
+    function close(fromHistory){
+      if (!cs.classList.contains('is-open')) return;
+      lightbox.classList.remove('show');
+      if (gallery) gallery.classList.remove('show');
+      cs.classList.remove('is-open');
+      cs.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('cs-locked');
+      if (page) page.inert = false;
+      stopMedia();
+      if (!fromHistory && location.hash === HASH) {
+        if (history.state && history.state.cs) history.back();
+        else history.replaceState(null, '', location.pathname + location.search);
+      }
+      if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+    }
+
+    openers.forEach(function(el){
+      el.addEventListener('click', function(e){ e.preventDefault(); open(true); });
+    });
+    cs.querySelectorAll('[data-cs-close]').forEach(function(el){
+      el.addEventListener('click', function(){ close(false); });
+    });
+    document.addEventListener('keydown', function(e){
+      if (!cs.classList.contains('is-open')) return;
+      if (e.key === 'Escape') {
+        if (lightbox.classList.contains('show')) lightbox.classList.remove('show');
+        else if (gallery && gallery.classList.contains('show')) gallery.classList.remove('show');
+        else close(false);
+      }
+      if (e.key === 'ArrowRight') canvas.scrollBy({ left: canvas.clientWidth * 0.7, behavior: 'smooth' });
+      if (e.key === 'ArrowLeft') canvas.scrollBy({ left: -canvas.clientWidth * 0.7, behavior: 'smooth' });
+    });
+    window.addEventListener('popstate', function(){
+      if (location.hash === HASH) open(false); else close(true);
+    });
+    if (location.hash === HASH) open(false);
+  }
+
+  document.querySelectorAll('.cs[data-hash]').forEach(setup);
+})();
+</script>
+<script>
+// selected work: tile Lotties load and play only while on screen
+(function(){
+  var els = document.querySelectorAll('.case-lottie[data-lottie]');
+  if (!els.length || !('IntersectionObserver' in window)) return;
+  var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var lib = null;
+  function load(){
+    if (window.lottie) return Promise.resolve(window.lottie);
+    if (!lib) lib = new Promise(function(resolve, reject){
+      var s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js';
+      s.onload = function(){ resolve(window.lottie); };
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+    return lib;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      var el = e.target;
+      if (!e.isIntersecting) { if (el._anim) el._anim.pause(); return; }
+      if (el._anim) { if (!still) el._anim.play(); return; }
+      load().then(function(lottie){
+        el._anim = lottie.loadAnimation({ container: el, renderer: 'svg', loop: true, autoplay: !still, path: el.dataset.lottie });
+        if (still) el._anim.addEventListener('DOMLoaded', function(){ el._anim.goToAndStop(Math.floor(el._anim.totalFrames * 0.6), true); });
+      }).catch(function(){});
+    });
+  }, { rootMargin: '200px' });
+  els.forEach(function(el){ io.observe(el); });
 })();
 </script>
 </body>
