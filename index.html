@@ -1412,22 +1412,14 @@ a.cs-pill { text-decoration: none; }
 @keyframes csPageIn { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .cs.is-open .cs-track { animation: none !important; } }
 
-/* phones: solid header and footer bars, edge to edge */
+/* phones: header and footer fade into the page, header flush with the top edge */
 @media (max-width: 768px) {
   .cs.is-open .cs-top {
-    margin-bottom: 0; padding: calc(8px + env(safe-area-inset-top)) 12px 8px;
-    background: rgba(255,255,255,0.86); -webkit-backdrop-filter: saturate(1.8) blur(18px); backdrop-filter: saturate(1.8) blur(18px);
-    border-bottom: 0.7px solid var(--g200);
+    margin-bottom: -20px; padding: calc(8px + env(safe-area-inset-top)) 12px 26px;
+    background: linear-gradient(#f4f3f0 64%, rgba(244,243,240,0));
   }
-  .cs.is-open .cs-close { background: var(--g50, #f5f5f7); border-color: transparent; }
-  .cs.is-open .cs-track { padding-top: 16px; padding-bottom: calc(84px + env(safe-area-inset-bottom)); }
-  .cs.is-open .cs-sheet::after { display: none; }
-  .cs.is-open .cs-nav {
-    bottom: 0; padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
-    background: rgba(255,255,255,0.86); -webkit-backdrop-filter: saturate(1.8) blur(18px); backdrop-filter: saturate(1.8) blur(18px);
-    border-top: 0.7px solid var(--g200);
-    -webkit-mask-image: none; mask-image: none;
-  }
+  .cs.is-open .cs-track { padding-top: 22px; padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+  .cs.is-open .cs-sheet::after { bottom: 0; }
 }
 </style>
 </head>
