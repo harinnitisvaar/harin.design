@@ -1436,19 +1436,24 @@ a.cs-pill { text-decoration: none; }
 @keyframes csPageIn { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .cs.is-open .cs-track { animation: none !important; } .cs-pn, .cs-menu { transition: none !important; } }
 
-/* Zepto Cafe: user research cohorts */
-.cs-research { width: min(940px, 86vw); justify-content: space-between; gap: 22px; }
-.cs-research .cs-h2 { max-width: 560px; }
-.cs-research > div > .cs-p { margin-top: 10px; max-width: 600px; }
-.cs-cohorts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-.cs-cohorts .cs-prob { display: flex; flex-direction: column; }
-.cs-cohorts .cs-prob p { margin-top: 6px; }
-.cs-cohorts .cs-prob .cs-ans { margin-top: auto; padding-top: 12px; color: var(--ink); font-weight: 500; }
-.cs-thread { font-size: 15px; line-height: 1.5; color: var(--g700); padding: 14px 18px; border-radius: 16px; background: rgba(245,244,241,0.6); }
+/* Zepto Cafe: user research, in their own words */
+.cs-research { width: min(980px, 88vw); justify-content: space-between; gap: 20px; }
+.cs-where { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.cs-where > span { padding: 7px 12px; border-radius: 100px; border: 0.7px solid var(--g200); font-size: 12px; color: var(--g700); }
+.cs-voices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.cs-voice { display: flex; flex-direction: column; gap: 8px; }
+.cs-who { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.cs-ava { flex: none; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: rgba(245,244,241,0.9); font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; font-size: 19px; }
+.cs-who b { display: block; font-size: 14px; font-weight: 600; letter-spacing: -0.015em; }
+.cs-who small { display: block; font-size: 12px; color: var(--g500); }
+.cs-voice q { display: block; quotes: none; padding: 12px 14px; border-radius: 6px 18px 18px 18px; background: rgba(245,244,241,0.75); font-size: 14px; line-height: 1.45; color: var(--ink); letter-spacing: -0.01em; }
+.cs-voice q::before { content: "\201C"; } .cs-voice q::after { content: "\201D"; }
+.cs-research mark { background: linear-gradient(transparent 45%, rgba(255,204,0,0.38) 45%); color: inherit; padding: 0 1px; }
+.cs-thread { font-size: 15px; line-height: 1.5; color: var(--g700); padding: 14px 18px; border-radius: 16px; border: 0.7px solid var(--g200); }
 .cs-thread b { color: var(--ink); font-weight: 600; }
 @media (max-width: 768px) {
   .cs-research { width: auto; }
-  .cs-cohorts { grid-template-columns: 1fr; gap: 10px; }
+  .cs-voices { grid-template-columns: 1fr; gap: 20px; }
 }
 </style>
 </head>
@@ -2245,31 +2250,32 @@ renderFeatured();
           <span class="cs-frame-name">User research</span>
           <div class="cs-card cs-research">
             <div>
-              <span class="cs-num">Research</span>
-              <h3 class="cs-h2">Does anyone actually need food in 10 minutes?</h3>
-              <p class="cs-p">Before drawing a screen, I went and asked. Students at colleges around HSR, like NIFT. Office folks over coffee at nearby cafes. Home makers over the phone.</p>
-            </div>
-            <div class="cs-cohorts">
-              <div class="cs-prob">
-                <span class="cs-num">Students <span class="e">🎒</span></span>
-                <b>Hungry between classes, on a budget</b>
-                <p>Short breaks, small wallets, tired of canteen food.</p>
-                <p class="cs-ans">Cafe: ₹49 chai and quick snacks, before the next class.</p>
-              </div>
-              <div class="cs-prob">
-                <span class="cs-num">Working <span class="e">💼</span></span>
-                <b>A break, not a meal plan</b>
-                <p>Cravings between meetings and late at work. Fast only counts if it tastes like a real cafe.</p>
-                <p class="cs-ans">Cafe: proper coffee and food, one tap from the grocery app.</p>
-              </div>
-              <div class="cs-prob">
-                <span class="cs-num">Home makers <span class="e">🏠</span></span>
-                <b>"Is it safe for my family?"</b>
-                <p>Speed was nice. Fresh was non-negotiable. They wanted to know who made it, and when.</p>
-                <p class="cs-ans">Cafe: made after you order, never frozen or reheated.</p>
+              <span class="cs-num">Research · 3 cohorts</span>
+              <h3 class="cs-h2">Before designing, I went and listened</h3>
+              <div class="cs-where">
+                <span><span class="e">🎓</span> Students at NIFT, HSR</span>
+                <span><span class="e">☕</span> Office folks at cafes, HSR</span>
+                <span><span class="e">📞</span> Home makers, over calls</span>
               </div>
             </div>
-            <p class="cs-thread">Different days, same question: <b>can I trust it?</b> Speed made people curious. Trust and quality would bring them back, so we designed every screen to show them.</p>
+            <div class="cs-voices">
+              <div class="cs-voice">
+                <div class="cs-who"><span class="cs-ava">🎒</span><div><b>Students</b><small>Short breaks, small budgets</small></div></div>
+                <q>Lunch break is 40 minutes. If food takes 30 to come, I'm eating it in class.</q>
+                <q>I'd try it if it's cheap. But <mark>is it fresh, or just heated up?</mark></q>
+              </div>
+              <div class="cs-voice">
+                <div class="cs-who"><span class="cs-ava">💼</span><div><b>Working</b><small>Cravings between meetings</small></div></div>
+                <q>At 4 pm I just want a coffee and a snack without leaving my desk.</q>
+                <q>Fast is fine. But <mark>if it tastes like a packet</mark>, I'm not ordering again.</q>
+              </div>
+              <div class="cs-voice">
+                <div class="cs-who"><span class="cs-ava">🏠</span><div><b>Home makers</b><small>Ordering for the family</small></div></div>
+                <q>For the kids, <mark>I need to know who cooked it and when.</mark></q>
+                <q>10 minutes? <mark>Sounds like it was already sitting somewhere.</mark></q>
+              </div>
+            </div>
+            <p class="cs-thread"><mark>Highlighted</mark> is what came up in every group, in different words. Speed got people curious, but <b>trust and quality</b> decided if they'd order. That became the brief for every screen.</p>
           </div>
         </section>
 
