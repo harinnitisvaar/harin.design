@@ -1435,6 +1435,21 @@ a.cs-pill { text-decoration: none; }
 }
 @keyframes csPageIn { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .cs.is-open .cs-track { animation: none !important; } .cs-pn, .cs-menu { transition: none !important; } }
+
+/* Zepto Cafe: user research cohorts */
+.cs-research { width: min(940px, 86vw); justify-content: space-between; gap: 22px; }
+.cs-research .cs-h2 { max-width: 560px; }
+.cs-research > div > .cs-p { margin-top: 10px; max-width: 600px; }
+.cs-cohorts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.cs-cohorts .cs-prob { display: flex; flex-direction: column; }
+.cs-cohorts .cs-prob p { margin-top: 6px; }
+.cs-cohorts .cs-prob .cs-ans { margin-top: auto; padding-top: 12px; color: var(--ink); font-weight: 500; }
+.cs-thread { font-size: 15px; line-height: 1.5; color: var(--g700); padding: 14px 18px; border-radius: 16px; background: rgba(245,244,241,0.6); }
+.cs-thread b { color: var(--ink); font-weight: 600; }
+@media (max-width: 768px) {
+  .cs-research { width: auto; }
+  .cs-cohorts { grid-template-columns: 1fr; gap: 10px; }
+}
 </style>
 </head>
 <body>
@@ -2225,6 +2240,41 @@ renderFeatured();
 
         <div class="cs-gap"></div>
 
+        <!-- USER RESEARCH -->
+        <section class="cs-frame" data-chapter="research">
+          <span class="cs-frame-name">User research</span>
+          <div class="cs-card cs-research">
+            <div>
+              <span class="cs-num">Research</span>
+              <h3 class="cs-h2">Does anyone actually need food in 10 minutes?</h3>
+              <p class="cs-p">Before drawing a screen, I went and asked. Students at colleges around HSR, like NIFT. Office folks over coffee at nearby cafes. Home makers over the phone.</p>
+            </div>
+            <div class="cs-cohorts">
+              <div class="cs-prob">
+                <span class="cs-num">Students <span class="e">🎒</span></span>
+                <b>Hungry between classes, on a budget</b>
+                <p>Short breaks, small wallets, tired of canteen food.</p>
+                <p class="cs-ans">Cafe: ₹49 chai and quick snacks, before the next class.</p>
+              </div>
+              <div class="cs-prob">
+                <span class="cs-num">Working <span class="e">💼</span></span>
+                <b>A break, not a meal plan</b>
+                <p>Cravings between meetings and late at work. Fast only counts if it tastes like a real cafe.</p>
+                <p class="cs-ans">Cafe: proper coffee and food, one tap from the grocery app.</p>
+              </div>
+              <div class="cs-prob">
+                <span class="cs-num">Home makers <span class="e">🏠</span></span>
+                <b>"Is it safe for my family?"</b>
+                <p>Speed was nice. Fresh was non-negotiable. They wanted to know who made it, and when.</p>
+                <p class="cs-ans">Cafe: made after you order, never frozen or reheated.</p>
+              </div>
+            </div>
+            <p class="cs-thread">Different days, same question: <b>can I trust it?</b> Speed made people curious. Trust and quality would bring them back, so we designed every screen to show them.</p>
+          </div>
+        </section>
+
+        <div class="cs-gap"></div>
+
         <!-- DISCOVERABILITY: CROSS-SELL -->
         <section class="cs-frame" data-chapter="discover">
           <span class="cs-frame-name">Discoverability / Cross-sell awareness</span>
@@ -2447,6 +2497,7 @@ renderFeatured();
     <nav class="cs-nav" aria-label="Case study sections">
       <button type="button" data-cs-go="intro" class="on">Intro</button>
       <button type="button" data-cs-go="problem">Problem</button>
+      <button type="button" data-cs-go="research">Research</button>
       <button type="button" data-cs-go="discover">Discover</button>
       <button type="button" data-cs-go="home">Home</button>
       <button type="button" data-cs-go="trust">Trust</button>
