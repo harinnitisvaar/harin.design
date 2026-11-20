@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Harin Nitisvaar — Interaction Design</title>
+<title>Harin Nitisvaar · Interaction Design</title>
 <meta name="description" content="Interaction designer. Currently at CRED. Previously Swiggy, Zepto, Meesho, Dunzo.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&display=swap">
 <script type="importmap">
 {
   "imports": {
@@ -18,18 +18,22 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* palette: white, pale blue (--canvas), navy (--ink); the greys are mid-blues between them */
 :root {
+  --blue: #e3ebf8;
+  --blue-2: #d4e0f4;
+  --accent: #2c55c7;
   --white: #ffffff;
   --cream: #ffffff;
-  --canvas: #ececee;
-  --tile: #f5f5f7;
-  --g50: #f5f5f7;
-  --g100: #ebebed;
-  --g200: #d8d8dc;
-  --g400: #a1a1a6;
-  --g500: #86868b;
-  --g700: #515154;
-  --ink: #1d1d1f;
+  --canvas: #f2f5fb;
+  --tile: #ffffff;
+  --g50: #f2f5fb;
+  --g100: #e6ecf6;
+  --g200: #d3ddec;
+  --g400: #a2b0c8;
+  --g500: #74839e;
+  --g700: #3f5072;
+  --ink: #0f1d3a;
   --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --island: cubic-bezier(0.32, 0.72, 0, 1);
@@ -38,7 +42,7 @@
 html { overflow-y: scroll; scroll-behavior: smooth; }
 
 body, input, button, select, textarea {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Helvetica Neue", sans-serif;
+  font-family: "Figtree", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
 }
 
 .loader-text, .loader-bar { position: relative; z-index: 1; }
@@ -134,42 +138,16 @@ body {
   align-items: center;
 }
 
-/* Morphing word: blurred crossfade + alpha threshold = letters melt into each other */
-.morph {
-  display: block;
-  position: relative;
-  white-space: nowrap;
-}
-
-/* Only melt while morphing so the resting word stays crisp */
-.morph.is-melting { filter: url(#melt); }
-
-.morph-a,
-.morph-b {
-  display: block;
-  text-align: center;
-  user-select: none;
-}
-
-.morph-b {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  opacity: 0;
-}
-
-
 .hero-title {
-  font-size: 44px;
-  font-weight: 600;
+  font-size: 56px;
+  font-weight: 500;
   letter-spacing: -0.035em;
-  line-height: 1.08;
-  margin-bottom: 14px;
+  line-height: 1.05;
 }
 
 .hero-sub {
-  max-width: 460px;
+  max-width: 420px;
+  text-wrap: balance;
   font-size: 17px;
   line-height: 1.45;
   color: var(--g500);
@@ -183,19 +161,387 @@ body {
   margin: 0 auto;
 }
 
-.about-statement {
-  font-size: 30px;
-  font-weight: 500;
-  line-height: 1.22;
-  letter-spacing: -0.03em;
-  color: var(--g400);
+
+.dock {
+  list-style: none; margin-top: 14px; margin-bottom: 64px;
+  display: flex; align-items: flex-end; gap: 8px;
+  padding: 8px; border-radius: 22px;
+  position: relative; isolation: isolate;
+  /* glass: a faint frosted fill, a bright top sheen and an edge that catches light.
+     Inner highlights only, no drop shadow. */
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.25) 48%, rgba(255, 255, 255, 0) 52%, rgba(255, 255, 255, 0.35) 100%),
+    rgba(232, 232, 237, 0.45);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.05),
+    inset 0 -8px 16px -10px rgba(0, 0, 0, 0.08);
+}
+/* light rim: brighter at the top-left and bottom-right, like the edge of a pane of glass */
+.dock::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none; z-index: -1;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.2) 35%, rgba(0, 0, 0, 0.06) 60%, rgba(255, 255, 255, 0.9) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+}
+.dock-sep { width: 1px; height: 28px; align-self: center; background: rgba(0, 0, 0, 0.1); margin: 0 4px; }
+.dock-cta {
+  display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px 0 18px;
+  border-radius: 12px; background: var(--ink); color: var(--white);
+  font-size: 14px; font-weight: 500; letter-spacing: -0.01em; text-decoration: none; white-space: nowrap;
+  transition: transform 0.35s var(--spring), background 0.2s ease;
+}
+.dock-cta svg { width: 15px; height: 15px; transition: transform 0.35s var(--spring); }
+.dock-cta:hover { background: #000; transform: translateY(-2px); }
+.dock-cta:hover svg { transform: translateY(2px); }
+.dock-cta:active { transform: scale(0.96); }
+.dock-cap { margin-top: 72px; font-size: 14px; color: var(--g500); letter-spacing: -0.01em; }
+.dock-app { position: relative; }
+.dock-app img {
+  display: block; width: 44px; height: 44px; border-radius: 11px;
+  transform-origin: 50% 100%;
+  transition: transform 0.35s var(--spring);
+}
+.dock-app:hover img { transform: translateY(-6px) scale(1.18); }
+.dock-app::after {
+  content: attr(data-name); position: absolute; left: 50%; bottom: calc(100% + 18px);
+  transform: translate(-50%, 4px); opacity: 0; pointer-events: none; white-space: nowrap;
+  font-size: 12px; font-weight: 500; color: var(--white); background: var(--ink);
+  padding: 4px 8px; border-radius: 7px; transition: opacity 0.15s ease, transform 0.2s ease;
+}
+.dock-app:hover::after { opacity: 1; transform: translate(-50%, 0); }
+
+.bio { max-width: 520px; margin: 0 auto; text-align: center; text-wrap: pretty; font-size: 16px; line-height: 1.6; color: var(--g700); letter-spacing: -0.01em; }
+.bio > * + * { margin-top: 16px; }
+.bio-hi { font: inherit; }
+.bio-hi b { font-weight: 600; }
+.bio b { font-weight: 500; color: var(--ink); }
+
+/* ─── FLOATING SECTION NAV ─── */
+.fnav {
+  position: fixed; z-index: 70; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom));
+  display: flex; gap: 2px; padding: 5px; border-radius: 999px;
+  isolation: isolate;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.35) 50%, rgba(255, 255, 255, 0.2) 100%),
+    rgba(232, 239, 250, 0.6);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+  transform: translate(-50%, calc(100% + 40px)) scale(0.9);
+  opacity: 0;
+  transition: transform 0.7s cubic-bezier(0.22, 1.2, 0.36, 1), opacity 0.3s ease;
+}
+.fnav.is-in { transform: translate(-50%, 0) scale(1); opacity: 1; }
+.fnav.is-in.morph-hide { opacity: 0; transition: none; }
+.nm-layer { display: none; position: fixed; inset: 0; z-index: 260; pointer-events: none; }
+.nm { position: absolute; left: 0; top: 0; }
+.nm i { position: absolute; left: 0; top: 0; height: 100px; transform-origin: 0 0; will-change: transform; }
+.nm-l, .nm-r { width: 50px; }
+.nm-l { border-radius: 50px 0 0 50px; }
+.nm-r { border-radius: 0 50px 50px 0; }
+.nm-m { width: 1px; }
+.nm-pill i { background: rgba(247, 250, 254, 0.94); }
+.nm-ink i { background: var(--ink); }
+.fnav a {
+  position: relative; z-index: 2; display: block; padding: 9px 16px; border-radius: 999px;
+  font-size: 14px; font-weight: 500; letter-spacing: -0.01em; line-height: 1;
+  color: var(--g700); text-decoration: none; white-space: nowrap;
+  transition: color 0.35s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.fnav a span { display: inline-block; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.fnav a:active span { transform: scale(0.92); }
+.fnav a:focus-visible { outline: 2px solid #0d99ff; outline-offset: 2px; }
+/* ─── ELASTIC NAV PILL (landing nav + case-study nav) ───
+   JS positions the ink pill with two springs, one per edge: the leading edge races, the trailing edge lags,
+   so the pill stretches while it travels. White copies of the labels ride inside the pill, clipped by it,
+   so a label turns white exactly where the pill covers it and never before. */
+.enav > a, .enav > button { position: relative; z-index: 1; }
+.enav-ink, .enav-hover { position: absolute; z-index: 3; left: 0; top: 0; width: 0; height: 0; border-radius: 999px; pointer-events: none; will-change: transform, width; }
+.enav-ink { background: var(--ink); overflow: hidden; }
+.enav-labels { position: absolute; left: 0; top: 0; will-change: transform; }
+.enav-labels span { position: absolute; display: flex; align-items: center; justify-content: center; white-space: nowrap; color: var(--white); }
+.enav-hover { z-index: 0; background: rgba(0, 0, 0, 0.06); opacity: 0; transition: opacity 0.2s ease; }
+.enav.is-hovering .enav-hover { opacity: 1; }
+.footer { margin-bottom: 72px; }
+@media (max-width: 768px) {
+  .fnav { bottom: calc(14px + env(safe-area-inset-bottom)); padding: 4px; }
+  .fnav a { padding: 9px 12px; font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fnav { transition: opacity 0.2s ease; transform: translate(-50%, 0); }
 }
 
-.about-statement b {
-  font-weight: 500;
-  color: var(--ink);
+/* ─── LANDING: info panel on the left, sectioned work on the right ─── */
+body { background: var(--canvas); padding: 0; }
+.lay { --side: 312px; display: grid; grid-template-columns: var(--side) minmax(0, 1fr); min-height: 100vh; }
+/* the info panel floats: an inset rounded card, like the Apple TV sidebar */
+.side {
+  position: sticky; top: 12px; height: calc(100vh - 24px); margin: 12px 0 12px 12px; overflow-y: auto; scrollbar-width: none;
+  display: flex; flex-direction: column; padding: 16px 24px 22px 18px;
+  background: transparent; border-radius: 0;
+}
+.side::-webkit-scrollbar { display: none; }
+.side-pill {
+  flex: none; align-self: flex-start; display: inline-flex; align-items: center; gap: 2px;
+  padding: 4px 6px 4px 4px; border-radius: 999px; background: var(--white);
+}
+.side-pill a { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; color: var(--g700); transition: color 0.2s ease, background 0.2s ease, transform 0.35s var(--spring); -webkit-tap-highlight-color: transparent; }
+.side-pill a:hover { color: var(--ink); background: rgba(0, 0, 0, 0.05); }
+.side-pill a:active { transform: scale(0.92); }
+.side-pill a:focus-visible { outline: 2px solid #0d99ff; outline-offset: 1px; }
+.side-pill svg { width: 17px; height: 17px; }
+.side-pill .side-ava { width: 32px; margin-right: 2px; overflow: hidden; background: var(--blue); }
+.side-pill .side-ava:hover { background: var(--blue); transform: scale(1.06); }
+.side-ava img { width: 100%; height: 100%; object-fit: cover; }
+.side-pill .side-handle { width: auto; height: 32px; padding: 0 8px 0 2px; margin-right: 2px; border-radius: 999px; font-weight: 500; color: var(--ink); text-decoration: none; }
+.side-pill .side-handle:hover { background: none; }
+.side { font-size: 14px; line-height: 1.55; letter-spacing: -0.01em; }
+.side-bio { margin-top: 40px; color: var(--g700); text-wrap: pretty; }
+.eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--g500); }
+.side-bio .eyebrow { margin-bottom: 10px; }
+.side-bio h1 { font: inherit; font-size: 24px; font-weight: 500; line-height: 1.2; letter-spacing: -0.025em; color: var(--ink); margin-bottom: 16px; text-wrap: balance; }
+.side-bio p b { font-weight: 500; color: var(--ink); }
+.side-bio p + p { margin-top: 12px; }
+.side-cos { color: var(--g500); }
+.side-icons { display: flex; gap: 6px; margin-top: 8px; }
+.side-icons img { width: 32px; height: 32px; transition: transform 0.35s var(--spring); }
+.side-icons img:hover { transform: translateY(-3px) scale(1.12); }
+.side-foot { padding-top: 24px; }
+.side-cta {
+  display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 18px 0 14px; border-radius: 14px;
+  background: var(--white); color: var(--ink); font-size: 15px; font-weight: 500; letter-spacing: -0.01em; text-decoration: none;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition: transform 0.35s var(--spring), background 0.2s ease;
+}
+.side-cta svg { width: 17px; height: 17px; transition: transform 0.35s var(--spring); }
+.side-cta:hover { background: var(--blue-2); }
+.side-cta:hover svg { transform: translateY(2px); }
+.side-cta:active { transform: scale(0.97); }
+.side-copy { margin-top: 14px; color: var(--g500); }
+
+.main { min-width: 0; padding: 0 16px 120px 16px; }
+.msec { padding-top: 20px; }
+.msec + .msec { margin-top: 64px; }
+.msec-head { display: flex; align-items: center; gap: 10px; padding: 4px 2px 16px; }
+.msec-head h2 { font-size: 20px; font-weight: 500; letter-spacing: -0.02em; color: var(--ink); }
+.chip { flex: none; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px; background: var(--cb); color: var(--cf); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6); }
+.chip svg { width: 18px; height: 18px; }
+
+.masonry { display: flex; align-items: flex-start; gap: 14px; }
+.m-col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+.cgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 4px 14px; }
+
+.tile {
+  position: relative; display: block; color: inherit; text-decoration: none;
+  cursor: pointer; outline: none; -webkit-tap-highlight-color: transparent;
+}
+.tile.in { animation: tileIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes tileIn { from { opacity: 0; transform: translateY(14px) scale(0.985); } }
+.tbox {
+  position: relative; overflow: hidden; border-radius: 32px; background: var(--tile);
+  isolation: isolate; /* keeps the radius clipping videos and blend modes in Safari */
+  transition: transform 0.5s var(--spring);
+}
+.tile:active .tbox { transform: scale(0.985); }
+.tile:focus-visible .tbox { outline: 2px solid #0d99ff; outline-offset: 2px; }
+
+/* caption: its own strip at the bottom of the box, under the media */
+.tcap {
+  position: relative; z-index: 2; pointer-events: none;
+  display: flex; align-items: center; gap: 8px; height: 52px; padding: 0 24px; box-sizing: border-box;
+  font-size: 14px; font-weight: 500; letter-spacing: -0.005em; color: var(--ink); white-space: nowrap;
+}
+.tcap b { font-weight: 500; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.tcap i { font-style: normal; color: var(--g500); font-weight: 400; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.tcap i:last-child { margin-left: auto; flex: none; }
+
+/* explorations */
+.tile-play .tbox { display: flex; flex-direction: column; }   /* 9:16 media on top, caption strip below it */
+.tile-play .card-media { position: relative; flex: none; width: 100%; aspect-ratio: 9 / 16; overflow: hidden; background: var(--white); mix-blend-mode: multiply; margin: 0; border-radius: 0; }
+.tile-play .card-media video, .tile-play .card-media .card-poster {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+  filter: brightness(1.04); transform: scale(var(--vs, 1.04)); transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 450ms ease;
+}
+.tile-play:hover .card-media video, .tile-play:hover .card-media .card-poster { transform: scale(calc(var(--vs, 1.04) + 0.02)); }
+.tile-play.framed .tbox { background: var(--ink); }
+.tile-play.framed .tcap { color: var(--white); }
+.tile-play.framed .tcap i { color: rgba(255, 255, 255, 0.6); }
+.tile-play.framed .card-media { mix-blend-mode: normal; background: var(--ink); }
+.tile-play.framed .card-media video, .tile-play.framed .card-media .card-poster { object-fit: cover; filter: none; transform: scale(1); }
+.tile-play.framed:hover .card-media video, .tile-play.framed:hover .card-media .card-poster { transform: scale(1.03); }
+
+/* case studies: a cover built from the real screens */
+.tile-case .tbox { aspect-ratio: 4 / 3; background: var(--tint, var(--tile)); }
+.tc-phones { position: absolute; inset: 0; display: flex; justify-content: center; align-items: flex-start; gap: 4%; padding-top: 8%; }
+.tc-phones img {
+  width: 41%; height: auto; border-radius: 14px; background: var(--white);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.tc-phones img:nth-child(2) { margin-top: 9%; }
+.tile-case:hover .tc-phones img:nth-child(1) { transform: translateY(-4%) rotate(-2deg); }
+.tile-case:hover .tc-phones img:nth-child(2) { transform: translateY(-7%) rotate(2deg); }
+.tc-full { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+.tc-fit { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+.tile-case:hover .tc-full, .tile-case:hover .tc-fit { transform: scale(1.04); }
+
+/* press */
+.tile-press img { display: block; width: 100%; height: auto; transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+.tile-press:hover img { transform: scale(1.03); }
+
+.main { container-type: inline-size; }
+.msec .case { border-radius: 26px; background: var(--tile); }
+.msec .case-title, .msec .case-wide .case-title, .msec .case-sm .case-title { font-size: 16px; font-weight: 500; letter-spacing: -0.01em; }
+.msec .case-wide-sub { font-size: 14px; color: var(--g500); }
+.msec .case:hover { transform: none; }
+@container (max-width: 900px) { .msec .cases-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 769px) {
+  .msec .case-sm { aspect-ratio: 1 / 1.05; }
+  .msec .case-hero { left: 22px; right: 22px; top: 44%; }
+  .msec .ch-tiles { padding-bottom: 22px; }
+}
+/* featured: one horizontal row that scrolls sideways, bleeding off the right edge */
+.hrow {
+  display: flex; gap: 14px; overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory; scrollbar-width: none;
+  margin-right: -16px; padding-right: 16px;
+}
+.hrow::-webkit-scrollbar { display: none; }
+.hrow .tile { flex: none; scroll-snap-align: start; }
+.hrow .tbox img { height: 320px; width: auto; }
+.hrow .tcap { width: 0; min-width: 100%; }
+@media (max-width: 860px) {
+  .hrow { gap: 10px; margin: 0 -12px; padding: 0 12px; scroll-padding: 0 12px; }
+  .hrow .tbox img { height: 240px; }
+}
+/* ─── CASE STUDY: floating slides over the page colour (desktop) ─── */
+@media (min-width: 769px) {
+  .cs .cs-backdrop { background: var(--canvas); -webkit-backdrop-filter: none; backdrop-filter: none; transition: opacity 0.32s ease-out; }
+  .cs.to-card .cs-backdrop { transition: opacity 0.46s ease-in 0.08s; }
+  .cs .cs-sheet { inset: 0; border-radius: 0; background: transparent; transform: none; transition: none; }
+  .cs.is-open .cs-sheet { transform: none; }
+  .cs .cs-top { opacity: 0; transform: translateY(-8px); transition: opacity 0.35s ease 0.15s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.15s; }
+  .cs.is-open .cs-top { opacity: 1; transform: none; }
+  .cs:not(.is-open) .cs-top { transition-delay: 0s; }
+  .cs .cs-track > * { opacity: 0; transform: translateY(46px) scale(0.965); }
+  .cs.is-open .cs-track > * { animation: slideIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: calc(0.08s + var(--si, 0) * 0.07s); }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(46px) scale(0.965); } to { opacity: 1; transform: none; } }
+  .cs.closing .cs-track > * { animation: slideOut 0.35s cubic-bezier(0.4, 0, 1, 1) both; animation-delay: 0s; }
+  @keyframes slideOut { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(24px) scale(0.98); } }
+  .cs.closing { visibility: visible; }
+  .cs.closing .cs-backdrop { opacity: 0; }
+  .cs.closing .cs-top { opacity: 0; }
+}
+@media (min-width: 769px) and (prefers-reduced-motion: reduce) {
+  .cs.is-open .cs-track > *, .cs.closing .cs-track > * { animation: none; opacity: 1; transform: none; }
 }
 
+/* ─── CASE STUDY: the card expands into the first slide; close sits beside the nav (desktop) ─── */
+/* the intro slide's logo and title are the same element as the landing card's: same size, weight and spacing */
+.cs-intro-logo { display: block; width: 44px; height: 44px; border-radius: 26%; margin-bottom: 14px; }
+#cs .cs-intro-logo { width: 64px; height: 64px; border-radius: 24%; }
+.cs-intro-text .cs-h1 { font-size: 16px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.2; }
+@media (min-width: 769px) {
+  .cs .cs-top-title { display: none; }
+  .cs .cs-close {
+    position: fixed; z-index: 4; width: 46px; height: 46px; padding: 0; justify-content: center; border-radius: 50%; border: 0; color: var(--ink);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.35) 50%, rgba(255, 255, 255, 0.2) 100%), rgba(232, 239, 250, 0.6);
+    -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+    opacity: 0; transform: scale(0.85); transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), background 0.2s ease, color 0.2s ease;
+  }
+  .cs .cs-close svg.cs-close-x { width: 16px; height: 16px; }
+  .cs .cs-close .cs-close-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .cs.is-open .cs-close.placed { opacity: 1; transform: none; }
+  .cs .cs-close:hover { background: var(--ink); color: var(--white); }
+  .cs .cs-top { transform: none; }
+
+  /* card-expand: the first slide waits under the travelling card, then takes over */
+  .cs.from-card .cs-track > :first-child { animation: none; transform: none; opacity: 0; will-change: opacity; }
+  .cs.from-card.landed .cs-track > :first-child { opacity: 1; transition: opacity 0.16s ease-out; }
+  .cs.to-card .cs-track > :first-child { animation: none; transform: none; opacity: 0; transition: opacity 0.14s ease-out; }
+  /* warm-up: draw the case study invisibly while the card is hovered or pressed, so the first frame of the open is cheap */
+  .cs.warm:not(.is-open):not(.closing) { visibility: visible; opacity: 0.001; pointer-events: none; }
+  .cs.warm:not(.is-open):not(.closing) .cs-track > :first-child { animation: none; opacity: 1; transform: none; }
+  .cs.warm:not(.is-open):not(.closing) * { pointer-events: none !important; }
+  .cs.from-card .cs-track > :first-child .cs-frame-name { opacity: 0; animation: fadeIn 0.3s ease 0.5s forwards; }
+  @keyframes fadeIn { to { opacity: 1; } }
+  .cs.to-card .cs-track > :not(:first-child) { animation: slideOut 0.2s ease-in both; }
+  .cs.to-card .cs-track > :first-child .cs-frame-name { opacity: 0; }
+  .cs .cs-track > :first-child .cs-card { will-change: transform, clip-path; }
+  .cs.from-card.is-open .cs-track > :not(:first-child) { animation-delay: calc(0.3s + var(--si, 0) * 0.05s); animation-duration: 0.6s; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+  .case.lifted { visibility: hidden; }
+}
+.xp-box, .xp-art, .xp-logo, .xp-title { position: fixed; z-index: 255; pointer-events: none; margin: 0; will-change: transform, opacity; }
+.cs > .xp-shell, .cs > .xp-art, .cs > .xp-logo, .cs > .xp-title, .cs > .nm-layer { z-index: 1 !important; }
+.cs > .cs-sheet { z-index: 2; }
+.xp-logo, .xp-title { z-index: 256; }
+.xp-shell { position: fixed; inset: 0; z-index: 254; pointer-events: none; }
+.xp-shell i { position: absolute; left: 0; top: 0; background: var(--white); transform-origin: 0 0; will-change: transform; }
+.xp-shell .c { width: 100px; height: 100px; background: none; overflow: hidden; }
+.xp-shell .c::before { content: ""; position: absolute; width: 200px; height: 200px; border-radius: 50%; background: var(--white); }
+.xp-shell .tl::before { left: 0; top: 0; } .xp-shell .tr::before { right: 0; top: 0; } .xp-shell .bl::before { left: 0; bottom: 0; } .xp-shell .br::before { right: 0; bottom: 0; }
+.xp-shell .eh { width: 1px; height: 100px; } .xp-shell .ev { width: 100px; height: 1px; } .xp-shell .m { width: 1px; height: 1px; }
+.xp-box { background: var(--white); }
+.xp-title { white-space: nowrap; color: var(--ink); transform-origin: 0 0; line-height: 1.2; }
+.xp-art { overflow: visible; }
+
+/* first slides: every screen the same height, side by side, in every case study */
+@media (min-width: 769px) {
+  .cs-intro .cs-hero-shots { align-items: center; }
+  .cs-intro .cs-hero-shots > img, .cs-intro .cs-hero-shots > .cs-phone,
+  .cs-intro .cs-hero-shots > img:nth-child(2), .cs-intro .cs-hero-shots > .cs-phone:nth-child(2),
+  .cs-intro .cs-hero-shots > .cs-phone.sq, .cs-intro .cs-hero-shots > .cs-phone.ot-hero { height: 86%; }
+}
+
+/* the key number lives in the subcopy, highlighted */
+.case-sub { display: block; margin-top: 6px; font-size: 14px; line-height: 1.4; color: var(--g500); }
+.case-sub b, .case-wide-sub b { font-weight: 500; color: var(--ink); }
+.msec .case-sm .case-hero { top: 50%; }
+
+/* bio: first paragraph, the rest behind "Read more" (grid rows animate 0fr to 1fr, so the height eases naturally) */
+.bio-more { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows 0.4s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.3s ease; }
+.bio-more > div { overflow: hidden; min-height: 0; }
+.bio-more > div > p { margin-top: 12px; }
+.side-bio.open .bio-more { grid-template-rows: 1fr; opacity: 1; }
+.bio-toggle { margin-top: 8px; padding: 0; border: 0; background: none; font: inherit; font-weight: 500; color: var(--accent); cursor: pointer; text-underline-offset: 3px; }
+.bio-toggle:hover { text-decoration: underline; }
+.bio-toggle:focus-visible { outline: 2px solid #0d99ff; outline-offset: 2px; border-radius: 4px; }
+
+/* logos, resume and copyright stay pinned to the bottom of the panel while the bio scrolls under them */
+.side-dock {
+  position: sticky; bottom: -22px; z-index: 2; margin: 8px -24px -22px -18px; padding: 24px 24px 22px 18px;
+  background: linear-gradient(180deg, rgba(242, 245, 251, 0) 0, var(--canvas) 22px);
+}
+@media (max-width: 860px) { .side-dock { position: static; margin: 0; padding: 24px 0 0; background: none; } }
+
+/* the floating section nav sits centred over the work column, not the whole window */
+@media (min-width: 861px) { .fnav { left: calc(50% + 156px); } }
+
+@media (max-width: 860px) {
+  .lay { display: block; }
+  .side { position: static; height: auto; overflow: visible; padding: 16px 16px 8px; margin: 0; border-radius: 0; background: none; box-shadow: none; }
+  .side-bio { margin-top: 28px; }
+  .side-foot { padding-top: 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; }
+  .side-copy { display: none; }
+  .main { padding: 8px 12px 110px; }
+  .msec + .msec { margin-top: 40px; }
+  .masonry { gap: 10px; }
+  .m-col { gap: 10px; }
+  .cgrid { gap: 2px 10px; }
+  .cgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tcap { font-size: 12px; height: 40px; padding: 0 16px; }
+  .tcap i:not(:last-child) { display: none; }
+  .tbox { border-radius: 22px; }
+}
+@media (prefers-reduced-motion: reduce) { .tile.in { animation: none; } }
 
 /* ─── SECTION HEAD ─── */
 .section-head {
@@ -290,15 +636,16 @@ body {
 .card .card-media video,
 .card .card-media .card-poster {
   filter: brightness(1.04); /* lift near-white (≈245–254, after colour conversion) to pure white so no box shows */
-  transform: scale(0.9);
+  transform: scale(var(--vs, 0.9));
   transition: transform 0.6s var(--ease);
 }
 
 .card:hover .card-media video,
-.card:hover .card-media .card-poster { transform: scale(0.92); }
+.card:hover .card-media .card-poster { transform: scale(calc(var(--vs, 0.9) + 0.02)); }
 
-.card[data-idx="2"] .card-media video,
-.card[data-idx="2"] .card-media .card-poster { transform: scale(0.85); }
+/* Dark, full-bleed recordings get the same rounded corners as a phone screen */
+.card-framed .card-media video,
+.card-framed .card-media .card-poster { border-radius: 32px; }
 
 .card-poster {
   position: absolute;
@@ -401,8 +748,68 @@ body {
 
 .card.is-unmuted .card-unmuted-dot { opacity: 1; }
 
+/* ─── CURSOR BUDDY: my cutout trails the pointer, and talks when you go quiet ─── */
+.buddy { display: none; /* whole cursor buddy hidden for now: delete display:none here and on .buddy-body to bring it back */ position: fixed; left: 0; top: 0; z-index: 80; width: 76px; pointer-events: none; opacity: 0; transition: opacity 0.3s var(--ease); will-change: transform; }
+.buddy.on { opacity: 1; }
+.buddy-body { display: none; transform-origin: 50% 100%; will-change: transform; } /* image hidden for now: delete display:none to bring it back */
+.buddy-body img { display: block; width: 100%; height: auto; user-select: none; -webkit-user-drag: none; }
+.buddy-bubble { position: absolute; bottom: calc(100% + 6px); left: 58%; width: max-content; max-width: 220px; padding: 10px 14px; border-radius: 18px 18px 18px 6px; background: var(--ink); color: #fff; font-size: 13px; font-weight: 500; line-height: 1.35; letter-spacing: -0.01em; transform-origin: 0 100%; opacity: 0; transform: scale(0.5) translateY(8px); transition: opacity 0.18s var(--ease), transform 0.5s var(--spring); }
+.buddy.flip .buddy-bubble { left: auto; right: 58%; border-radius: 18px 18px 6px 18px; transform-origin: 100% 100%; }
+.buddy.talk .buddy-bubble { opacity: 1; transform: none; }
+@media (hover: none), (pointer: coarse) { .buddy { display: none; } }
+@media (prefers-reduced-motion: reduce) { .buddy-bubble { transition: opacity 0.2s; transform: none; } }
+
+/* ─── EXPLORATION STORY MODAL ─── */
+html { scrollbar-gutter: stable; }
+.story { position: fixed; inset: 0; z-index: 90; display: flex; align-items: center; justify-content: center; padding: 40px; pointer-events: none; visibility: hidden; transition: visibility 0s linear 0.4s; }
+.story.open { pointer-events: auto; visibility: visible; transition: none; }
+.story-backdrop { position: absolute; inset: 0; will-change: opacity; background: rgba(15,29,58,0.15); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); opacity: 0; transition: opacity 0.35s var(--ease); }
+.story.open .story-backdrop { opacity: 1; }
+.story-card { position: relative; display: flex; gap: 32px; align-items: stretch; background: var(--white); border-radius: 32px; padding: 16px 40px 16px 16px; max-width: 820px; width: 100%; opacity: 0; transform: translateY(20px) scale(0.97); transition: opacity 0.22s ease-out, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1); will-change: transform, opacity; backface-visibility: hidden; }
+.story.open .story-card { opacity: 1; transform: none; }
+.story-media { flex: none; height: min(640px, calc(100vh - 112px)); aspect-ratio: 9 / 16; border-radius: 22px; overflow: hidden; background: var(--g50, #f5f5f7); }
+.story-media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.story-media { position: relative; background: var(--white); }
+/* timebar: a thin track along the bottom of the video, thicker while you hover or drag it */
+.story-bar {
+  position: absolute; left: 14px; right: 14px; bottom: 12px; height: 18px; cursor: pointer; touch-action: none;
+  display: flex; align-items: center; -webkit-tap-highlight-color: transparent; outline: none;
+}
+.story-bar::before, .story-bar i {
+  content: ""; position: absolute; left: 0; height: 4px; border-radius: 999px;
+  transition: height 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.story-bar::before { right: 0; background: rgba(255, 255, 255, 0.35); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.story-bar i { width: 100%; background: var(--white); transform-origin: 0 50%; transform: scaleX(var(--p, 0)); }
+.story-media:not(.framed) .story-bar::before { background: rgba(15, 29, 58, 0.14); }
+.story-media:not(.framed) .story-bar i { background: var(--ink); }
+.story-bar:hover::before, .story-bar:hover i, .story-bar.drag::before, .story-bar.drag i { height: 7px; }
+.story-bar:focus-visible::before { outline: 2px solid #0d99ff; outline-offset: 3px; }
+.story-text { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; padding: 24px 0; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.story-title { margin-top: 6px; font-size: 30px; font-weight: 600; letter-spacing: -0.035em; line-height: 1.08; color: var(--ink); }
+.story-p { font-size: 17px; line-height: 1.55; letter-spacing: -0.01em; color: var(--ink); text-wrap: pretty; }
+.story-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 20px; font-size: 13px; color: var(--g500); }
+.story-tools span { margin-right: 2px; }
+.story-tools b { font-weight: 500; color: var(--ink); background: var(--blue); padding: 4px 10px; border-radius: 999px; }
+.story-x { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border-radius: 50%; border: 0; background: #f5f5f7; color: var(--ink); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.25s var(--ease), transform 0.4s var(--spring); }
+.story-x:hover { background: #ececf0; transform: rotate(90deg); }
+.story-x svg { width: 14px; height: 14px; }
+@media (max-width: 768px) {
+  .story { padding: 0; align-items: flex-end; }
+  .story-card { flex-direction: column; gap: 16px; padding: 12px 12px calc(20px + env(safe-area-inset-bottom)); border-radius: 28px 28px 0 0; max-width: none; width: 100%; max-height: 94vh; overflow-y: auto; transform: translateY(40px); }
+  .story-media { height: auto; width: 62%; align-self: center; max-height: 56vh; }
+  .story-text { padding: 0 8px; }
+  .story-title { font-size: 24px; }
+  .story-p { font-size: 15px; }
+  .story-tools { margin-top: 14px; }
+  .story-x { top: 18px; right: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { .story-card { transition: opacity 0.2s; transform: none; } }
+
 /* ─── CASE STUDIES (entry points) ─── */
-.cases { margin-top: 24px; }
+.cases { margin-top: 112px; }
+@media (max-width: 768px) { .cases { margin-top: 72px; } }
 
 .cases-grid {
   display: grid;
@@ -563,7 +970,12 @@ body {
   .hero-title { font-size: 34px; }
   .hero-sub { font-size: 15px; }
   .about { padding: 40px 4px 64px; }
-  .about-statement { font-size: 24px; }
+  .dock-cap { margin-top: 48px; font-size: 13px; }
+  .dock { margin-bottom: 40px; margin-top: 12px; gap: 6px; padding: 6px; border-radius: 18px; }
+  .dock-sep { height: 22px; margin: 0 2px; }
+  .dock-cta { height: 32px; padding: 0 10px 0 12px; border-radius: 8px; font-size: 12px; gap: 5px; }
+  .dock-cta svg { width: 12px; height: 12px; }
+  .dock-app img { width: 32px; height: 32px; border-radius: 8px; }
   .section-title { font-size: 26px; }
   .grid { gap: 10px; }
   .card { border-radius: 22px; }
@@ -730,7 +1142,7 @@ body {
   font-weight: 500;
   color: var(--ink);
   cursor: pointer;
-  transition: all 0.35s var(--spring);
+  transition: background 0.35s var(--spring), color 0.35s var(--spring), border-color 0.35s var(--spring), transform 0.35s var(--spring);
 }
 
 .cs-close svg { width: 11px; height: 11px; }
@@ -745,9 +1157,7 @@ body {
   overflow-y: hidden;
   overscroll-behavior: contain;
   scrollbar-width: none;
-  background-color: #f4f3f0;
-  background-image: radial-gradient(rgba(22,21,19,0.09) 1px, transparent 1px);
-  background-size: 22px 22px;
+  background: transparent;
   cursor: grab;
 }
 
@@ -788,14 +1198,19 @@ body {
   flex-direction: column;
 }
 
+/* connector between frames: dot, hairline, arrowhead. Built from fixed-size parts so it never stretches. */
 .cs-link {
   flex: none;
   width: 96px;
   height: 24px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
   color: #0d99ff;
 }
-
-.cs-link svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.cs-link-dot { flex: none; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.cs-link-line { flex: 1; height: 1.75px; margin-right: -7px; background: currentColor; border-radius: 1px; }
+.cs-link-head { flex: none; display: block; width: 10px; height: 14px; overflow: visible; }
 
 .cs-gap { flex: none; width: 72px; }
 
@@ -974,7 +1389,7 @@ body {
 }
 .cs-pill:hover { transform: translateY(-2px) scale(1.03); }
 
-/* bottom navigator */
+/* bottom navigator: same glass and elastic pill as the landing nav */
 .cs-nav {
   position: absolute;
   left: 50%;
@@ -984,12 +1399,17 @@ body {
   display: flex;
   align-items: center;
   gap: 2px;
-  padding: 4px;
-  background: rgba(255,255,255,0.9);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(0,0,0,0.06);
-  border-radius: 100px;
+  padding: 5px;
+  isolation: isolate;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.35) 50%, rgba(255, 255, 255, 0.2) 100%),
+    rgba(232, 239, 250, 0.6);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+  border-radius: 999px;
   max-width: calc(100% - 32px);
   overflow-x: auto;
   scrollbar-width: none;
@@ -997,18 +1417,24 @@ body {
 .cs-nav::-webkit-scrollbar { display: none; }
 .cs-nav button {
   flex: none;
-  padding: 7px 12px;
+  padding: 8px 14px;
   border: 0;
-  border-radius: 100px;
+  border-radius: 999px;
   background: transparent;
   font: inherit;
-  font-size: 12px;
-  color: var(--g500);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  color: var(--g700);
   cursor: pointer;
-  transition: background 0.25s, color 0.25s;
+  transition: color 0.25s;
+  -webkit-tap-highlight-color: transparent;
 }
 .cs-nav button:hover { color: var(--ink); }
-.cs-nav button.on { background: var(--ink); color: var(--white); }
+.cs-nav button:focus-visible { outline: 2px solid #0d99ff; outline-offset: 2px; }
+/* fallback before the elastic pill boots */
+.cs-nav:not(.enav) button.on { background: var(--ink); color: var(--white); }
 
 /* lightbox */
 .cs-lightbox {
@@ -1093,7 +1519,8 @@ body.cs-locked { overflow: hidden; }
 .case-wide-shots { position: relative; flex: 1; display: flex; justify-content: center; align-items: flex-end; gap: 16px; padding-top: 36px; min-width: 0; }
 .case-wide-shots img { width: 26%; max-width: 190px; aspect-ratio: 9 / 18; object-fit: cover; object-position: top; border-radius: 22px 22px 0 0; transition: transform 0.6s var(--island); }
 .case-wide-shots img:nth-child(2) { width: 30%; max-width: 220px; }
-.case-wide:hover .case-wide-shots img { transform: translateY(-8px); }
+.case-wide-shots img { transform-origin: 50% 100%; }
+.case-wide:hover .case-wide-shots img { transform: scale(1.04); }
 .case-wide:hover .case-wide-shots img:nth-child(2) { transition-delay: 0.04s; }
 .case-wide:hover .case-wide-shots img:nth-child(3) { transition-delay: 0.08s; }
 @media (max-width: 768px) {
@@ -1256,19 +1683,19 @@ a.cs-pill { text-decoration: none; }
 .case-hero { position: absolute; left: 22px; right: 22px; bottom: 0; top: 50%; display: flex; justify-content: center; align-items: flex-end; gap: 8px; pointer-events: none; }
 .case-hero img { display: block; transition: transform 0.6s var(--island); }
 .ch-tiles { align-items: center; padding-bottom: 22px; }
-.ch-tiles img { position: relative; width: 40%; margin: 0 -3%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 18px; border: 3px solid var(--tile); }
+.ch-tiles img { position: relative; width: 34%; margin: 0 -3%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 18px; border: 3px solid var(--tile); }
 .ch-tiles img:nth-child(1) { transform: rotate(-8deg) translateY(6px); }
 .ch-tiles img:nth-child(2) { z-index: 1; transform: translateY(-8px); }
 .ch-tiles img:nth-child(3) { transform: rotate(8deg) translateY(6px); }
 .ch-phones img { width: 40%; height: 100%; object-fit: cover; object-position: top; border-radius: 16px 16px 0 0; border: 1px solid rgba(0,0,0,0.06); border-bottom: 0; }
 .ch-pic img { width: 100%; height: calc(100% - 22px); margin-bottom: 22px; object-fit: cover; border-radius: 16px; }
-.case-sm:hover .case-hero img { transform: translateY(-6px); }
+.case-sm:hover .case-hero img { transform: scale(1.04); }
 .ch-icon { align-items: center; padding-bottom: 22px; }
 .case-lottie { display: block; height: 100%; max-height: 190px; max-width: 100%; aspect-ratio: 1 / 1; transition: transform 0.6s var(--island); }
 .case-lottie svg { display: block; }
-.case-sm:hover .case-lottie { transform: translateY(-6px) rotate(-4deg); }
+.case-sm:hover .case-lottie { transform: scale(1.05) rotate(-4deg); }
 .case-sm:hover .ch-tiles img:nth-child(1) { transform: rotate(-12deg) translate(-6px, 2px); }
-.case-sm:hover .ch-tiles img:nth-child(2) { transform: translateY(-14px); }
+.case-sm:hover .ch-tiles img:nth-child(2) { transform: translateY(-8px) scale(1.06); }
 .case-sm:hover .ch-tiles img:nth-child(3) { transform: rotate(12deg) translate(6px, 2px); }
 @media (max-width: 1024px) {
   .case-sm { aspect-ratio: 3 / 2; }
@@ -1299,7 +1726,7 @@ a.cs-pill { text-decoration: none; }
 .case-sm:hover .case-hero .ch-crop img { transform: none; }
 .ch-crop .case-lottie { position: absolute; left: 4.28%; top: 2.47%; width: 91.7%; height: auto; max-height: none; aspect-ratio: 268 / 188; }
 .case-sm:hover .ch-crop .case-lottie { transform: none; }
-.case-sm:hover .ch-crop { transform: translateY(-6px); }
+.case-sm:hover .ch-crop { transform: scale(1.04); }
 
 /* Dunzo tile: the logo and the waving shopkeeper from the onboarding screen */
 .ch-crop.dz { aspect-ratio: 1 / 1; }
@@ -1368,7 +1795,7 @@ a.cs-pill { text-decoration: none; }
   .cs-impact-grid b, .cs-impact-6 b { font-size: 34px; padding-right: 64px; }
   .cs-impact-grid .cs-ill { width: 52px; height: 52px; top: 16px; right: 16px; }
   .cs-impact-grid span { padding-right: 64px; }
-  .cs-nav { bottom: calc(14px + env(safe-area-inset-bottom)); box-shadow: 0 8px 24px rgba(22,21,19,0.10); }
+  .cs-nav { bottom: calc(14px + env(safe-area-inset-bottom)); }
   .cs-nav button { padding: 9px 14px; font-size: 13px; }
 }
 
@@ -1437,7 +1864,7 @@ a.cs-pill { text-decoration: none; }
 @media (prefers-reduced-motion: reduce) { .cs.is-open .cs-track { animation: none !important; } .cs-pn, .cs-menu { transition: none !important; } }
 
 /* Zepto Cafe: user research, in their own words */
-.cs-research { width: min(980px, 88vw); justify-content: center; gap: 40px; }
+.cs-research { width: min(980px, 88vw); justify-content: flex-start; gap: 40px; }
 .cs-research .cs-h2 { font-size: 32px; }
 .cs-voices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .cs-voice q + q { margin-top: 2px; }
@@ -1448,13 +1875,116 @@ a.cs-pill { text-decoration: none; }
 .cs-who small { display: block; font-size: 12px; color: var(--g500); }
 .cs-voice q { display: block; quotes: none; padding: 12px 14px; border-radius: 6px 18px 18px 18px; background: rgba(245,244,241,0.75); font-size: 16px; line-height: 1.45; color: var(--ink); letter-spacing: -0.01em; }
 .cs-voice q::before { content: "\201C"; } .cs-voice q::after { content: "\201D"; }
-.cs-research mark { background: linear-gradient(transparent 45%, rgba(255,204,0,0.38) 45%); color: inherit; padding: 0 1px; }
+.cs-research mark { background: rgba(255,204,0,0.32); color: inherit; padding: 1px 3px; border-radius: 4px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 @media (max-width: 768px) {
   .cs-research { width: auto; gap: 22px; }
   .cs-research .cs-h2 { font-size: 24px; }
   .cs-voice q { font-size: 15px; }
   .cs-voices { grid-template-columns: 1fr; gap: 20px; }
 }
+
+
+/* Customisation impact: each result on the same row as the PM's words about it */
+.ck { width: min(940px, 86vw); justify-content: flex-start; gap: 32px; }
+.ck-head .cs-p { margin-top: 8px; max-width: 520px; }
+.ck-rows { display: flex; flex-direction: column; gap: 10px; }
+.ck-labels, .ck-row { display: grid; grid-template-columns: 280px 1fr; gap: 12px; }
+.ck-labels span { padding: 0 4px; font-size: 12px; font-weight: 500; color: var(--g400); }
+.ck-row .cs-mini { display: flex; flex-direction: column; justify-content: center; padding: 16px 18px; border-radius: 16px; }
+.ck-row .cs-mini b { font-size: 30px; }
+.ck-row .cs-mini span { font-size: 12px; }
+.ck-note { margin: 0; display: flex; align-items: center; gap: 14px; padding: 12px 18px 12px 12px; background: #f5f5f7; border: 0; border-radius: 16px; }
+.ck-note img { flex: none; width: 56px; height: 56px; object-fit: cover; object-position: top; border-radius: 10px; border: 1px solid rgba(0,0,0,0.06); }
+.ck-note figcaption { min-width: 0; color: var(--ink); }
+.ck-note figcaption span { display: block; font-size: 15px; font-weight: 500; line-height: 1.4; letter-spacing: -0.015em; }
+.ck-note figcaption small { display: block; margin-top: 4px; font-size: 12px; font-weight: 500; color: var(--g500); }
+@media (max-width: 768px) {
+  .ck { width: auto; gap: 20px; }
+  .ck-labels { display: none; }
+  .ck-row { grid-template-columns: 1fr; gap: 6px; }
+  .ck-rows { gap: 18px; }
+  .ck-note figcaption span { font-size: 14px; }
+}
+
+/* Trust sheet, rebuilt in HTML: Apple-style large title, App Store stat strip, inset grouped lists.
+   Drawn at 360pt and zoomed to fit each phone frame. */
+.ts-phone { overflow: visible !important; border: 0 !important; }
+.ts-clip, .ts-full .cs-scroller { height: 100%; overflow: hidden; border-radius: 22px; border: 1px solid rgba(0,0,0,0.07); background: #f2f2f7; }
+.ts-full .cs-scroller { overflow-y: auto; }
+.ts-stage { width: 360px; position: absolute; left: 0; top: 0; zoom: var(--tsz, 0.57); }
+.ts-clip, .ts-full .cs-scroller { position: relative; }
+.ts-phone { min-width: 0; contain: inline-size; }
+.ts-open .ts-stage { height: 800px; overflow: hidden; }
+.ts-bg { display: block; width: 100% !important; height: auto !important; border: 0 !important; border-radius: 0 !important; aspect-ratio: auto !important; }
+.ts-scrim { position: absolute; inset: 0; background: rgba(0,0,0,0.38); }
+.ts-x { position: absolute; left: 50%; top: 104px; width: 34px; height: 34px; margin-left: -17px; display: grid; place-items: center; border-radius: 50%; background: rgba(255,255,255,0.9); }
+.ts-x svg { width: 12px; height: 12px; stroke: #1d1d1f; stroke-width: 1.6; stroke-linecap: round; }
+.ts-open .ts { position: absolute; left: 0; right: 0; top: 150px; bottom: 0; overflow: hidden; border-radius: 22px 22px 0 0; }
+.ts { background: #f2f2f7; color: #1d1d1f; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif; text-align: left; }
+.ts-grab { width: 36px; height: 5px; margin: 0 auto; border-radius: 3px; background: #c7c7cc; position: relative; top: 7px; }
+.ts-title { margin: 0; padding: 26px 20px 0; background: #fff; font-size: 28px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+.ts .ts-grab + .ts-title { margin-top: -5px; }
+.ts > .ts-grab { background: #c7c7cc; }
+.ts-stats { display: grid; grid-template-columns: repeat(3, 1fr); padding: 18px 8px 20px; background: #fff; border-bottom: 0.5px solid #d1d1d6; }
+.ts-stats > div { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 0 6px; }
+.ts-stats > div + div { border-left: 0.5px solid #d1d1d6; }
+.ts-stats small { font-size: 10px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #8e8e93; }
+.ts-stats b { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; color: #3a3a3c; }
+.ts-stats img { width: 22px !important; height: 22px !important; object-fit: contain; border: 0 !important; border-radius: 0 !important; aspect-ratio: auto !important; }
+.ts-stars { display: inline-flex; gap: 1px; height: 22px; align-items: center; }
+.ts-stars svg { width: 11px; height: 11px; fill: #ff9500; }
+.ts-stars.sm svg { width: 10px; height: 10px; }
+.ts-body { padding: 4px 16px 96px; }
+.ts-body h5 { margin: 0; padding: 22px 4px 8px; font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
+.ts-group { margin: 0; padding: 0; list-style: none; background: #fff; border-radius: 12px; }
+.ts-foot { margin: 0; padding: 7px 4px 0; font-size: 13px; color: #8e8e93; }
+.ts-steps { counter-reset: st; padding: 4px 0; }
+.ts-steps li { position: relative; display: grid; grid-template-columns: 30px 1fr; padding: 9px 16px 9px 14px; counter-increment: st; }
+.ts-steps li::before { content: counter(st); grid-row: span 2; width: 20px; height: 20px; margin-top: 1px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 600; color: #fff; background: #1d1d1f; }
+.ts-steps li:not(:last-child)::after { content: ""; position: absolute; left: 23.5px; top: 31px; bottom: -10px; width: 1px; background: #d1d1d6; }
+.ts-steps b { font-size: 15px; font-weight: 500; letter-spacing: -0.01em; }
+.ts-steps span { font-size: 13px; color: #8e8e93; margin-top: 1px; }
+.ts-list li { display: flex; align-items: center; gap: 12px; min-height: 44px; padding-left: 14px; font-size: 15px; letter-spacing: -0.01em; }
+.ts-list li span { flex: 1; align-self: stretch; display: flex; align-items: center; }
+.ts-list li + li span { border-top: 0.5px solid #d1d1d6; }
+.ts-ic { flex: none; width: 22px; height: 22px; fill: none; stroke: #6e6e73; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.ts-rate { display: flex; align-items: center; gap: 18px; padding: 14px 16px; }
+.ts-score { display: flex; flex-direction: column; align-items: center; }
+.ts-score b { font-size: 52px; font-weight: 700; letter-spacing: -0.04em; line-height: 1; color: #3a3a3c; }
+.ts-score span { font-size: 13px; font-weight: 600; color: #8e8e93; margin-top: 2px; }
+.ts-bars { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.ts-bar { display: grid; grid-template-columns: 44px 1fr; align-items: center; gap: 6px; }
+.ts-bar i { font-style: normal; font-size: 7px; letter-spacing: 1px; color: #8e8e93; text-align: right; line-height: 1; }
+.ts-bar span { height: 3px; border-radius: 2px; background: #e5e5ea; overflow: hidden; }
+.ts-bar em { display: block; height: 100%; background: #8e8e93; border-radius: 2px; }
+.ts-bars small { margin-top: 4px; font-size: 12px; color: #8e8e93; text-align: right; }
+.ts-review { margin-top: 10px; padding: 14px 16px; }
+.ts-rv-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.ts-rv-top b { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.3; }
+.ts-rv-top img { flex: none; width: 40px !important; height: 40px !important; object-fit: cover; border: 0 !important; border-radius: 0 !important; aspect-ratio: auto !important; }
+.ts-review p { margin: 6px 0 0; font-size: 14px; line-height: 1.4; color: #3a3a3c; }
+.ts-review small { display: block; margin-top: 8px; font-size: 12px; color: #8e8e93; }
+.ts-cta { position: sticky; bottom: 0; padding: 14px 16px 22px; background: linear-gradient(rgba(242,242,247,0), #f2f2f7 40%); }
+.ts-open .ts-cta { position: absolute; left: 0; right: 0; bottom: 0; }
+.ts-cta span { display: flex; align-items: center; justify-content: center; height: 50px; border-radius: 14px; background: #ff3269; color: #fff; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
+
+/* trust sheet, more visual: Settings-style colour tiles, icon badges on the steps, the chef hat as a hero */
+.ts-tile { flex: none; display: grid; place-items: center; width: 29px; height: 29px; border-radius: 7px; background: var(--c); }
+.ts-tile .ts-ic { width: 18px; height: 18px; stroke: #fff; stroke-width: 1.8; }
+.ts-steps { padding: 6px 0; }
+.ts-steps li { grid-template-columns: 44px 1fr; padding: 8px 16px 8px 12px; }
+.ts-steps li::before { display: none; }
+.ts-badge { grid-row: span 2; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: #fff3e0; position: relative; z-index: 1; }
+.ts-steps li:nth-child(2) .ts-badge { background: #ffe8e5; } .ts-steps li:nth-child(3) .ts-badge { background: #efe9ff; } .ts-steps li:nth-child(4) .ts-badge { background: #e6f6ea; }
+.ts-badge svg { width: 18px; height: 18px; fill: none; stroke: #ff9500; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.ts-steps li:nth-child(2) .ts-badge svg { stroke: #ff3b30; } .ts-steps li:nth-child(3) .ts-badge svg { stroke: #7a5af8; } .ts-steps li:nth-child(4) .ts-badge svg { stroke: #34c759; }
+.ts-steps li:not(:last-child)::after { left: 27.5px; top: 40px; bottom: -8px; }
+.ts-steps b, .ts-steps span { grid-column: 2; }
+.ts-chefs { display: flex; align-items: stretch; overflow: hidden; }
+.ts-hat { flex: none; width: 104px; display: grid; place-items: center; background: linear-gradient(160deg, #f3efff, #e7e0ff); }
+.ts-hat img { width: 72px !important; height: auto !important; border: 0 !important; border-radius: 0 !important; aspect-ratio: auto !important; }
+.ts-chefs .ts-list { flex: 1; min-width: 0; margin: 0; padding: 0; list-style: none; }
+.ts-chefs .ts-list li { padding-left: 12px; font-size: 14px; }
 </style>
 </head>
 <body>
@@ -1662,161 +2192,254 @@ function init() {
 init();
 </script>
 
-<div class="sheet">
-  <header class="topbar">
-    <a class="brand" href="./" aria-label="Interactions by Harin, home">
-      <span class="brand-mark" aria-hidden="true">H</span>
-      <span>Harin</span>
-    </a>
-    <nav class="topbar-links" aria-label="Social">
-      <a class="pill" href="https://instagram.com/harin.design" target="_blank" rel="noopener" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        <span class="pill-label">Instagram</span>
-      </a>
-      <a class="pill" href="https://x.com/HNitisvaar" target="_blank" rel="noopener" aria-label="Twitter">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        <span class="pill-label">Twitter</span>
-      </a>
-      <a class="pill is-outline" href="https://www.linkedin.com/in/harinnitisvaar/" target="_blank" rel="noopener">
-        <span class="pill-label">LinkedIn</span>
-      </a>
-    </nav>
-  </header>
-
-  <section class="hero">
-    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-      <filter id="melt" x="-20%" y="-50%" width="140%" height="200%" color-interpolation-filters="sRGB">
-        <!-- Paint solid ink (#1d1d1f) and threshold the alpha so blurred letters fuse like liquid.
-             The threshold strength is animated so the effect fades in and out instead of snapping. -->
-        <feColorMatrix id="meltMatrix" in="SourceGraphic" type="matrix" values="0 0 0 0 0.114  0 0 0 0 0.114  0 0 0 0 0.122  0 0 0 1 0" result="goo"/>
-      </filter>
-    </svg>
-    <h1 class="hero-title" aria-label="Interactions, product design, motion, illustrations and visual design">
-      <span class="morph" id="morph" aria-hidden="true"><span class="morph-a">Interactions</span><span class="morph-b"></span></span>
-    </h1>
-    <p class="hero-sub">Weekly explorations in motion and interaction—made with SwiftUI, Figma &amp; a lot of coffee.</p>
-  </section>
-
-  <main class="content">
-    <section class="about" aria-label="About">
-      <p class="about-statement"><b>6 years</b> into design, currently at <b>CRED</b>. Previously at <b>Zepto</b>, <b>Swiggy</b>, <b>Dunzo</b>, and <b>Meesho</b>. It started with posters, then illustrations, animations, UI, product thinking and interactions—slowly shaping me into a <b>generalist designer</b>.</p>
-    </section>
-
-    <div class="grid" id="grid"></div>
-
-    <!-- CASE STUDIES -->
-    <section class="cases" aria-label="Case studies">
-      <div class="section-head">
-        <h2 class="section-title">Selected Work</h2>
-        <p class="section-sub">Work I'm proud of, crafted with care.</p>
+<div class="lay">
+  <aside class="side" id="about" data-nav="about">
+    <div class="side-pill">
+      <a class="side-ava" href="./" aria-label="Harin Nitisvaar, home"><img src="avatar.jpg" alt=""></a>
+      <a class="side-handle" href="https://instagram.com/harin.design" target="_blank" rel="noopener">@harin.design</a>
+      <a href="https://instagram.com/harin.design" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+      <a href="https://x.com/HNitisvaar" target="_blank" rel="noopener" aria-label="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3zm-1.08 16.18h1.7L7.4 4.73H5.58l11.09 14.45z"/></svg></a>
+      <a href="https://www.linkedin.com/in/harinnitisvaar/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11.25H3V9.75zm6.5 0h3.83v1.54h.06c.53-1 1.84-2.06 3.79-2.06 4.05 0 4.8 2.67 4.8 6.14V21h-4v-4.95c0-1.18-.02-2.7-1.64-2.7-1.65 0-1.9 1.29-1.9 2.62V21h-4V9.75z"/></svg></a>
+    </div>
+    <div class="side-bio">
+      <h1>Hi there 👋 I'm Harin Nitisvaar</h1>
+      <p>I'm a product designer with <b>6 years in design</b>, currently at <b>CRED</b>. Before that I worked at Zepto, Swiggy, Dunzo and Meesho.</p>
+      <div class="bio-more" id="bioMore">
+        <div>
+          <p>It started with posters, then illustrations, animations, UI, product thinking and interactions, slowly shaping me into a <b>generalist designer</b>.</p>
+          <p>At Dunzo I was the <b>brand and visual designer</b>. I drew the mascot, warmed up cold onboarding screens with illustration, and made a sticker pack for WhatsApp and Instagram.</p>
+          <p>At Swiggy I made checkout feel more human. A few tiny illustrations on the tipping widget got <b>3% more people to tip</b>, and putting motion into banners lifted <b>click-through by 4 to 7%</b>.</p>
+          <p>At Zepto I helped turn a grocery app into a food app. Zepto Cafe launched with 40 kitchens and grew <b>past 650 across India</b>.</p>
+          <p>Now at CRED, I'm chasing the same thing I always have: <b>interfaces that feel good in the hand</b>, down to the last pixel and frame.</p>
+          <p>How I work: I think in <b>Figma</b>, animate in <b>Rive</b>, and build it in <b>Xcode</b> when a working prototype says more than a deck ever could.</p>
+          <p>In my free time I build small apps that make people smile. One of them, Throw, got <b>500k+ views on Instagram</b>. Another, a game about Bengaluru traffic, ended up in <b>NDTV, Hindustan Times and The New Indian Express</b>.</p>
+          <p>Always happy to talk about motion, tiny details, or a problem you're stuck on.</p>
+        </div>
       </div>
+      <button class="bio-toggle" type="button" aria-expanded="false" aria-controls="bioMore">Read more</button>
+    </div>
+    <div class="side-dock">
+    <div class="side-cos">
+      <p>I've worked at these top Indian apps</p>
+      <div class="side-icons"><img src="logos/cred.png" alt="CRED" title="CRED"><img src="logos/zepto.png" alt="Zepto" title="Zepto"><img src="logos/swiggy.png" alt="Swiggy" title="Swiggy"><img src="logos/dunzo.png" alt="Dunzo" title="Dunzo"><img src="logos/meesho.png" alt="Meesho" title="Meesho"></div>
+    </div>
+    <div class="side-foot">
+      <a class="side-cta" href="resume.pdf" download="Harin Nitisvaar Resume.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg>Download resume</a>
+    </div>
+    </div>
+  </aside>
+  <main class="main">
+    <section class="msec" id="play" data-nav="play" aria-labelledby="h-play">
+      <header class="msec-head"><h2 id="h-play">Explorations</h2></header>
+      <div class="masonry" id="grid"></div>
+    </section>
+    <section class="msec" id="work" data-nav="work" aria-labelledby="h-work">
+      <header class="msec-head"><h2 id="h-work">Case studies</h2></header>
       <div class="cases-grid">
         <button class="case case-wide" type="button" id="csOpen" data-cs-open="cs" aria-haspopup="dialog" aria-controls="cs">
           <span class="case-wide-text">
             <img class="case-icon" src="logos/zepto.png" alt="Zepto logo">
-            <span><span class="case-title">Zepto Cafe</span><span class="case-wide-sub">Taking a grocery app into 10-minute food. From 40 stores to 650+.</span></span>
+            <span><span class="case-title">Zepto Cafe</span><span class="case-wide-sub">Taking a grocery app into 10-minute food. <b>40 to 650+</b> Cafe stores.</span></span>
           </span>
           <span class="case-wide-shots" aria-hidden="true">
             <img src="work/zepto-cafe/01-store-picker.png" alt="" loading="lazy">
             <img src="work/zepto-cafe/02-cafe-home.png" alt="" loading="lazy">
             <img src="work/zepto-cafe/09-addons.png" alt="" loading="lazy">
           </span>
-          <span class="case-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </button>
         <a class="case case-sm" href="#tipping-widget">
           <span class="case-hero ch-tiles" aria-hidden="true"><img src="work/tipping-widget/ill-building.png" alt="" loading="lazy"><img src="work/tipping-widget/ill-stairs.png" alt="" loading="lazy"><img src="work/tipping-widget/ill-rain.png" alt="" loading="lazy"></span>
           <img class="case-icon" src="logos/swiggy.png" alt="Swiggy logo">
-          <span class="case-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          <span><span class="case-title">Tipping Widget</span></span>
+          <span><span class="case-title">Tipping Widget</span><span class="case-sub"><b>+3%</b> more people tipped</span></span>
         </a>
         <a class="case case-sm" href="#dunzo-visuals">
           <span class="case-hero ch-icon" aria-hidden="true"><span class="ch-crop dz"><img src="work/dunzo/onb-01.png" alt="" loading="lazy"><video class="ch-gif" src="work/dunzo/onb-01.mp4" autoplay muted loop playsinline preload="metadata"></video></span></span>
           <img class="case-icon" src="logos/dunzo.png" alt="Dunzo logo">
-          <span class="case-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          <span><span class="case-title">Dunzo Visuals</span></span>
+          <span><span class="case-title">Dunzo Visuals</span><span class="case-sub"><b>3 flows</b> in one illustration style</span></span>
         </a>
         <a class="case case-sm" href="#order-tracking-page">
           <span class="case-hero ch-icon" aria-hidden="true"><span class="ch-crop"><img src="work/order-tracking/state-delivered.png" alt="" loading="lazy"><span class="case-lottie" data-lottie="work/order-tracking/l-delivered.json"></span></span></span>
           <img class="case-icon" src="logos/zepto.png" alt="Zepto logo">
-          <span class="case-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          <span><span class="case-title">Order Tracking Page</span></span>
+          <span><span class="case-title">Order Tracking Page</span><span class="case-sub"><b>4 days</b> from idea to handoff</span></span>
         </a>
         <a class="case case-sm" href="#everything-visuals">
           <span class="case-hero ch-icon" aria-hidden="true"><span class="case-lottie" data-lottie="work/swiggy-visuals/l/genie-searching.json"></span></span>
           <img class="case-icon" src="logos/swiggy.png" alt="Swiggy logo">
-          <span class="case-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          <span><span class="case-title">Everything Visuals</span></span>
+          <span><span class="case-title">Everything Visuals</span><span class="case-sub"><b>+4 to 7%</b> higher click-through</span></span>
         </a>
       </div>
     </section>
-
-    <!-- FEATURED -->
-    <section class="featured-section">
-      <div class="section-head">
-        <h2 class="section-title">Featured</h2>
-        <p class="section-sub">A few kind mentions I'm grateful for.</p>
-      </div>
-      <div class="featured-scroll" id="featured-scroll"></div>
+    <section class="msec" id="featured" data-nav="featured" aria-labelledby="h-feat">
+      <header class="msec-head"><h2 id="h-feat">Featured</h2></header>
+      <div class="hrow" id="fgrid"></div>
     </section>
   </main>
+</div>
 
-  <footer class="footer">
-    <span>© 2026 Harin Nitisvaar</span>
-    <span>GitHub link coming soon.</span>
-  </footer>
+<nav class="fnav" id="fnav" aria-label="Sections">
+  <a href="#about" data-to="about"><span>About</span></a>
+  <a href="#play" data-to="play"><span>Explorations</span></a>
+  <a href="#work" data-to="work"><span>Work</span></a>
+  <a href="#featured" data-to="featured"><span>Featured</span></a>
+</nav>
+
+<div class="buddy" id="buddy" aria-hidden="true"><div class="buddy-body"><img src="me.png" alt=""></div><div class="buddy-bubble"></div></div>
+
+<div class="story" id="story" role="dialog" aria-modal="true" aria-labelledby="storyTitle" aria-hidden="true">
+  <div class="story-backdrop" data-story-close></div>
+  <div class="story-card">
+    <div class="story-media"><video playsinline loop muted preload="none"></video><div class="story-bar" role="slider" tabindex="0" aria-label="Video position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div></div>
+    <div class="story-text">
+      <h3 class="story-title sr-only" id="storyTitle"></h3>
+      <p class="story-p"></p>
+      <p class="story-tools"><span>Built with</span><b>Xcode</b><b>Rive</b><b>Figma</b></p>
+    </div>
+    <button class="story-x" type="button" data-story-close aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
 </div>
 
 <script>
 const works = [
-  { title: 'Thoughts? Burn it.', context: '2026', video: 'videos/3.mp4', poster: 'thumbs/3.jpg' },
-  { title: 'Butter-smooth movie scrolling', context: '2026', video: 'videos/7.mp4', poster: 'thumbs/7.jpg' },
-  { title: 'Airbnb wishlist', context: '2026', video: 'videos/1.mp4', poster: 'thumbs/1.jpg' },
-  { title: 'Ordering food from homescreen', context: '2026', video: 'videos/2.mp4', poster: 'thumbs/2.jpg' },
-  { title: 'Reaction-based GIF generator', context: '2026', video: 'videos/5.mp4', poster: 'thumbs/5.jpg' },
-  { title: 'Your mood + 1 action that can fix it.', context: '2026', video: 'videos/6.mp4', poster: 'thumbs/6.jpg' },
-  { title: 'Mission office: reach or never.', context: '2026', video: 'videos/4.mp4', poster: 'thumbs/4.jpg' },
-  { title: 'Payment with Dynamic Island', context: '2026', video: 'videos/8.mp4', poster: 'thumbs/8.jpg' },
-  { title: 'Bring out the Michael in you', context: '2026', video: 'videos/9.mp4', poster: 'thumbs/9.jpg' },
-  { title: 'Alarm? Sun is your slider.', context: '2026', video: 'videos/10.mp4', poster: 'thumbs/10.jpg' },
-  { title: 'Movie mood selector', context: '2026', video: 'videos/11.mp4', poster: 'thumbs/11.jpg' },
-  { title: 'Side nudge. Why not?', context: '2026', video: 'videos/12.mp4', poster: 'thumbs/12.jpg' },
-  { title: 'Contextual gift picking', context: '2026', video: 'videos/13.mp4', poster: 'thumbs/13.jpg' },
-  { title: 'Particle reacts to your mood', context: '2026', video: 'videos/14.mp4', poster: 'thumbs/14.jpg' },
+  { title: 'Throw a letter, literally', context: '2026', video: 'videos/15.mp4', poster: 'thumbs/15.jpg', framed: true, scale: 0.72,
+    story: 'My friend used to write me letters. Real ones, on paper. I loved that feeling, and texts never had it. So I made Throw: write a note, fold it into a paper plane, and throw it at someone you love.',
+    fun: 'Pull down to fold. Let go to throw. It lands right on their face ✈️' },
+  { title: 'Or throw a grenade', context: '2026', video: 'videos/16.mp4', poster: 'thumbs/16.jpg', framed: true, scale: 0.72,
+    story: 'Same app, slightly worse intentions. When words aren\u2019t enough, swap the letter for a grenade.',
+    fun: 'It spins all the way there and blows up on your friend\u2019s screen 💣' },
+  { title: 'Fix your PS5 with AR', context: '2026', video: 'videos/17.mp4', poster: 'thumbs/17.jpg', big: true,
+    story: 'Repair guides are walls of text. What if your phone could look at your PS5, open it up in AR, and point at the part that\u2019s actually broken?',
+    fun: 'Tell it what\u2019s wrong. It shows you the culprit 🔧' },
+  { title: 'Fix your iPhone with AR', context: '2026', video: 'videos/18.mp4', poster: 'thumbs/18.jpg', big: true,
+    story: 'A green line on your screen shouldn\u2019t mean a trip to the service centre. Point your camera at the phone and it splits open in AR.',
+    fun: 'Then it walks you through the fix, one screw at a time 📱' },
+  { title: 'Thoughts? Burn it.', context: '2026', video: 'videos/3.mp4', poster: 'thumbs/3.jpg',
+    story: 'Some thoughts don\u2019t need saving. Write it down, then watch it burn. Letting go should feel physical.' },
+  { title: 'Butter-smooth movie scrolling', context: '2026', video: 'videos/7.mp4', poster: 'thumbs/7.jpg',
+    story: 'Movie apps scroll like spreadsheets. I wanted browsing posters to feel as smooth as the films themselves.' },
+  { title: 'Airbnb wishlist', context: '2026', video: 'videos/1.mp4', poster: 'thumbs/1.jpg', scale: 0.85,
+    story: 'Saving a stay felt like nothing happened. I wanted adding to a wishlist to feel like a tiny celebration.' },
+  { title: 'Ordering food from homescreen', context: '2026', video: 'videos/2.mp4', poster: 'thumbs/2.jpg',
+    story: 'Why open an app for your usual order? I put the whole order on the home screen, one tap away.' },
+  { title: 'Reaction-based GIF generator', context: '2026', video: 'videos/5.mp4', poster: 'thumbs/5.jpg',
+    story: 'Finding the right GIF takes longer than the chat itself. What if your reaction became the GIF?' },
+  { title: 'Your mood + 1 action that can fix it.', context: '2026', video: 'videos/6.mp4', poster: 'thumbs/6.jpg',
+    story: 'Mood trackers stop at \u201chow do you feel?\u201d. I wanted the next step: one small thing that can actually help.' },
+  { title: 'Mission office: reach or never.', context: '2026', video: 'videos/4.mp4', poster: 'thumbs/4.jpg',
+    story: 'Getting to office on time is a daily boss fight. So I turned the commute into a mission.' },
+  { title: 'Payment with Dynamic Island', context: '2026', video: 'videos/8.mp4', poster: 'thumbs/8.jpg',
+    story: 'Payments make you stare at a loading screen. I moved the whole thing into the Dynamic Island so you can keep going.' },
+  { title: 'Bring out the Michael in you', context: '2026', video: 'videos/9.mp4', poster: 'thumbs/9.jpg',
+    story: 'Some moments deserve a Michael Scott reaction. This brings it out on cue.' },
+  { title: 'Alarm? Sun is your slider.', context: '2026', video: 'videos/10.mp4', poster: 'thumbs/10.jpg',
+    story: 'Setting an alarm is just picking numbers. What if you dragged the sun to when you want to wake up?' },
+  { title: 'Movie mood selector', context: '2026', video: 'videos/11.mp4', poster: 'thumbs/11.jpg',
+    story: 'Picking a movie can take longer than watching one. Tell it your mood and let it pick.' },
+  { title: 'Side nudge. Why not?', context: '2026', video: 'videos/12.mp4', poster: 'thumbs/12.jpg',
+    story: 'Notifications always shout from the top. What if a small nudge came in from the side instead?' },
+  { title: 'Contextual gift picking', context: '2026', video: 'videos/13.mp4', poster: 'thumbs/13.jpg',
+    story: 'Gift lists are endless. I wanted suggestions that know who it\u2019s for and what the occasion is.' },
+  { title: 'Particle reacts to your mood', context: '2026', video: 'videos/14.mp4', poster: 'thumbs/14.jpg',
+    story: 'Mood apps use faces and numbers. I wanted something softer: particles that move the way you feel.' },
 ];
 
-function render() {
-  document.getElementById('grid').innerHTML = works.map((w, i) => `
-    <div class="card" style="animation-delay:${i * 0.06}s" data-idx="${i}">
-      <div class="card-info">
-        <div class="card-year">${w.context}</div>
-        <div class="card-title">${w.title}</div>
-      </div>
-      <div class="card-media" onclick="handleCardClick(${i})">
-        ${w.video ? `<video
-          playsinline muted loop
-          preload="${i === 0 ? 'metadata' : 'none'}"
-          data-idx="${i}"
-          data-src="${w.video}"
-        >
-          <source data-src="${w.video}" type="video/mp4">
-        </video>
+// ── Landing: each section builds its own grid ──
+const caseStudies = [
+  { hash: 'zepto-cafe', title: 'Zepto Cafe', sub: '10-minute food, 40 to 650+ stores', tint: '#efe9fb', phones: ['work/zepto-cafe/01-store-picker.png', 'work/zepto-cafe/02-cafe-home.png'] },
+  { hash: 'tipping-widget', title: 'Tipping Widget', sub: 'Tips went up by 3%', tint: '#fff1e6', video: 'work/tipping-widget/hero.mp4' },
+  { hash: 'dunzo-visuals', title: 'Dunzo Visuals', sub: 'Illustration doing UX work', img: 'work/dunzo/stickers.png' },
+  { hash: 'order-tracking-page', title: 'Order Tracking Page', sub: 'A calmer wait for your order', tint: '#eaf1fb', phones: ['work/order-tracking/state-way.png', 'work/order-tracking/state-delivered.png'] },
+  { hash: 'everything-visuals', title: 'Everything Visuals', sub: 'Swiggy, 2022 to 2024', img: 'work/swiggy-visuals/live-01.png' },
+];
+function tileHTML(t) {
+  const cap = (title, sub, end) => `<div class="tcap"><b>${title}</b>${sub ? `<i>${sub}</i>` : ''}${end ? `<i>${end}</i>` : ''}</div>`;
+  if (t.kind === 'case') {
+    const c = t.c;
+    const cover = c.phones ? `<div class="tc-phones">${c.phones.map(src => `<img src="${src}" alt="" loading="lazy" decoding="async">`).join('')}</div>`
+      : c.video ? `<video class="tc-full" src="${c.video}#t=0.1" muted loop playsinline autoplay preload="metadata"></video>`
+      : `<img class="tc-full" src="${c.img}" alt="" loading="lazy" decoding="async">`;
+    return `<a class="tile tile-case" data-kind="case" href="#${c.hash}" aria-label="${c.title} case study" style="${c.tint ? `--tint:${c.tint}` : ''}">
+      <div class="tbox">${cover}${cap(c.title, c.sub)}</div>
+    </a>`;
+  }
+  if (t.kind === 'press') { const f = t.f; return `<a class="tile tile-press" data-kind="press" href="${f.url}" target="_blank" rel="noopener" aria-label="${f.name} (opens in a new tab)">
+      <div class="tbox"><img src="${f.img}" alt="" loading="lazy">${cap(f.name)}</div>
+    </a>`; }
+  const w = t.w, i = t.i;
+  return `<div class="tile tile-play${w.framed ? ' framed' : ''}" data-kind="play" data-idx="${i}" role="button" tabindex="0" aria-label="${w.title}: read the story" style="${w.framed ? '' : `--vs:${w.big ? 1.04 : w.scale ? Math.min(0.96, w.scale + 0.15) : 0.96}`}">
+      <div class="tbox"><div class="card-media">
+        <video playsinline muted loop preload="none" data-idx="${i}" data-src="${w.video}"><source data-src="${w.video}" type="video/mp4"></video>
         <img class="card-poster" src="${w.poster}" alt="" aria-hidden="true" loading="lazy" decoding="async">
-        <div class="card-unmuted-dot"></div>
-        <div class="card-bar" onclick="event.stopPropagation()">
-          <div class="card-bar-progress" onmousedown="startScrub(event,${i})" onclick="seekCard(event,${i})">
-            <div class="card-bar-fill" data-idx="${i}"></div>
-          </div>
-          <div class="card-bar-row">
-            <button class="card-bar-btn" onclick="togglePlayPause(${i}); event.stopPropagation();">
-              <svg class="card-ic-play" data-idx="${i}" viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 3.5l13 8.5-13 8.5V3.5z"/></svg>
-              <svg class="card-ic-pause" data-idx="${i}" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/></svg>
-            </button>
-            <span class="card-bar-time" data-idx="${i}">0:00</span>
-          </div>
-        </div>` : ''}
-      </div>
-    </div>
-  `).join('');
+      </div>${cap(w.title, '', w.context)}</div>
+    </div>`;
+}
+function makeTiles(items) {
+  const holder = document.createElement('div');
+  holder.innerHTML = items.map(tileHTML).join('');
+  return [].slice.call(holder.children);
+}
+const RATIO = { case: 1, press: 1.25, play: 16 / 9 };
+const sections = [];
+function colsFor(W) { return W >= 760 ? 3 : 2; }   // 18 tall tiles: 3 or 2 columns divide evenly, so columns end flush
+// shortest-column masonry; ratio comes from the image itself when it has loaded
+function layoutSection(sec, animate) {
+  const el = sec.el, cols = colsFor(el.clientWidth || window.innerWidth);
+  sec.cols = cols;
+  el.innerHTML = '';
+  const colEls = [], heights = [];
+  for (let c = 0; c < cols; c++) { const d = document.createElement('div'); d.className = 'm-col'; el.appendChild(d); colEls.push(d); heights.push(0); }
+  sec.tiles.forEach(t => {
+    let k = 0; for (let c = 1; c < cols; c++) if (heights[c] < heights[k] - 0.01) k = c;
+    colEls[k].appendChild(t);
+    const img = t.dataset.kind === 'press' && t.querySelector('img');
+    const r = img && img.naturalWidth ? img.naturalHeight / img.naturalWidth : t.classList.contains('framed') ? 16 / 9 : RATIO[t.dataset.kind];
+    heights[k] += r + 0.04;
+  });
+  balanceColumns(colEls);
+  animateIn(sec.tiles, animate);
+  sec.tiles.forEach(t => { const v = t.querySelector('video'); if (v && v.src && !v.dataset.userPaused) { const p = v.play(); if (p && p.catch) p.catch(() => {}); } });
+}
+// make every column end on the same line: a short column's shortfall is shared out across its
+// white phone tiles (they have room around the phone), never the full-bleed framed ones
+function balanceColumns(colEls) {
+  if (colEls.length < 2) return;
+  colEls.forEach(c => c.querySelectorAll('.tbox').forEach(b => { b.style.aspectRatio = ''; }));
+  const hs = colEls.map(c => c.getBoundingClientRect().height), max = Math.max(...hs);
+  colEls.forEach((c, i) => {
+    const gap = max - hs[i]; if (gap < 1) return;
+    const boxes = [...c.querySelectorAll('.tile:not(.framed) .tbox')]; if (!boxes.length) return;
+    const add = gap / boxes.length;
+    if (add > boxes[0].getBoundingClientRect().height * 0.06) return;   // only ever a nudge, never a stretch
+    boxes.forEach(b => { const r = b.getBoundingClientRect(); b.style.aspectRatio = r.width + ' / ' + (r.height + add); });
+  });
+}
+function animateIn(els, animate) {
+  if (!animate) return;
+  els.forEach((el, i) => { el.classList.remove('in'); void el.offsetWidth; el.style.animationDelay = Math.min(i, 8) * 0.04 + 's'; el.classList.add('in'); });
+}
+function buildMasonry() {
+  const plays = makeTiles(works.map((w, i) => ({ kind: 'play', w, i })));
+  plays.forEach(el => {
+    el.addEventListener('click', () => openStory(+el.dataset.idx));
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openStory(+el.dataset.idx); } });
+  });
+  sections.push({ el: document.getElementById('grid'), tiles: plays });
+  const press = makeTiles(featured.map(f => ({ kind: 'press', f })));
+  const frow = document.getElementById('fgrid');
+  press.forEach(t => frow.appendChild(t));
+  animateIn(press, true);
+  sections.forEach(sec => layoutSection(sec, true));
+}
+let balanceT = 0;
+window.addEventListener('resize', () => {
+  sections.forEach(sec => { if (colsFor(sec.el.clientWidth) !== sec.cols) layoutSection(sec, false); });
+  clearTimeout(balanceT);
+  balanceT = setTimeout(() => sections.forEach(sec => balanceColumns([...sec.el.querySelectorAll(':scope > .m-col')])), 120);
+});
+
+function render() {
+  buildMasonry();
 
   // Intersection Observer: autoplay one video at a time on scroll
   const markReady = (vid) => {
@@ -1865,7 +2488,7 @@ function render() {
         if (card) { card.classList.remove('is-unmuted'); card.classList.remove('is-playing'); }
       }
     });
-  }, { threshold: 0.01, rootMargin: '1200px 0px' });
+  }, { threshold: 0.01, rootMargin: '200px 0px' });
 
   document.querySelectorAll('video[data-idx]').forEach(v => {
     const idx = v.getAttribute('data-idx');
@@ -1914,6 +2537,147 @@ function handleCardClick(idx) {
   }
   updateCardPlayIcon(idx);
 }
+
+// Cursor buddy
+(function () {
+  var el = document.getElementById('buddy');
+  if (!el || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  var body = el.querySelector('.buddy-body'), bubble = el.querySelector('.buddy-bubble');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var lines = [
+    'Still there? I can wait. I\u2019m a PNG, I have time.',
+    'Psst. Click a video and I\u2019ll tell you how it started.',
+    'Blink twice if you\u2019re hiring.',
+    'I\u2019ve been following you this whole time. In a cute way.',
+    'Your cursor fell asleep. So did I.',
+    'Fun fact: I built this site instead of sleeping.',
+    'Don\u2019t mind me. Just admiring your taste in portfolios.',
+    'Scroll down. The good stuff is down there \uD83D\uDC47'
+  ];
+  var OX = 20, OY = 26, IDLE = 5000, NEXT = 7000;
+  var tx = 0, ty = 0, x = 0, y = 0, vx = 0, vy = 0, rot = 0, raf = 0, seen = false;
+  var idleT = 0, nextT = 0, last = -1;
+  function pick() { var i; do { i = Math.floor(Math.random() * lines.length); } while (i === last && lines.length > 1); last = i; return lines[i]; }
+  function say() {
+    bubble.textContent = pick();
+    el.classList.toggle('flip', x > window.innerWidth - 300);
+    el.classList.add('talk');
+    nextT = setTimeout(function () { el.classList.remove('talk'); nextT = setTimeout(say, 450); }, NEXT);
+  }
+  function quiet() {
+    clearTimeout(idleT); clearTimeout(nextT); el.classList.remove('talk');
+    idleT = setTimeout(say, IDLE);
+  }
+  function frame() {
+    if (reduce) { x = tx; y = ty; vx = vy = 0; }
+    else {
+      vx = (vx + (tx - x) * 0.09) * 0.74;
+      vy = (vy + (ty - y) * 0.09) * 0.74;
+      x += vx; y += vy;
+    }
+    var target = reduce ? 0 : Math.max(-16, Math.min(16, vx * 1.6));
+    rot += (target - rot) * 0.2;
+    var stretch = reduce ? 1 : 1 + Math.min(0.06, Math.abs(vy) * 0.004);
+    el.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0)';
+    body.style.transform = 'rotate(' + rot.toFixed(2) + 'deg) scale(' + (2 - stretch).toFixed(3) + ',' + stretch.toFixed(3) + ')';
+    if (Math.abs(tx - x) + Math.abs(ty - y) + Math.abs(vx) + Math.abs(vy) + Math.abs(rot) > 0.08) raf = requestAnimationFrame(frame);
+    else raf = 0;
+  }
+  document.addEventListener('mousemove', function (e) {
+    tx = e.clientX + OX; ty = e.clientY + OY;
+    if (!seen) { x = tx; y = ty; seen = true; }
+    el.classList.add('on');
+    if (!raf) raf = requestAnimationFrame(frame);
+    quiet();
+  }, { passive: true });
+  document.documentElement.addEventListener('mouseleave', function () { el.classList.remove('on', 'talk'); clearTimeout(idleT); clearTimeout(nextT); });
+  window.addEventListener('blur', function () { clearTimeout(idleT); clearTimeout(nextT); el.classList.remove('talk'); });
+})();
+
+// Exploration story modal
+(function () {
+  var el = document.getElementById('story');
+  if (!el) return;
+  var vid = el.querySelector('video'), lastFocus = null, gridVid = null;
+  vid.muted = true;
+  var openToken = 0, bgPlaying = [];
+  window.openStory = function (i) {
+    var w = works[i]; if (!w) return;
+    lastFocus = document.activeElement;
+    gridVid = document.querySelector('video[data-idx="' + i + '"]');
+    // pause every playing grid video: they sit behind a blurred backdrop, and decoding them halves the frame rate of the open
+    bgPlaying = [].slice.call(document.querySelectorAll('#grid video')).filter(function (v) { return !v.paused; });
+    bgPlaying.forEach(function (v) { v.pause(); });
+    if (gridVid) gridVid.pause();
+    el.querySelector('.story-title').textContent = w.title;
+    el.querySelector('.story-p').textContent = w.story || '';
+    el.querySelector('.story-media').classList.toggle('framed', !!w.framed);
+    vid.poster = w.poster;
+    var t = gridVid && gridVid.currentTime ? gridVid.currentTime : 0;
+    var token = ++openToken;
+    // load and play only after the card has landed, so decoding doesn't steal frames from the open animation
+    setTimeout(function () {
+      if (token !== openToken || !el.classList.contains('open')) return;
+      vid.src = w.video;
+      vid.addEventListener('loadedmetadata', function () { try { vid.currentTime = t; } catch (e) {} }, { once: true });
+      vid.play().catch(function(){});
+    }, 420);
+    el.classList.add('open'); el.setAttribute('aria-hidden', 'false');
+    document.documentElement.style.overflow = 'hidden';
+    el.querySelector('.story-x').focus({ preventScroll: true });
+  };
+  function close() {
+    if (!el.classList.contains('open')) return;
+    openToken++;
+    el.classList.remove('open'); el.setAttribute('aria-hidden', 'true');
+    vid.pause(); vid.removeAttribute('src'); vid.load();
+    bar.style.setProperty('--p', 0);
+    document.documentElement.style.overflow = '';
+    bgPlaying.forEach(function (v) { if (v !== gridVid && !v.dataset.userPaused) v.play().catch(function(){}); });
+    bgPlaying = [];
+    if (gridVid && !gridVid.dataset.userPaused) gridVid.play().catch(function(){});
+    if (lastFocus) lastFocus.focus({ preventScroll: true });
+  }
+  el.querySelectorAll('[data-story-close]').forEach(function (b) { b.addEventListener('click', close); });
+
+  // timebar: follows playback every frame while open; click or drag to scrub, arrow keys step 5%
+  var bar = el.querySelector('.story-bar'), barRaf = 0, dragging = false, wasPlaying = false;
+  function paintBar() {
+    var p = vid.duration ? vid.currentTime / vid.duration : 0;
+    bar.style.setProperty('--p', p.toFixed(4));
+    bar.setAttribute('aria-valuenow', Math.round(p * 100));
+  }
+  function tick() { paintBar(); barRaf = el.classList.contains('open') ? requestAnimationFrame(tick) : 0; }
+  vid.addEventListener('play', function () { if (!barRaf) barRaf = requestAnimationFrame(tick); });
+  vid.addEventListener('loadedmetadata', paintBar);
+  function seekTo(clientX) {
+    var r = bar.getBoundingClientRect(), p = Math.max(0, Math.min(1, (clientX - r.left) / r.width));
+    if (vid.duration) { vid.currentTime = p * vid.duration; }
+    bar.style.setProperty('--p', p.toFixed(4));
+  }
+  bar.addEventListener('pointerdown', function (e) {
+    e.preventDefault(); e.stopPropagation();
+    dragging = true; wasPlaying = !vid.paused; vid.pause();
+    bar.classList.add('drag'); bar.setPointerCapture(e.pointerId); seekTo(e.clientX);
+  });
+  bar.addEventListener('pointermove', function (e) { if (dragging) seekTo(e.clientX); });
+  function endDrag() { if (!dragging) return; dragging = false; bar.classList.remove('drag'); if (wasPlaying) vid.play().catch(function(){}); }
+  bar.addEventListener('pointerup', endDrag); bar.addEventListener('pointercancel', endDrag);
+  bar.addEventListener('click', function (e) { e.stopPropagation(); });
+  bar.addEventListener('keydown', function (e) {
+    if (!vid.duration) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      vid.currentTime = Math.max(0, Math.min(vid.duration, vid.currentTime + (e.key === 'ArrowRight' ? 1 : -1) * vid.duration * 0.05));
+      paintBar();
+    }
+  });
+  vid.addEventListener('click', function () { if (vid.paused) vid.play().catch(function(){}); else vid.pause(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('card-media')) { e.preventDefault(); openStory(+e.target.closest('.card').dataset.idx); }
+  });
+})();
 
 function updateCardPlayIcon(idx) {
   const vid = document.querySelector(`video[data-idx="${idx}"]`);
@@ -1999,8 +2763,6 @@ function fmt(s) {
   const sec = Math.floor(s % 60);
   return m + ':' + (sec < 10 ? '0' : '') + sec;
 }
-
-render();
 
 // Featured horizontal scroll
 const featured = [
@@ -2112,76 +2874,10 @@ function renderFeatured() {
   }, { passive: false });
 }
 
+render();
 renderFeatured();
 </script>
 
-<script>
-/* ── Hero word morph: Interactions → Product design → Motion → … ── */
-(function(){
-  var el = document.getElementById('morph');
-  if (!el) return;
-  var a = el.querySelector('.morph-a');
-  var b = el.querySelector('.morph-b');
-  var words = ['Interactions', 'Product design', 'Motion', 'Illustrations', 'Visual design'];
-  var MORPH = 1.3, HOLD = 2.2; // seconds
-
-  var idx = 0;
-
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  var matrix = document.getElementById('meltMatrix');
-  // the box is as wide as the widest word, so a landing word never shifts the layout
-  var probe = document.createElement('span');
-  probe.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;left:0;top:0';
-  el.appendChild(probe);
-  function fit(){
-    var w = 0;
-    words.forEach(function(x){ probe.textContent = x; w = Math.max(w, probe.getBoundingClientRect().width); });
-    el.style.width = Math.ceil(w) + 'px';
-  }
-  fit();
-  window.addEventListener('resize', fit);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
-
-  function blur(f){ return 'blur(' + Math.min(4 / f - 4, 40) + 'px)'; }
-  function ease(x){ return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
-  function setMorph(f){
-    b.style.filter = blur(f);
-    b.style.opacity = Math.pow(f, 0.4);
-    a.style.filter = blur(1 - f);
-    a.style.opacity = Math.pow(1 - f, 0.4);
-    // fade the liquid threshold in at the start and out at the end, so the word lands without a snap
-    var w = Math.min(1, Math.min(f, 1 - f) / 0.18);
-    w = w * w * (3 - 2 * w);
-    matrix.setAttribute('values', '0 0 0 0 0.114  0 0 0 0 0.114  0 0 0 0 0.122  0 0 0 ' + (1 + 11 * w).toFixed(3) + ' ' + (-4.5 * w).toFixed(3));
-  }
-  function settle(){
-    a.textContent = b.textContent;
-    a.style.filter = ''; a.style.opacity = '';
-    b.style.filter = ''; b.style.opacity = 0;
-    el.classList.remove('is-melting');
-  }
-
-  var phase = 'hold', t = 0, last = performance.now();
-  function tick(now){
-    var dt = Math.min((now - last) / 1000, 0.1); // clamp so a background tab doesn't jump
-    last = now;
-    t += dt;
-    if (phase === 'hold' && t >= HOLD) {
-      idx = (idx + 1) % words.length;
-      b.textContent = words[idx];
-      el.classList.add('is-melting');
-      phase = 'morph'; t = 0;
-    }
-    if (phase === 'morph') {
-      if (t >= MORPH) { setMorph(1); settle(); phase = 'hold'; t = 0; }
-      else setMorph(ease(t / MORPH));
-    }
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
-})();
-</script>
 <!-- CASE STUDY: ZEPTO CAFE (horizontal canvas) -->
 <div class="cs" id="cs" data-hash="zepto-cafe" role="dialog" aria-modal="true" aria-labelledby="csTitle" aria-hidden="true">
   <div class="cs-backdrop" data-cs-close></div>
@@ -2204,7 +2900,7 @@ renderFeatured();
           <div class="cs-card cs-intro">
             <div class="cs-intro-text">
               <div>
-                <span class="cs-eyebrow">Zepto · V1 · Shipped</span>
+                <img class="cs-intro-logo" src="logos/zepto.png" alt="Zepto logo">
                 <h2 class="cs-h1" id="csTitle">Zepto Cafe</h2>
                 <p class="cs-p">Zepto was the grocery app. The plan was to make it the food app too, and to own one idea: hot food in 10 minutes <span class="e">⏱️</span>.</p>
                 <p class="cs-p">This is V1. We started with zero Cafe kitchens, launched with 40, and grew past 650 across India.</p>
@@ -2288,7 +2984,7 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- STORE SELECTION -->
         <section class="cs-frame">
@@ -2305,7 +3001,7 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- HOME -->
         <section class="cs-frame" data-chapter="home">
@@ -2321,7 +3017,7 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- TRUST SHEET -->
         <section class="cs-frame" data-chapter="trust">
@@ -2332,13 +3028,71 @@ renderFeatured();
             </div>
             <div class="cs-phones">
               <figure class="cs-phone"><img src="work/zepto-cafe/trust-tap.png" alt="Tapping the trust strip on the cafe home" loading="lazy"><figcaption>Tap the strip</figcaption></figure>
-              <figure class="cs-phone"><img src="work/zepto-cafe/trust-open.png" alt="Trust sheet opening over the cafe home" loading="lazy"><figcaption>The sheet</figcaption></figure>
-              <figure class="cs-phone cs-phone-scroll"><div class="cs-scroller" tabindex="0" aria-label="The full trust sheet. Scroll to read."><img src="work/zepto-cafe/trust-full.png" alt="The full trust sheet" loading="lazy"></div><figcaption>Scroll the sheet</figcaption></figure>
+              <figure class="cs-phone ts-phone ts-open" aria-label="Trust sheet opening over the cafe home"><div class="ts-clip"><div class="ts-stage"><img class="ts-bg" src="work/zepto-cafe/trust-tap.png" alt=""><div class="ts-scrim"></div><span class="ts-x"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6"/></svg></span>
+                <div class="ts">
+                  <div class="ts-grab"></div>
+                  <h4 class="ts-title">Fresh food you can trust</h4>
+                  <div class="ts-stats">
+                    <div><small>Orders</small><b>1 Cr+</b><img src="work/zepto-cafe/sheet/bag.png" alt=""></div>
+                    <div><small>Rating</small><b>4.6</b><span class="ts-stars"><svg viewBox="0 0 12 12"><path d="M6 .8l1.6 3.4 3.7.4-2.8 2.5.8 3.7L6 8.9 2.7 10.8l.8-3.7L.7 4.6l3.7-.4z"/></svg><svg viewBox="0 0 12 12"><path d="M6 .8l1.6 3.4 3.7.4-2.8 2.5.8 3.7L6 8.9 2.7 10.8l.8-3.7L.7 4.6l3.7-.4z"/></svg><svg viewBox="0 0 12 12"><path d="M6 .8l1.6 3.4 3.7.4-2.8 2.5.8 3.7L6 8.9 2.7 10.8l.8-3.7L.7 4.6l3.7-.4z"/></svg><svg viewBox="0 0 12 12"><path d="M6 .8l1.6 3.4 3.7.4-2.8 2.5.8 3.7L6 8.9 2.7 10.8l.8-3.7L.7 4.6l3.7-.4z"/></svg><svg viewBox="0 0 12 12"><path d="M6 .8l1.6 3.4 3.7.4-2.8 2.5.8 3.7L6 8.9 2.7 10.8l.8-3.7L.7 4.6l3.7-.4z"/></svg></span></div>
+                    <div><small>Chefs</small><b>Top</b><img src="work/zepto-cafe/sheet/hat.png" alt=""></div>
+                  </div>
+                  <div class="ts-body">
+                    <h5>Made fresh, never stored</h5>
+                    <ol class="ts-group ts-steps"><li><i class="ts-badge"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg></i><b>You order</b><span>Nothing is cooked before this</span></li><li><i class="ts-badge"><svg viewBox="0 0 24 24"><path d="M12 21c-3.6 0-6-2.4-6-5.6 0-3.4 2.6-5 3.6-8.4 2 1.4 2.4 3.2 2.4 4.6 1-.6 1.6-1.8 1.8-3 2 1.8 4.2 4 4.2 6.8 0 3.2-2.4 5.6-6 5.6z"/></svg></i><b>Chef cooks</b><span>Right then, in the kitchen near you</span></li><li><i class="ts-badge"><svg viewBox="0 0 24 24"><path d="M4 8.5 12 4l8 4.5v7L12 20l-8-4.5z"/><path d="M4 8.5 12 13l8-4.5M12 13v7"/></svg></i><b>Packed hot</b><span>Sealed the moment it's ready</span></li><li><i class="ts-badge"><svg viewBox="0 0 24 24"><path d="M4 11 12 4.5 20 11v8.5H4z"/><path d="M10 19.5V14h4v5.5"/></svg></i><b>At your door</b><span>In about 10 minutes</span></li></ol>
+                    <p class="ts-foot">Nothing frozen or reheated.</p>
+                    <h5>Chefs who know the drill</h5>
+                    <div class="ts-group ts-chefs"><span class="ts-hat"><img src="work/zepto-cafe/sheet/hat.png" alt=""></span><ul class="ts-list"><li><i class="ts-tile" style="--c:#ff9500"><svg class="ts-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h7l4 4V19a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 19V5a1.5 1.5 0 0 1 1-1.5z"/><path d="M14 3.5V8h4M9 12h6M9 15.5h4"/></svg></i><span>Trained on every recipe</span></li><li><i class="ts-tile" style="--c:#007aff"><svg class="ts-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></svg></i><span>Same taste, every city</span></li><li><i class="ts-tile" style="--c:#a2845e"><svg class="ts-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5 12 4l8 4.5v7L12 20l-8-4.5z"/><path d="M4 8.5 12 13l8-4.5M12 13v7"/></svg></i><span>Checked before packing</span></li></ul></div>
+                    <h5>Clean kitchens, every day</h5>
+                    <ul class="ts-group ts-list"><li><i class="ts-tile" style="--c:#34c759"><svg class="ts-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 19 6v5.5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg></i><span>FSSAI licensed</span></li><li><i class="ts-tile" style="--c:#ff3b30"><svg class="ts-ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5.5" width="16" height="14.5" rx="2.5"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4M9.5 14.5l1.8 1.8 3.4-3.4"/></svg></i><span>Audited daily</span></li><li><i class="ts-tile" style="--c:#af52de"><svg class="ts-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 12.5V6.8a1.4 1.4 0 0 1 2.8 0v4.7M10.8 11V5.4a1.4 1.4 0 0 1 2.8 0V11M13.6 11V6.6a1.4 1.4 0 0 1 2.8 0v6.6c0 4-2.3 6.8-5.6 6.8-2.4 0-3.8-1.2-5.2-3.4l-1.7-2.8a1.4 1.4 0 0 1 2.3-1.6L8 12.5"/></svg></i><span>Caps and gloves</span></li><li><i class="ts-tile" style="--c:#30b0c7"><svg class="ts-ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5M12 14.5v2.5"/></svg></i><span>Sealed packs</span></li></ul>
+                    <h5>Ratings and reviews</h5>
+                    <div class="ts-group ts-rate">
+                      <div class="ts-score"><b>4.6</b><span>out of 5</span></div>
+                      <div class="ts-bars"><div class="ts-bar"><i>★★★★★</i><span><em style="width:72%"></em></span></div><div class="ts-bar"><i>★★★★</i><span><em style="width:16%"></em></span></div><div class="ts-bar"><i>★★★</i><span><em style="width:6%"></em></span></div><div class="ts-bar"><i>★★</i><span><em style="width:3%"></em></span></div><div class="ts-bar"><i>★</i><span><em style="width:3%"></em></span></div><small>1 crore+ orders</small></div>
+                    </div>
+                    <div class="ts-group ts-review">
+                      <div class="ts-rv-top"><b>Tasted like home, and actually hot!</b><img src="work/zepto-cafe/sheet/dish.png" alt=""></div>
+                      <span class="ts-stars sm"><svg viewBox="0 0 12 12"><path d="M6 .8l1.6 3.4 3.7.4-2.8 2.5.8 3.7L6 8.9 2.7 10.8l.8-3.7L.7 4.6l3.7-.4z"/></svg><svg viewBox="0 0 12 12"><path d="M6 .8l1.6 3.4 3.7.4-2.8 2.5.8 3.7L6 8.9 2.7 10.8l.8-3.7L.7 4.6l3.7-.4z"/></svg><svg viewBox="0 0 12 12"><path d="M6 .8l1.6 3.4 3.7.4-2.8 2.5.8 3.7L6 8.9 2.7 10.8l.8-3.7L.7 4.6l3.7-.4z"/></svg><svg viewBox="0 0 12 12"><path d="M6 .8l1.6 3.4 3.7.4-2.8 2.5.8 3.7L6 8.9 2.7 10.8l.8-3.7L.7 4.6l3.7-.4z"/></svg><svg viewBox="0 0 12 12"><path d="M6 .8l1.6 3.4 3.7.4-2.8 2.5.8 3.7L6 8.9 2.7 10.8l.8-3.7L.7 4.6l3.7-.4z"/></svg></span>
+                      <small>Ananya · Koramangala</small>
+                    </div>
+                  </div>
+                  <div class="ts-cta"><span>Show me the menu</span></div>
+                </div></div></div><figcaption>The sheet</figcaption></figure>
+              <figure class="cs-phone cs-phone-scroll ts-phone ts-full"><div class="cs-scroller" tabindex="0" aria-label="The full trust sheet. Scroll to read."><div class="ts-stage">
+                <div class="ts">
+                  <div class="ts-grab"></div>
+                  <h4 class="ts-title">Fresh food you can trust</h4>
+                  <div class="ts-stats">
+                    <div><small>Orders</small><b>1 Cr+</b><img src="work/zepto-cafe/sheet/bag.png" alt=""></div>
+                    <div><small>Rating</small><b>4.6</b><span class="ts-stars"><svg viewBox="0 0 12 12"><path d="M6 .8l1.6 3.4 3.7.4-2.8 2.5.8 3.7L6 8.9 2.7 10.8l.8-3.7L.7 4.6l3.7-.4z"/></svg><svg viewBox="0 0 12 12"><path d="M6 .8l1.6 3.4 3.7.4-2.8 2.5.8 3.7L6 8.9 2.7 10.8l.8-3.7L.7 4.6l3.7-.4z"/></svg><svg viewBox="0 0 12 12"><path d="M6 .8l1.6 3.4 3.7.4-2.8 2.5.8 3.7L6 8.9 2.7 10.8l.8-3.7L.7 4.6l3.7-.4z"/></svg><svg viewBox="0 0 12 12"><path d="M6 .8l1.6 3.4 3.7.4-2.8 2.5.8 3.7L6 8.9 2.7 10.8l.8-3.7L.7 4.6l3.7-.4z"/></svg><svg viewBox="0 0 12 12"><path d="M6 .8l1.6 3.4 3.7.4-2.8 2.5.8 3.7L6 8.9 2.7 10.8l.8-3.7L.7 4.6l3.7-.4z"/></svg></span></div>
+                    <div><small>Chefs</small><b>Top</b><img src="work/zepto-cafe/sheet/hat.png" alt=""></div>
+                  </div>
+                  <div class="ts-body">
+                    <h5>Made fresh, never stored</h5>
+                    <ol class="ts-group ts-steps"><li><i class="ts-badge"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg></i><b>You order</b><span>Nothing is cooked before this</span></li><li><i class="ts-badge"><svg viewBox="0 0 24 24"><path d="M12 21c-3.6 0-6-2.4-6-5.6 0-3.4 2.6-5 3.6-8.4 2 1.4 2.4 3.2 2.4 4.6 1-.6 1.6-1.8 1.8-3 2 1.8 4.2 4 4.2 6.8 0 3.2-2.4 5.6-6 5.6z"/></svg></i><b>Chef cooks</b><span>Right then, in the kitchen near you</span></li><li><i class="ts-badge"><svg viewBox="0 0 24 24"><path d="M4 8.5 12 4l8 4.5v7L12 20l-8-4.5z"/><path d="M4 8.5 12 13l8-4.5M12 13v7"/></svg></i><b>Packed hot</b><span>Sealed the moment it's ready</span></li><li><i class="ts-badge"><svg viewBox="0 0 24 24"><path d="M4 11 12 4.5 20 11v8.5H4z"/><path d="M10 19.5V14h4v5.5"/></svg></i><b>At your door</b><span>In about 10 minutes</span></li></ol>
+                    <p class="ts-foot">Nothing frozen or reheated.</p>
+                    <h5>Chefs who know the drill</h5>
+                    <div class="ts-group ts-chefs"><span class="ts-hat"><img src="work/zepto-cafe/sheet/hat.png" alt=""></span><ul class="ts-list"><li><i class="ts-tile" style="--c:#ff9500"><svg class="ts-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h7l4 4V19a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 19V5a1.5 1.5 0 0 1 1-1.5z"/><path d="M14 3.5V8h4M9 12h6M9 15.5h4"/></svg></i><span>Trained on every recipe</span></li><li><i class="ts-tile" style="--c:#007aff"><svg class="ts-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></svg></i><span>Same taste, every city</span></li><li><i class="ts-tile" style="--c:#a2845e"><svg class="ts-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5 12 4l8 4.5v7L12 20l-8-4.5z"/><path d="M4 8.5 12 13l8-4.5M12 13v7"/></svg></i><span>Checked before packing</span></li></ul></div>
+                    <h5>Clean kitchens, every day</h5>
+                    <ul class="ts-group ts-list"><li><i class="ts-tile" style="--c:#34c759"><svg class="ts-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 19 6v5.5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg></i><span>FSSAI licensed</span></li><li><i class="ts-tile" style="--c:#ff3b30"><svg class="ts-ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5.5" width="16" height="14.5" rx="2.5"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4M9.5 14.5l1.8 1.8 3.4-3.4"/></svg></i><span>Audited daily</span></li><li><i class="ts-tile" style="--c:#af52de"><svg class="ts-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 12.5V6.8a1.4 1.4 0 0 1 2.8 0v4.7M10.8 11V5.4a1.4 1.4 0 0 1 2.8 0V11M13.6 11V6.6a1.4 1.4 0 0 1 2.8 0v6.6c0 4-2.3 6.8-5.6 6.8-2.4 0-3.8-1.2-5.2-3.4l-1.7-2.8a1.4 1.4 0 0 1 2.3-1.6L8 12.5"/></svg></i><span>Caps and gloves</span></li><li><i class="ts-tile" style="--c:#30b0c7"><svg class="ts-ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5M12 14.5v2.5"/></svg></i><span>Sealed packs</span></li></ul>
+                    <h5>Ratings and reviews</h5>
+                    <div class="ts-group ts-rate">
+                      <div class="ts-score"><b>4.6</b><span>out of 5</span></div>
+                      <div class="ts-bars"><div class="ts-bar"><i>★★★★★</i><span><em style="width:72%"></em></span></div><div class="ts-bar"><i>★★★★</i><span><em style="width:16%"></em></span></div><div class="ts-bar"><i>★★★</i><span><em style="width:6%"></em></span></div><div class="ts-bar"><i>★★</i><span><em style="width:3%"></em></span></div><div class="ts-bar"><i>★</i><span><em style="width:3%"></em></span></div><small>1 crore+ orders</small></div>
+                    </div>
+                    <div class="ts-group ts-review">
+                      <div class="ts-rv-top"><b>Tasted like home, and actually hot!</b><img src="work/zepto-cafe/sheet/dish.png" alt=""></div>
+                      <span class="ts-stars sm"><svg viewBox="0 0 12 12"><path d="M6 .8l1.6 3.4 3.7.4-2.8 2.5.8 3.7L6 8.9 2.7 10.8l.8-3.7L.7 4.6l3.7-.4z"/></svg><svg viewBox="0 0 12 12"><path d="M6 .8l1.6 3.4 3.7.4-2.8 2.5.8 3.7L6 8.9 2.7 10.8l.8-3.7L.7 4.6l3.7-.4z"/></svg><svg viewBox="0 0 12 12"><path d="M6 .8l1.6 3.4 3.7.4-2.8 2.5.8 3.7L6 8.9 2.7 10.8l.8-3.7L.7 4.6l3.7-.4z"/></svg><svg viewBox="0 0 12 12"><path d="M6 .8l1.6 3.4 3.7.4-2.8 2.5.8 3.7L6 8.9 2.7 10.8l.8-3.7L.7 4.6l3.7-.4z"/></svg><svg viewBox="0 0 12 12"><path d="M6 .8l1.6 3.4 3.7.4-2.8 2.5.8 3.7L6 8.9 2.7 10.8l.8-3.7L.7 4.6l3.7-.4z"/></svg></span>
+                      <small>Ananya · Koramangala</small>
+                    </div>
+                  </div>
+                  <div class="ts-cta"><span>Show me the menu</span></div>
+                </div></div></div><figcaption>Scroll the sheet</figcaption></figure>
             </div>
           </div>
         </section>
 
-<div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- MENU -->
         <section class="cs-frame" data-chapter="menu">
@@ -2352,7 +3106,7 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- CUSTOMISATION -->
         <section class="cs-frame" data-chapter="custom">
@@ -2369,31 +3123,36 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- CUSTOMISATION IMPACT -->
         <section class="cs-frame">
           <span class="cs-frame-name">Customisation / Impact</span>
-          <div class="cs-card cs-cimpact">
-            <div class="cs-cimpact-text">
+          <div class="cs-card ck">
+            <div class="ck-head">
               <span class="cs-num">05 · Impact</span>
               <h3 class="cs-h2">It worked, and fast</h3>
               <p class="cs-p">We tested the new sheet against the old one. More people picked add-ons, and more of them went on to order.</p>
-              <div class="cs-cimpact-stats">
-                <div class="cs-mini"><b>+20%</b><span>add-ons clicked</span></div>
-                <div class="cs-mini"><b>+13%</b><span>customisation viewed → order placed</span></div>
-                <div class="cs-mini"><b>189</b><span>combo orders in 12 hours, at a 20% rollout</span></div>
-              </div>
             </div>
-            <div class="cs-cimpact-proof">
-              <button class="cs-proof-img" type="button" data-full="work/zepto-cafe/impact-slack-1.png" aria-label="Slack update on add-to-cart rate"><img src="work/zepto-cafe/impact-slack-1.png" alt="" loading="lazy"></button>
-              <button class="cs-proof-img" type="button" data-full="work/zepto-cafe/impact-slack-2.png" aria-label="Slack update on early results"><img src="work/zepto-cafe/impact-slack-2.png" alt="" loading="lazy"></button>
-              <button class="cs-proof-img" type="button" data-full="work/zepto-cafe/impact-slack-3.png" aria-label="Slack update on combo orders"><img src="work/zepto-cafe/impact-slack-3.png" alt="" loading="lazy"></button>
+            <div class="ck-rows">
+              <div class="ck-labels"><span>Result</span><span>What the PM said</span></div>
+              <div class="ck-row">
+                <div class="cs-mini"><b>+20%</b><span>add-ons clicked</span></div>
+                <figure class="ck-note"><img src="work/zepto-cafe/impact-slack-1-blur.jpg" alt="" loading="lazy"><figcaption><span>“Add-to-cart with an add-on jumped to 7.52% overnight!”</span><small>PM, Zepto Cafe</small></figcaption></figure>
+              </div>
+              <div class="ck-row">
+                <div class="cs-mini"><b>+13%</b><span>customisation viewed → order placed</span></div>
+                <figure class="ck-note"><img src="work/zepto-cafe/impact-slack-2-blur.jpg" alt="" loading="lazy"><figcaption><span>“+20% add-ons clicked, +13% more orders. Early results look great!”</span><small>PM, Zepto Cafe</small></figcaption></figure>
+              </div>
+              <div class="ck-row">
+                <div class="cs-mini"><b>189</b><span>combo orders in 12 hours, at a 20% rollout</span></div>
+                <figure class="ck-note"><img src="work/zepto-cafe/impact-slack-3-blur.jpg" alt="" loading="lazy"><figcaption><span>“189 combo orders in 12 hours at just 20%. 1000 at full scale?!”</span><small>PM, Zepto Cafe</small></figcaption></figure>
+              </div>
             </div>
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- EVENTS -->
         <section class="cs-frame" data-chapter="events">
@@ -2409,7 +3168,7 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- MOODS -->
         <section class="cs-frame" data-chapter="moods">
@@ -2426,7 +3185,7 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- MOODS IMPACT -->
         <section class="cs-frame">
@@ -2540,7 +3299,7 @@ renderFeatured();
           <div class="cs-card cs-intro">
             <div class="cs-intro-text">
               <div>
-                <span class="cs-eyebrow">Swiggy · Checkout · Shipped</span>
+                <img class="cs-intro-logo" src="logos/swiggy.png" alt="Swiggy logo">
                 <h2 class="cs-h1" id="csTipTitle">Tipping Widget</h2>
                 <p class="cs-p">Tipping is a tiny moment in checkout. Most people scroll right past it.</p>
                 <p class="cs-p">I wanted it to feel like it's about a person, not a button. A few tiny illustrations later, tips went up by 3%.</p>
@@ -2573,7 +3332,7 @@ renderFeatured();
             <div class="cs-stats">
               <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/stopwatch.png" alt="" loading="lazy"><b>4 days</b><span>from idea to handoff</span></div>
               <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/palette.png" alt="" loading="lazy"><b>64 px</b><span>to tell each story</span></div>
-              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/eyes.png" alt="" loading="lazy"><b>3–10 s</b><span>people spend on this widget</span></div>
+              <div class="cs-stat"><img class="cs-ill" src="work/zepto-cafe/fluent/eyes.png" alt="" loading="lazy"><b>3 to 10 s</b><span>people spend on this widget</span></div>
             </div>
           </div>
         </section>
@@ -2594,7 +3353,7 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- DAILY HARDSHIPS -->
         <section class="cs-frame">
@@ -2610,7 +3369,7 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- ILLUSTRATE -->
         <section class="cs-frame" data-chapter="illustrate">
@@ -2630,7 +3389,7 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- ANIMATE -->
         <section class="cs-frame" data-chapter="animate">
@@ -2646,7 +3405,7 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- IN THE APP -->
         <section class="cs-frame" data-chapter="ui">
@@ -2680,7 +3439,7 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- REACTIONS -->
         <section class="cs-frame" data-chapter="reactions">
@@ -2759,7 +3518,7 @@ renderFeatured();
           <div class="cs-card cs-intro ot-intro">
             <div class="cs-intro-text">
               <div>
-                <span class="cs-eyebrow">Zepto · Order tracking · Shipped</span>
+                <img class="cs-intro-logo" src="logos/zepto.png" alt="Zepto logo">
                 <h2 class="cs-h1" id="csTrackTitle">Order Tracking Page</h2>
                 <p class="cs-p">The tracking page was made for one order and one delivery. Then Zepto started sending one order in many boxes, and the old page couldn't keep up.</p>
                 <p class="cs-p">I cleaned it up, made room for many shipments, and added a little joy while you wait.</p>
@@ -2821,7 +3580,7 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- ETA EXPLORATIONS -->
         <section class="cs-frame" data-chapter="explore">
@@ -2841,7 +3600,7 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- SHIPMENTS -->
         <section class="cs-frame" data-chapter="shipments">
@@ -2859,7 +3618,7 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- FINAL -->
         <section class="cs-frame" data-chapter="final">
@@ -2883,7 +3642,7 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- JOY -->
         <section class="cs-frame" data-chapter="joy">
@@ -2903,7 +3662,7 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- EDGE CASES -->
         <section class="cs-frame" data-chapter="edge">
@@ -2997,7 +3756,7 @@ renderFeatured();
           <div class="cs-card cs-intro">
             <div class="cs-intro-text">
               <div>
-                <span class="cs-eyebrow">Dunzo · Illustration and animation</span>
+                <img class="cs-intro-logo" src="logos/dunzo.png" alt="Dunzo logo">
                 <h2 class="cs-h1" id="csDunzoTitle">Dunzo Visuals</h2>
                 <p class="cs-p">At Dunzo, I was the person who drew things and made them move.</p>
                 <p class="cs-p">Here are three small problems where a friendly illustration did most of the work, and one sticker pack, just for fun.</p>
@@ -3005,7 +3764,7 @@ renderFeatured();
               <dl class="cs-meta">
                 <dt>Role</dt><dd>Brand and visual designer</dd>
                 <dt>Team</dt><dd>1 PM, 1 senior visual designer, me</dd>
-                <dt>When</dt><dd>2020 – 2022</dd>
+                <dt>When</dt><dd>2020 to 2022</dd>
               </dl>
             </div>
             <div class="cs-hero-shots" aria-hidden="true">
@@ -3056,7 +3815,7 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- ADDRESS -->
         <section class="cs-frame" data-chapter="address">
@@ -3073,7 +3832,7 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- PEAK -->
         <section class="cs-frame" data-chapter="peak">
@@ -3089,7 +3848,7 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- STICKERS -->
         <section class="cs-frame" data-chapter="stickers">
@@ -3169,7 +3928,7 @@ renderFeatured();
           <div class="cs-card cs-intro">
             <div class="cs-intro-text">
               <div>
-                <span class="cs-eyebrow">Swiggy · 2022 – 2024 · Visual design</span>
+                <img class="cs-intro-logo" src="logos/swiggy.png" alt="Swiggy logo">
                 <h2 class="cs-h1" id="csSwiggyTitle">Everything Visuals</h2>
                 <p class="cs-p">Two years of "can you make this a bit more fun?".</p>
                 <p class="cs-p">Banners, nav tiles, tracking states, splash screens, tiny toggles. None of them is a big project on its own, but together they're what makes an app feel alive.</p>
@@ -3177,7 +3936,7 @@ renderFeatured();
               <dl class="cs-meta">
                 <dt>Role</dt><dd>Visual designer</dd>
                 <dt>Made with</dt><dd>Figma, After Effects, Lottie</dd>
-                <dt>When</dt><dd>2022 – 2024</dd>
+                <dt>When</dt><dd>2022 to 2024</dd>
               </dl>
             </div>
             <div class="cs-hero-shots" aria-hidden="true">
@@ -3214,7 +3973,7 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- CTR IMPACT -->
         <section class="cs-frame">
@@ -3227,13 +3986,13 @@ renderFeatured();
             </div>
             <div class="cs-big">
               <img src="work/zepto-cafe/fluent/chart-up.png" alt="" loading="lazy">
-              <b>+4–7%</b>
+              <b>+4 to 7%</b>
               <span>higher click-through on animated banners and tiles</span>
             </div>
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- GENIE -->
         <section class="cs-frame" data-chapter="genie">
@@ -3256,7 +4015,7 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- SPLASH -->
         <section class="cs-frame" data-chapter="splash">
@@ -3274,7 +4033,7 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- LANDMARK -->
         <section class="cs-frame" data-chapter="landmark">
@@ -3290,7 +4049,7 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- TOGGLE -->
         <section class="cs-frame" data-chapter="toggle">
@@ -3307,7 +4066,7 @@ renderFeatured();
           </div>
         </section>
 
-        <div class="cs-link" aria-hidden="true"><svg viewBox="0 0 96 24" preserveAspectRatio="none"><circle cx="4" cy="12" r="3.5" fill="currentColor"/><path d="M8 12h78" stroke="currentColor" stroke-width="1.5"/><path d="M84 7l7 5-7 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cs-link" aria-hidden="true"><i class="cs-link-dot"></i><i class="cs-link-line"></i><svg class="cs-link-head" viewBox="0 0 10 14"><path d="M2 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
         <!-- MORE -->
         <section class="cs-frame" data-chapter="more">
@@ -3384,7 +4143,7 @@ renderFeatured();
 
 <script>
 (function(){
-  var page = document.querySelector('.sheet');
+  var page = document.querySelector('.lay');
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // explorations open in an overlay from the frame they belong to
@@ -3594,8 +4353,101 @@ renderFeatured();
     });
     lightbox.addEventListener('click', function(){ lightbox.classList.remove('show'); });
 
+    var csNav = cs.querySelector('.cs-nav');
+    var closeBtn = cs.querySelector('.cs-close');
+    // desktop: the close button sits just right of the bottom nav, vertically centred on it
+    function placeClose(){
+      if (!closeBtn) return;
+      if (vertical()) { closeBtn.classList.remove('placed'); closeBtn.style.left = closeBtn.style.top = ''; return; }
+      var r = csNav.getBoundingClientRect(), w = closeBtn.offsetWidth || 46;
+      closeBtn.style.left = Math.min(window.innerWidth - w - 8, r.right + 10) + 'px';
+      closeBtn.style.top = (r.top + (r.height - w) / 2) + 'px';
+      closeBtn.classList.add('placed');
+    }
+    window.addEventListener('resize', function(){ if (cs.classList.contains('is-open')) placeClose(); });
+
+    // the clicked card grows into the first slide: artwork fades, logo and title travel to their places
+    var XP_EASE = 'cubic-bezier(0.65, 0, 0.35, 1)', XP_DUR = 460, xpEls = [];
+    function xpClear(){ xpEls.forEach(function(e){ e.remove(); }); xpEls = []; }
+    function rectBox(r){ return { left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px' }; }
+    // Card -> slide. A white rounded shape grows from the card to the first slide. It is nine pieces
+    // (4 corners, 4 edges, centre) that only translate and scale, so the GPU runs it without repainting.
+    // The card's logo and title glide to their places; the real slide fades in on top as it lands.
+    function shellPose(r, rad){
+      var k = rad / 100, w = r.width, h = r.height, x = r.left, y = r.top, iw = Math.max(0, w - 2 * rad), ih = Math.max(0, h - 2 * rad);
+      function T(tx, ty, sx, sy){ return 'translate3d(' + tx.toFixed(2) + 'px,' + ty.toFixed(2) + 'px,0) scale(' + sx.toFixed(4) + ',' + sy.toFixed(4) + ')'; }
+      return [
+        T(x, y, k, k), T(x + w - rad, y, k, k), T(x, y + h - rad, k, k), T(x + w - rad, y + h - rad, k, k),   // corners (100px at rest)
+        T(x + rad - 0.5, y, iw + 1, k), T(x + rad - 0.5, y + h - rad, iw + 1, k),                             // top, bottom edges (1x100)
+        T(x, y + rad - 0.5, k, ih + 1), T(x + w - rad, y + rad - 0.5, k, ih + 1),                             // left, right edges (100x1)
+        T(x + rad - 0.5, y + rad - 0.5, iw + 1, ih + 1)                                                      // centre (1x1)
+      ];
+    }
+    function mount(el){ cs.insertBefore(el, sheet); }   // under the sheet, so the real slide can fade in on top
+    function makeShell(){
+      var g = document.createElement('div'); g.className = 'xp-shell';
+      ['c tl', 'c tr', 'c bl', 'c br', 'eh', 'eh', 'ev', 'ev', 'm'].forEach(function(c){ var p = document.createElement('i'); p.className = c; g.appendChild(p); });
+      mount(g); xpEls.push(g); return g;
+    }
+    function glide(el, a, b, o){ return el.animate([{ transform: a }, { transform: b }], o); }
+    function moveRect(from, to, noScale){ return 'translate3d(' + (to.left - from.left).toFixed(2) + 'px,' + (to.top - from.top).toFixed(2) + 'px,0)' + (noScale ? '' : ' scale(' + (to.width / from.width).toFixed(4) + ')'); }
+    function parts(card, target){
+      var C = card.getBoundingClientRect(), T = target.getBoundingClientRect();
+      var cl = card.querySelector('.case-icon'), tl = target.querySelector('.cs-intro-logo');
+      var ct = card.querySelector('.case-title'), tt = target.querySelector('.cs-h1');
+      return { C: C, T: T, cr: parseFloat(getComputedStyle(card).borderTopLeftRadius) || 26, tr: parseFloat(getComputedStyle(target).borderTopLeftRadius) || 28,
+        logo: cl, L1: cl && cl.getBoundingClientRect(), L2: tl && tl.getBoundingClientRect(),
+        title: ct, T1: ct && ct.getBoundingClientRect(), T2: tt && tt.getBoundingClientRect(),
+        hero: card.querySelector('.case-hero, .case-wide-shots'), metric: card.querySelector('.case-sub, .case-wide-sub') };
+    }
+    function ghosts(P){
+      var g = {};
+      if (P.logo && P.L2) { g.logo = P.logo.cloneNode(true); g.logo.className = 'xp-logo'; Object.assign(g.logo.style, rectBox(P.L1), { borderRadius: '26%', transformOrigin: '0 0' }); mount(g.logo); xpEls.push(g.logo); }
+      if (P.title && P.T2) { var cs2 = getComputedStyle(P.title); g.title = document.createElement('span'); g.title.className = 'xp-title'; g.title.textContent = P.title.textContent;
+        Object.assign(g.title.style, { font: cs2.font, letterSpacing: cs2.letterSpacing, left: P.T1.left + 'px', top: P.T1.top + 'px', transformOrigin: '0 0' }); mount(g.title); xpEls.push(g.title); }
+      if (P.hero) { var hr = P.hero.getBoundingClientRect(); g.art = P.hero.cloneNode(true); g.art.classList.add('xp-art'); Object.assign(g.art.style, rectBox(hr), { right: 'auto', bottom: 'auto' }); mount(g.art); xpEls.push(g.art); }
+      if (P.metric) { var mr = P.metric.getBoundingClientRect(); g.metric = P.metric.cloneNode(true); g.metric.classList.add('xp-art'); Object.assign(g.metric.style, { left: mr.left + 'px', top: mr.top + 'px', right: 'auto', width: mr.width + 'px' }); mount(g.metric); xpEls.push(g.metric); }
+      return g;
+    }
+    function run(P, forward, dur, done){
+      var o = { duration: dur, easing: XP_EASE, fill: 'forwards' };
+      var shell = makeShell(), A = shellPose(P.C, P.cr), B = shellPose(P.T, P.tr), kids = shell.children, g = ghosts(P), last;
+      for (var n = 0; n < 9; n++) last = glide(kids[n], forward ? A[n] : B[n], forward ? B[n] : A[n], o);
+      if (g.logo) glide(g.logo, forward ? 'none' : moveRect(P.L1, P.L2), forward ? moveRect(P.L1, P.L2) : 'none', o);
+      if (g.title) glide(g.title, forward ? 'none' : moveRect(P.T1, P.T2, true), forward ? moveRect(P.T1, P.T2, true) : 'none', o);   // same type size both ends: move only
+      if (g.art) g.art.animate(forward ? [{ opacity: 1 }, { opacity: 0 }] : [{ opacity: 0 }, { opacity: 1 }], forward ? { duration: 160, easing: 'ease-out', fill: 'forwards' } : { duration: 180, delay: dur - 180, easing: 'ease-in', fill: 'forwards' });
+      if (g.metric) g.metric.animate(forward ? [{ opacity: 1 }, { opacity: 0 }] : [{ opacity: 0 }, { opacity: 1 }], forward ? { duration: 160, easing: 'ease-out', fill: 'forwards' } : { duration: 180, delay: dur - 180, easing: 'ease-in', fill: 'forwards' });
+      last.onfinish = done;
+      return { shell: shell, g: g };
+    }
+    function expandFrom(card){
+      xpClear();
+      var first = cs.querySelector('.cs-track > :first-child'), target = first && first.querySelector('.cs-card');
+      if (!card || !target || !card.getBoundingClientRect().width) return false;
+      cs.classList.add('from-card'); cs.classList.remove('landed');   // first: the slide must be at rest before we measure it
+      var P = parts(card, target);
+      card.classList.add('lifted'); cs._lifted = card;
+      var r = run(P, true, XP_DUR, function(){});
+      // hand over to the real slide while the shape is settling: slide fades in, stand-ins fade out
+      setTimeout(function(){
+        cs.classList.add('landed');   // the real slide fades in on top of the opaque stand-in
+        setTimeout(xpClear, 200);
+      }, XP_DUR - 20);
+      return true;
+    }
+    function collapseTo(card, done){
+      var first = cs.querySelector('.cs-track > :first-child'), target = first && first.querySelector('.cs-card');
+      if (!card || !target || canvas.scrollLeft > 40 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+      var P = parts(card, target);
+      cs.classList.add('to-card');   // the real slide fades out at once, revealing the shape that shrinks home
+      run(P, false, 420, function(){ card.classList.remove('lifted'); requestAnimationFrame(function(){ xpClear(); done(); }); });
+      return true;
+    }
+    [].slice.call(cs.querySelectorAll('.cs-track > *')).forEach(function(el, i){ el.style.setProperty('--si', Math.min(i, 8)); });
     function open(push){
       if (cs.classList.contains('is-open')) return;
+      cs.classList.remove('closing');
+      var morph = !vertical() && window.NavMorph ? NavMorph.from() : null;
       lastFocus = document.activeElement;
       cs.setAttribute('aria-hidden', 'false');
       cs.classList.add('is-open');
@@ -3607,7 +4459,11 @@ renderFeatured();
       canvas.scrollTop = 0;
       if (vertical()) window.scrollTo({ top: 0, behavior: 'instant' });
       syncNav();
-      startMedia();
+      var src = cs._src; cs._src = null;
+      if (morph && src && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) expandFrom(src);
+      setTimeout(placeClose, morph ? 300 : 0);
+      if (morph) { NavMorph.grow(morph, csNav, cs); clearTimeout(cs._mediaT); cs._mediaT = setTimeout(function(){ if (cs.classList.contains('is-open')) startMedia(); }, 560); }
+      else startMedia();
       if (push && location.hash !== HASH) history.pushState({ cs: 1 }, '', HASH);
       setTimeout(function(){ sheet.focus({ preventScroll: true }); }, 60);
     }
@@ -3616,7 +4472,21 @@ renderFeatured();
       if (!cs.classList.contains('is-open')) return;
       lightbox.classList.remove('show');
       if (gallery) gallery.classList.remove('show');
-      cs.classList.remove('is-open', 'menu-open');
+      var wasVertical = document.body.classList.contains('cs-page');
+      var lc = cs._lifted; cs._lifted = null;
+      xpClear();
+      if (!wasVertical && window.NavMorph) {
+        cs.classList.add('closing');
+        NavMorph.shrink(csNav, cs);
+        clearTimeout(cs._closeT);
+        var finish = function(){ cs.classList.remove('closing', 'to-card'); };
+        if (!(lc && collapseTo(lc, finish))) {
+          cs._closeT = setTimeout(finish, 640);
+          if (lc) setTimeout(function(){ lc.classList.remove('lifted'); }, 200);
+        }
+      } else if (lc) lc.classList.remove('lifted');
+      cs.classList.remove('is-open', 'menu-open', 'from-card', 'landed', 'warm');
+      if (closeBtn) closeBtn.classList.remove('placed');
       pn.classList.remove('away', 'menu-open');
       cs.setAttribute('aria-hidden', 'true');
       var wasPage = document.body.classList.contains('cs-page');
@@ -3635,7 +4505,9 @@ renderFeatured();
     }
 
     openers.forEach(function(el){
-      el.addEventListener('click', function(e){ e.preventDefault(); open(true); });
+      el.addEventListener('click', function(e){ e.preventDefault(); cs._src = el.closest('.case') || null; open(true); });
+      ['pointerenter', 'pointerdown', 'focus'].forEach(function(ev){ el.addEventListener(ev, function(){ if (!vertical()) cs.classList.add('warm'); }); });
+      el.addEventListener('pointerleave', function(){ setTimeout(function(){ if (!cs.classList.contains('is-open')) cs.classList.remove('warm'); }, 300); });
     });
     cs.querySelectorAll('[data-cs-close]').forEach(function(el){
       el.addEventListener('click', function(){ close(false); });
@@ -3691,6 +4563,257 @@ renderFeatured();
   }, { rootMargin: '200px' });
   els.forEach(function(el){ io.observe(el); });
 })();
+
+
+// Trust sheet: fit the 360pt-wide sheet to each phone frame
+(function () {
+  function fit() {
+    document.querySelectorAll('.ts-clip, .ts-full .cs-scroller').forEach(function (f) {
+      var w = f.clientWidth, st = f.querySelector('.ts-stage');
+      if (w && st) st.style.setProperty('--tsz', (w / 360).toFixed(4));
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fit); else fit();
+  window.addEventListener('load', fit);
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) { var ro = new ResizeObserver(fit); document.querySelectorAll('.ts-clip, .ts-full .cs-scroller').forEach(function (f) { ro.observe(f); }); }
+})();
 </script>
+<script>
+/* ── Nav morph: the landing tab bar grows into a case study's tab bar, and shrinks back on close.
+   The case-study nav is revealed through a clip that starts as the landing nav's exact pill. ── */
+window.NavMorph = (function () {
+  // A stand-in pill travels between the two navs (three transform-only pieces, run by the GPU).
+  // No crossfades where both sides are see-through: the stand-in fades in OVER the landing nav, and the
+  // case-study nav fades in OVER the stand-in, so there is always something opaque underneath.
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var EASE = 'cubic-bezier(0.65, 0, 0.35, 1)', DUR = 320, IN = 90, OUT = 120;
+  var layer = null, pill = null, running = [], timers = [];
+  function fnav() { return document.getElementById('fnav'); }
+  function ensure(host) {
+    if (!layer) {
+      layer = document.createElement('div'); layer.className = 'nm-layer'; layer.setAttribute('aria-hidden', 'true');
+      var g = document.createElement('div'); g.className = 'nm nm-pill';
+      ['nm-l', 'nm-m', 'nm-r'].forEach(function (c) { var e = document.createElement('i'); e.className = c; g.appendChild(e); });
+      layer.appendChild(g);
+      pill = { l: g.children[0], m: g.children[1], r: g.children[2] };
+    }
+    var sheet = host && host.querySelector('.cs-sheet');
+    if (sheet) host.insertBefore(layer, sheet); else document.body.appendChild(layer);
+  }
+  function pose(r) {
+    var k = r.height / 100, cap = r.height / 2, mid = Math.max(0, r.width - r.height);
+    return {
+      l: 'translate3d(' + r.left + 'px,' + r.top + 'px,0) scale(' + k + ')',
+      r: 'translate3d(' + (r.left + r.width - cap) + 'px,' + r.top + 'px,0) scale(' + k + ')',
+      m: 'translate3d(' + (r.left + cap - 0.5) + 'px,' + r.top + 'px,0) scale(' + (mid + 1) + ',' + k + ')'
+    };
+  }
+  function move(a, b) {
+    var pa = pose(a), pb = pose(b), o = { duration: DUR, easing: EASE, fill: 'forwards' };
+    ['l', 'm', 'r'].forEach(function (k) { running.push(pill[k].animate([{ transform: pa[k] }, { transform: pb[k] }], o)); });
+  }
+  function stop() {
+    running.forEach(function (a) { a.cancel(); }); running = [];
+    timers.forEach(clearTimeout); timers = [];
+    if (layer) { layer.style.display = 'none'; layer.style.opacity = ''; }
+  }
+  function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+  function setOpacity(el, v, ms) { el.style.transition = ms ? 'opacity ' + ms + 'ms ease-out' : 'none'; el.style.opacity = v; }
+  return {
+    from: function () {
+      var f = fnav(); if (!f || reduce || !f.classList.contains('is-in')) return null;
+      return { nav: f.getBoundingClientRect() };
+    },
+    grow: function (from, nav, host) {
+      var f = fnav();
+      if (!nav || !from) { if (f) { f.style.transition = 'none'; f.classList.add('morph-hide'); } return; }
+      ensure(host); stop();
+      var to = nav.getBoundingClientRect();
+      setOpacity(nav, '0', 0);
+      layer.style.display = 'block'; layer.style.opacity = '0';
+      move(from.nav, to);
+      running.push(layer.animate([{ opacity: 0 }, { opacity: 1 }], { duration: IN, easing: 'linear', fill: 'forwards' }));   // over the landing nav
+      later(function () { if (f) { f.style.transition = 'none'; f.classList.add('morph-hide'); } }, IN);
+      later(function () { setOpacity(nav, '', OUT); }, DUR);                                  // real nav fades in over the stand-in
+      later(function () { stop(); nav.style.transition = ''; }, DUR + OUT + 20);
+    },
+    shrink: function (nav, host) {
+      var f = fnav(); if (!f) return;
+      if (!nav || reduce) { f.style.transition = ''; f.classList.remove('morph-hide'); return; }
+      ensure(host); stop();
+      var a = nav.getBoundingClientRect();
+      f.style.transition = 'none'; f.classList.remove('morph-hide');
+      var b = f.getBoundingClientRect(); f.classList.add('morph-hide');
+      layer.style.display = 'block'; layer.style.opacity = '1';                              // opaque, under the real nav
+      setOpacity(nav, '0', 90);                                                              // real nav lifts off it
+      move(a, b);
+      later(function () {
+        f.classList.remove('morph-hide');                                                    // landing nav ready underneath
+        running.push(layer.animate([{ opacity: 1 }, { opacity: 0 }], { duration: OUT, easing: 'ease-out', fill: 'forwards' }));
+      }, DUR);
+      later(function () { stop(); f.style.transition = ''; setOpacity(nav, '', 0); }, DUR + OUT + 20);
+    }
+  };
+})();
+</script>
+<script>
+/* ── Elastic nav pill: shared by the landing nav and every case-study nav ── */
+window.ElasticNav = function (nav, items, activeClass) {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  nav.classList.add('enav');
+  var ghost = document.createElement('span'); ghost.className = 'enav-hover'; ghost.setAttribute('aria-hidden', 'true');
+  var ink = document.createElement('span'); ink.className = 'enav-ink'; ink.setAttribute('aria-hidden', 'true');
+  var labels = document.createElement('span'); labels.className = 'enav-labels';
+  ink.appendChild(labels); nav.insertBefore(ghost, nav.firstChild); nav.appendChild(ink);
+  var copies = items.map(function (it) { var c = document.createElement('span'); c.textContent = it.textContent.trim(); labels.appendChild(c); return c; });
+
+  function Spring(el, lead, trail, withLabels) { this.el = el; this.lead = lead; this.trail = trail; this.withLabels = withLabels; this.l = this.r = this.vl = this.vr = this.tl = this.tr = 0; this.ready = false; }
+  Spring.prototype.target = function (it, jump) {
+    this.tl = it.offsetLeft; this.tr = it.offsetLeft + it.offsetWidth;
+    this.right = this.tl > this.l;   // decide which edge leads once per move, so it can't flip-flop while settling
+    this.el.style.top = it.offsetTop + 'px'; this.el.style.height = it.offsetHeight + 'px';
+    if (jump || reduce || !this.ready) { this.l = this.tl; this.r = this.tr; this.vl = this.vr = 0; this.ready = it.offsetWidth > 0; this.paint(); return; }
+    kick();
+  };
+  Spring.prototype.step = function (dt) {
+    var right = this.right, kl = right ? this.trail : this.lead, kr = right ? this.lead : this.trail;
+    this.vl += ((this.tl - this.l) * kl - this.vl * 2 * Math.sqrt(kl) * 0.82) * dt; this.l += this.vl * dt;
+    this.vr += ((this.tr - this.r) * kr - this.vr * 2 * Math.sqrt(kr) * 0.82) * dt; this.r += this.vr * dt;
+    this.paint();
+    if (Math.abs(this.tl - this.l) + Math.abs(this.tr - this.r) + Math.abs(this.vl) + Math.abs(this.vr) > 0.08) return true;
+    this.l = this.tl; this.r = this.tr; this.vl = this.vr = 0; this.paint(); return false;
+  };
+  Spring.prototype.paint = function () {
+    this.el.style.transform = 'translate3d(' + this.l.toFixed(2) + 'px,0,0)';
+    this.el.style.width = Math.max(0, this.r - this.l).toFixed(2) + 'px';
+    if (this.withLabels) labels.style.transform = 'translate3d(' + (-this.l).toFixed(2) + 'px,0,0)';
+  };
+  var inkS = new Spring(ink, 520, 170, true), ghostS = new Spring(ghost, 700, 320, false);
+
+  var raf = 0, last = 0;
+  function kick() { if (!raf) { last = performance.now(); raf = requestAnimationFrame(loop); } }
+  function loop(now) {
+    var dt = Math.min((now - last) / 1000, 1 / 30); last = now;
+    var a = inkS.step(dt), b = ghostS.ready ? ghostS.step(dt) : false;
+    raf = (a || b) ? requestAnimationFrame(loop) : 0;
+  }
+
+  // the white label copies sit exactly over the real labels, in the ink's coordinate space
+  function layoutCopies() {
+    var top = items[0] ? items[0].offsetTop : 0;
+    items.forEach(function (it, i) {
+      var cs = getComputedStyle(it), c = copies[i].style;
+      c.left = it.offsetLeft + 'px'; c.top = (it.offsetTop - top) + 'px'; c.width = it.offsetWidth + 'px'; c.height = it.offsetHeight + 'px';
+      c.fontSize = cs.fontSize; c.fontWeight = cs.fontWeight; c.letterSpacing = cs.letterSpacing; c.fontFamily = cs.fontFamily;
+    });
+  }
+
+  var current = -1;
+  function set(i, jump) {
+    if (i < 0 || !items[i]) return;
+    current = i; layoutCopies(); inkS.target(items[i], jump);
+  }
+
+  // hover ghost
+  var hovering = false;
+  items.forEach(function (it) {
+    it.addEventListener('mouseenter', function () { ghostS.target(it, !hovering); hovering = true; nav.classList.add('is-hovering'); });
+  });
+  nav.addEventListener('mouseleave', function () { hovering = false; nav.classList.remove('is-hovering'); });
+
+  // follow a class someone else toggles (the case-study nav's own scroll-spy sets .on)
+  if (activeClass) {
+    var sync = function () {
+      var i = -1; items.forEach(function (it, k) { if (it.classList.contains(activeClass)) i = k; });
+      if (i >= 0 && i !== current) set(i);
+    };
+    var mo = new MutationObserver(sync);
+    items.forEach(function (it) { mo.observe(it, { attributes: true, attributeFilter: ['class'] }); });
+    sync();
+  }
+  // re-measure (without animating) whenever the nav changes size, including first becoming visible
+  if ('ResizeObserver' in window) new ResizeObserver(function () { if (current >= 0) set(current, true); }).observe(nav);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (current >= 0) set(current, true); });
+
+  return { set: set };
+};
+document.querySelectorAll('.cs-nav').forEach(function (n) { ElasticNav(n, [].slice.call(n.querySelectorAll('button')), 'on'); });
+</script>
+<script>
+/* ── Floating section nav: elastic ink pill, eased auto-scroll, scroll-spy ── */
+(function(){
+  var nav = document.getElementById('fnav');
+  if (!nav || !window.ElasticNav) return;
+  var links = [].slice.call(nav.querySelectorAll('a'));
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var pill = ElasticNav(nav, links);
+  var targets = links.map(function (a) { return document.querySelector('[data-nav="' + a.dataset.to + '"]'); });
+  var active = -1, locked = -1;
+  function setActive(i, jump) {
+    if (i === active || i < 0) return;
+    active = i;
+    links.forEach(function (a, k) { a.classList.toggle('is-active', k === i); if (k === i) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+    pill.set(i, jump);
+  }
+  var scrollAnim = 0;
+  function ease(t) { return t < 0.5 ? 16 * t * t * t * t * t : 1 - Math.pow(-2 * t + 2, 5) / 2; }
+  function cancelScroll() { if (scrollAnim) { cancelAnimationFrame(scrollAnim); scrollAnim = 0; locked = -1; } }
+  ['wheel', 'touchstart', 'keydown'].forEach(function (ev) { window.addEventListener(ev, cancelScroll, { passive: true }); });
+  function scrollToY(y, done) {
+    cancelScroll();
+    var from = window.scrollY, dist = y - from;
+    if (reduce || Math.abs(dist) < 2) { window.scrollTo({ top: y, behavior: 'instant' }); done && done(); return; }
+    var dur = Math.min(1300, Math.max(650, Math.abs(dist) * 0.45)), t0 = performance.now();
+    (function f(now) {
+      var t = Math.min(1, (now - t0) / dur);
+      window.scrollTo({ top: from + dist * ease(t), behavior: 'instant' });
+      if (t < 1) scrollAnim = requestAnimationFrame(f); else { scrollAnim = 0; done && done(); }
+    })(t0);
+  }
+  links.forEach(function (a, i) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      var el = targets[i]; if (!el) return;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var y = i === 0 ? 0 : Math.min(max, el.getBoundingClientRect().top + window.scrollY - 8);
+      locked = i; setActive(i);
+      scrollToY(Math.max(0, y), function () { locked = -1; });
+    });
+  });
+  // scroll-spy: the section crossing 40% of the viewport is active (the sticky info panel only counts at the very top)
+  function spy() {
+    if (locked >= 0) return;
+    var line = window.innerHeight * 0.4, cur = 0;
+    targets.forEach(function (el, i) { if (i && el && el.getBoundingClientRect().top <= line) cur = i; });
+    if (window.innerWidth > 860 && cur === 0 && window.scrollY > 4) cur = 1;
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) cur = targets.length - 1;
+    setActive(cur);
+  }
+  window.addEventListener('scroll', spy, { passive: true });
+  (function wait() {
+    if (document.querySelector('.loader')) return setTimeout(wait, 150);
+    nav.classList.add('is-in');
+    spy(); if (active < 0) setActive(0, true); else pill.set(active, true);
+  })();
+})();
+</script>
+<script>
+(function () {
+  var b = document.querySelector('.bio-toggle'); if (!b) return;
+  var bio = b.closest('.side-bio');
+  b.addEventListener('click', function () {
+    var open = bio.classList.toggle('open');
+    b.setAttribute('aria-expanded', open ? 'true' : 'false');
+    b.textContent = open ? 'Show less' : 'Read more';
+  });
+})();
+</script>
+
+
+
+
+
+
 </body>
 </html>
